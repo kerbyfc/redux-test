@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+            <title>Virtu test</title>
+
+            <% if (state) { %>
+                <script>
+                    window.__INITIAL_STATE__ = '<%- JSON.stringify(state) %>';
+                </script>
+            <% } %>
+    </head>
+    <body>
+        <div id="react-view"><%- html %></div>
+        <script type="application/javascript" src="/bundle.js"></script>
+    </body>
+</html>
