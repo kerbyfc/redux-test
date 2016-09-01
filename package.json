@@ -4,7 +4,7 @@
   "repository": "https://github.com/kerbyfc/redux-test",
   "description": "First redux application",
   "scripts": {
-    "dev": "NODE_PATH=$NODE_PATH:./src/app/share $(npm bin)/ts-node src/app/server/bootstrap.ts"
+    "dev": "NODE_PATH=$NODE_PATH:./src/app/share $(npm bin)/ts-node src/app/server/bootstrap.tsx"
   },
   "author": "Milo Mordaunt <milomord@gmail.com>",
   "license": "MIT",

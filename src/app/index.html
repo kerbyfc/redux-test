@@ -7,12 +7,12 @@
 
             <% if (state) { %>
                 <script>
-                    window.__INITIAL_STATE__ = '<%- JSON.stringify(state) %>';
+                    window.__INITIAL_STATE__ = '<%= JSON.stringify(state) %>';
                 </script>
             <% } %>
     </head>
     <body>
-        <div id="<%- APP_COMPONENT_ID %>"><%- html %></div>
+        <div id="<%- APP_COMPONENT_ID %>"><%= html %></div>
         <script type="application/javascript" src="/bundle.js"></script>
     </body>
 </html>
