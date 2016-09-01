@@ -1,9 +1,8 @@
 {
     "compilerOptions": {
-        "target": "es6",
+        "target": "es5",
         "noImplicitAny": false,
-        "sourceMap": true,
-        "outFile": "build/bundle.js",
+        "noLib": false,
         "jsx": "react"
     },
     "exclude": [

@@ -6,10 +6,6 @@ type AppProps = {
 
 export class App extends React.Component<AppProps, any> {
 
-    componentDidMount(): void {
-        this.props.history.pushState(null, '/home');
-    }
-
     render() {
         return (
             <div id='app'>
