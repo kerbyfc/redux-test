@@ -1,0 +1,1 @@
+export const APP_COMPONENT_SELECTOR = '#app';
