@@ -1,47 +1,33 @@
-import * as _ from 'lodash';
-import * as express from 'express';
-import * as fs from 'fs';
-import * as path from 'path';
+/**
+ * External imports
+ */
 import * as React from 'react';
-
-import {match} from 'react-router';
+import {createStore} from 'redux';
 import {Provider} from 'react-redux';
 import {renderToString} from 'react-dom/server';
 import {RouterContext} from 'react-router';
 
-import {APP_COMPONENT_ID} from '../shared/constants';
-import {ROUTES} from '../shared/router';
+/**
+ * Local imports
+ */
+import {REDUCERS} from '../shared/reducers/root';
 
-const port = 3001;
-const app = express();
-
-const layout: string = fs.readFileSync(path.join(__dirname, '../index.html')).toString();
-
-if (process.env.NODE_ENV !== 'production') {
-    require('./../../../webpack.dev.js')(app);
+interface IInitialData {
+    view: string;
+    state: {};
 }
 
-app.use(express.static(path.join(__dirname, 'build')));
+export function bootstrap(renderProps) {
+    return new Promise<IInitialData>((resolve) => {
+        const store = createStore(REDUCERS);
+        const state = store.getState();
 
-app.use((req, res) => {
-    match({routes: ROUTES, location: req.url}, (err, redirectLocation, renderProps) => {
-        const InitialView = (
-            <Provider>
+        const view = renderToString(
+            <Provider store={store}>
                 <RouterContext {...renderProps} />
             </Provider>
         );
 
-        const html = renderToString(InitialView);
-        const state = {};
-
-        res.end(_.template(layout)({html, state, APP_COMPONENT_ID}));
+        resolve({view, state});
     });
-
-});
-
-app.listen(port, function() {
-    console.log('Listening port ' + port);
-});
-
-export default app;
-
+}
