@@ -1,4 +1,4 @@
-import {ACTIONS} from '../actions';
+import {ACTIONS} from '../../constants/actions';
 
 export function submitForm(formData) {
     return {

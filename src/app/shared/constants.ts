@@ -1,1 +1,0 @@
-export const APP_COMPONENT_ID = 'app';
