@@ -36,7 +36,6 @@ export class ClientFormComponent extends React.Component<any, any> {
     }
 
     render() {
-        console.log('HERE', this);
         return (
             <form>
                 <input type="text" ref="name" name={CLIENT_FORM_FIELDS.name} value={this.props.name} onKeyDown={this.handleKeyDown} />
