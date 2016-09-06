@@ -3,21 +3,21 @@ var webpack = require('webpack');
 
 module.exports = {
     entry: [
-        './src/app/client/bootstrap.tsx'
+        './src/app/client/index.tsx'
     ],
     resolve: {
         modulesDirectories: ['node_modules', 'src/app'],
-        extensions:         ['', '.js', '.ts', '.tsx']
+        extensions: ['', '.js', '.ts', '.tsx']
     },
     output: {
-        path:       path.join(__dirname, 'build'),
-        filename:   'bundle.js',
+        path: path.join(__dirname, 'build'),
+        filename: 'bundle.js',
         publicPath: '/'
     },
     module: {
         loaders: [
             {
-                test:    /\.tsx?$/,
+                test: /\.tsx?$/,
                 exclude: /node_modules/,
                 loaders: ['ts-loader']
             }

@@ -4,24 +4,39 @@
   "repository": "https://github.com/kerbyfc/redux-test",
   "description": "First redux application",
   "scripts": {
-    "dev": "NODE_PATH=$NODE_PATH:./src/app/share $(npm bin)/ts-node src/app/server/webserver.tsx"
+    "dev": "NODE_PATH=$NODE_PATH:./src/app/share $(npm bin)/ts-node src/app/server/index.tsx"
   },
   "author": "Milo Mordaunt <milomord@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "babel-core": "^6.3.21",
+    "babel-loader": "^6.2.0",
+    "babel-plugin-react-transform": "^2.0.0-beta1",
+    "babel-plugin-transform-class-properties": "^6.3.13",
+    "babel-plugin-transform-decorators-legacy": "^1.3.4",
+    "babel-plugin-transform-object-rest-spread": "^6.3.13",
+    "babel-polyfill": "^6.3.14",
+    "babel-preset-es2015": "^6.3.13",
+    "babel-preset-react": "^6.3.13",
     "express": "^4.14.0",
+    "history": "^2.1.0",
+    "immutable": "^3.8.1",
+    "inversify": "^2.0.0-rc.13",
     "lodash": "^4.15.0",
+    "ramda": "^0.22.1",
     "react": "^15.3.1",
     "react-dom": "^15.3.1",
     "react-hot-loader": "^1.3.0",
     "react-redux": "^4.4.5",
     "react-router": "^2.7.0",
+    "react-transform-hmr": "^1.0.1",
     "redux": "^3.5.2",
+    "reflect-metadata": "^0.1.8",
     "ts-loader": "^0.8.2",
     "ts-node": "^1.3.0",
     "typescript": "^1.8.10",
     "webpack": "^1.13.2",
     "webpack-dev-middleware": "^1.6.1",
-    "webpack-hot-middleware": "^2.12.2"
+    "webpack-hot-middleware": "^2.10.0"
   }
 }
