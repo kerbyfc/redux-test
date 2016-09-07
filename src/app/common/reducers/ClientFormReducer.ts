@@ -13,6 +13,33 @@ import {zipObjProps} from '../../core/helpers';
 import {ClientFormInputKeyDownAction} from '../components/ClientFormComponent';
 import {ITextInputAction} from '../actions/TextInputKeyboardAction';
 
+/*
+TODO:
+
+interface IClientFormData {
+    name: string;
+    surname: string;
+}
+
+...
+
+getInitialData() {
+    return {
+        name: '',
+        surname: ''
+    }
+}
+
+...
+
+this.reduce = () => {
+    state = ...
+    flat
+    return state
+}
+
+ */
+
 /**
  * Interfaces
  */
@@ -24,7 +51,6 @@ export interface IClientFormData {
 export interface IClientFormState {
     disabled: boolean;
     data: IClientFormData;
-    inputCarretPositions: {};
 }
 
 /**
@@ -39,7 +65,6 @@ const initialClintFormData: IClientFormData = {
  * Component contract
  */
 export const CLIENT_FORM_FIELDS = <IClientFormData>zipObjProps<IClientFormData>(initialClintFormData);
-
 
 @injectable()
 export class ClientFormReducer extends Reducer<IClientFormState> {
@@ -56,8 +81,23 @@ export class ClientFormReducer extends Reducer<IClientFormState> {
         return {
             disabled: false,
             data: initialClintFormData,
-            inputCarretPositions: {}
+            inputCarretPositions: {},
         };
+        /*
+            TODO: think twice, should value= be updated in actor, then by react?
+            should add:
+
+            $: {
+                data: {
+                    name: 'state.clientForm.data.name'
+                }
+            }
+
+            use that:
+
+            <input type="text" key={this.props.$.data.name} />
+
+         */
     }
 
     reduce(state, action) {
