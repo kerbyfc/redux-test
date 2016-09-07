@@ -10,27 +10,26 @@ import {Action} from '../../core/Action';
 
 export interface IInputChangeActionPayload {
     event: Event;
+    selection: number[];
 
     /**
      * Should be computed by action
      */
     name?: string;
     value?: string;
-    selection?: number[];
     input?: HTMLInputElement;
 }
 
 export class InputChangeAction extends Action<IInputChangeActionPayload> {
-    constructor(event: Event) {
-        super({event});
+    constructor(event: Event, selection: number[]) {
+        super({event, selection});
 
         const input: HTMLInputElement = <HTMLInputElement>event.target;
 
         _.assign(this.payload, {
             input: input,
             value: input.value,
-            name: input.getAttribute('name'),
-            selection: [input.selectionStart, input.selectionEnd]
+            name: input.getAttribute('name')
         });
 
         this.actors.push((state) => {
