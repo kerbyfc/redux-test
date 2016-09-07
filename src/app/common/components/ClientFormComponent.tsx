@@ -26,15 +26,6 @@ export class ClientFormComponent extends React.Component<any, any> {
         new ClientFormInputKeyDownAction({event}).emit();
     };
 
-    componentDidUpdate() {
-        setTimeout(() => {
-            const cursor = this.props.cursors.name;
-            console.log(cursor);
-            const el = this.refs['name'] as HTMLInputElement;
-            el.setSelectionRange(cursor, cursor);
-        });
-    }
-
     render() {
         return (
             <form>
