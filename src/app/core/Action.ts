@@ -9,7 +9,6 @@ export interface IAction {
     emit(): void;
 }
 
-
 @injectable()
 export class Action<TActionPayload> implements IAction {
 
@@ -21,14 +20,12 @@ export class Action<TActionPayload> implements IAction {
         return this.resolveType();
     }
 
-    static dispatcher: Dispatcher;
+    protected dispatcher: Dispatcher;
 
     constructor(
         protected payload: TActionPayload
     ) {
-        if (!Action.dispatcher) {
-            Action.dispatcher = injector.get(Dispatcher);
-        }
+        this.dispatcher = injector.get(Dispatcher);
         this.type = Action.resolveType.call(this.constructor);
     }
 
@@ -38,16 +35,51 @@ export class Action<TActionPayload> implements IAction {
         return true;
     }
 
-    emit() {
+    protected emitted = false;
+
+    // TODO: docs
+    protected actors: any[] = [];
+
+    emit(actor?): boolean {
+        if (this.emitted) {
+            // TODO: check environment
+            throw new Error(`Action can be emitted only once (${this.type})`);
+        }
+
+        /**
+         * The prefer way to detect actions in reducers is by 'is' prop,
+         * as it gives an ability to use prototype chain
+         *
+         * @example in reducer
+         *   if (action.is instanceof KeyboardAction) { ...
+         */
         const data = {
             is: this,
             payload: this.payload,
             type: this.type
         };
 
-        if (this.shouldBeEmitted()) {
-            console.log(`[ACTION] ${data.type}`, data.payload);
-            return Action.dispatcher.dispatch(data);
+        if (actor) {
+            this.actors.push(actor);
         }
+
+        /**
+         * Each actor should be envoked once after reducing
+         */
+        if (this.actors.length) {
+            let actor;
+            while (actor = this.actors.shift()) {
+                this.dispatcher.subscribeOnce(actor);
+            }
+        }
+
+        if (this.shouldBeEmitted()) {
+            // TODO: use middleware
+            console.log(`[ACTION] ${data.type}`, data.payload);
+            this.dispatcher.dispatch(data);
+
+            this.emitted = true;
+        }
+        return this.emitted;
     }
 }
