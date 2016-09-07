@@ -34,6 +34,10 @@ export class Injector {
         });
     }
 
+    bindSingleton<I>(provider): void {
+        this.kernel.bind<I>(provider).to(provider).inSingletonScope();
+    }
+
     bind<I>(provider): void {
         this.kernel.bind<I>(provider).to(provider);
     }

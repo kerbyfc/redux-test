@@ -11,25 +11,29 @@ import {injector} from '../core/Injector';
 /**
  * Import providers
  */
-import {AppReducer} from './reducers/AppReducer';
+import {AppReducer, IState} from './reducers/AppReducer';
 import {ClientFormReducer} from './reducers/ClientFormReducer';
 import {Dispatcher} from '../core/Dispatcher';
 import {OnlyRussianCharsValidator} from './validators/OnlyRussianCharsValidator';
 import {TextLengthValidator} from './validators/TextLengthValidator';
 import {Validator} from '../core/Validator';
+import {CarretPositionReducer} from './reducers/CarretPositionReducer';
+
+injector.bindSingleton<Dispatcher>(Dispatcher);
 
 injector.registerProviders([
     /**
      * Core
      */
-    Dispatcher,
     Validator,
 
-    /**
+    /*
+    * *
      * Reducers
      */
     AppReducer,
     ClientFormReducer,
+    CarretPositionReducer,
 
     /**
      * Validators
