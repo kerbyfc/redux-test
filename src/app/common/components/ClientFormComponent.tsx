@@ -8,7 +8,6 @@ import * as _ from 'lodash';
 /**
  * Local imports
  */
-import {CLIENT_FORM_FIELDS} from '../reducers/ClientFormReducer';
 import {TextInputKeyDownAction} from '../actions/TextInputKeyDownAction';
 
 export class ClientFormInputKeyDownAction extends TextInputKeyDownAction {}
@@ -29,8 +28,8 @@ export class ClientFormComponent extends React.Component<any, any> {
     render() {
         return (
             <form>
-                <input type="text" ref="name" name={CLIENT_FORM_FIELDS.name} value={this.props.name} onKeyDown={this.handleKeyDown} />
-                <input type="text" name={CLIENT_FORM_FIELDS.surname} value={this.props.surname} onKeyDown={this.handleKeyDown} />
+                {/*<input type="text" ref="name" name={state.map.clientForm.data.name} value={this.props.name} onKeyDown={this.handleKeyDown} />*/}
+                {/*<input type="text" name={CLIENT_FORM_FIELDS.surname} value={this.props.surname} onKeyDown={this.handleKeyDown} />*/}
             </form>
         );
     }

@@ -25,7 +25,7 @@ export interface IReduxReducersMapObject {
 }
 
 @injectable()
-export abstract class Reducer<TState> implements IReducer<TState> {
+export class Reducer<TState> implements IReducer<TState> {
 
     static key: string;
 
@@ -85,7 +85,7 @@ export abstract class Reducer<TState> implements IReducer<TState> {
                 /**
                  * No needs to return unchanged state in reducer
                  */
-                const result = origin.call(this, state || this.getInitialState(), action) || state || this.getInitialState() || {};
+                const result = origin.call(this, state || this.getInitialState(), action) || state || this.getInitialState();
                 console.log('[UPDATE]', this.key, result); // TODO: remove prom prod, use middleware
                 return result;
             };
@@ -93,9 +93,19 @@ export abstract class Reducer<TState> implements IReducer<TState> {
             return this.reduce;
 
         } else {
-            return <IReduxReducer<TState>>combineReducers(children);
+            const childReducer = <IReduxReducer<TState>>combineReducers(children);
+
+            /**
+             * Wrap childReducer properties
+             * TODO: doct & examples
+             */
+            return (state: TState, action: IAction): TState => {
+                return this.reduce(childReducer(state, action), action);
+            };
         }
     }
 
-    abstract reduce(state: TState, action: IAction): TState;
+    reduce(state: TState, action: IAction): TState  {
+        return state;
+    }
 }
