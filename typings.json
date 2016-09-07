@@ -11,6 +11,7 @@
     "react-router": "registry:npm/react-router#2.4.0+20160811060709"
   },
   "globalDependencies": {
+    "flat": "registry:dt/flat#0.0.0+20160317120654",
     "inversify": "registry:dt/inversify#2.0.0-rc.12+20160830145920",
     "node": "registry:dt/node#6.0.0+20160831021119",
     "redux": "registry:dt/redux#3.5.2+20160703092728",
