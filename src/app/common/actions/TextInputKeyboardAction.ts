@@ -45,19 +45,41 @@ export abstract class TextInputKeyboardAction extends Action<ITextInputAction> {
          * Attrs should be merged with passed
          */
         this.payload.attrs = R.merge(this.extractAttrs(), payload.attrs);
+
+        this.actors.push(this.updateInputCarretPosision.bind(this));
+    }
+
+    valueChanged(state) {
+        if (state.caret.inputName === this.payload.attrs.name) {
+            const current: string = state.caret.element.value;
+            const expected: string = this.payload.value.next;
+            const changed: boolean = current === expected;
+
+            console.log(`[INPUT] ${state.caret.inputName} '${current}' > '${expected}' (${changed})`);
+            return changed;
+        }
+        return false;
+    }
+
+    updateInputCarretPosision(state, dispatcher) {
+        if (this.payload.value) {
+            // TODO: user inputs has higher priority
+            // may be its better avoid timeout and compare
+            // not a current state of input, but pass through
+            // the action the path to state value to check if
+            // was changed according expectations?
+            setTimeout(() => {
+                if (this.valueChanged(state)) {
+                    const pos = state.caret.position;
+                    state.caret.element.setSelectionRange(pos, pos);
+                }
+            });
+        }
     }
 
     protected getValue(): string {
         return this.getElement().value;
     }
-
-    // protected getSelection() {
-    //     const element = this.getElement();
-    //     return {
-    //         start: element.selectionStart,
-    //         end: element.selectionEnd
-    //     };
-    // }
 
     protected getElement(): HTMLInputElement {
         return <HTMLInputElement>this.payload.event.currentTarget;
@@ -83,7 +105,6 @@ export abstract class TextInputKeyboardAction extends Action<ITextInputAction> {
 
     protected shouldBeEmitted() {
         return this.payload.value !== null;
-
     }
 
     protected abstract computeValue(): ITextInputValue;
