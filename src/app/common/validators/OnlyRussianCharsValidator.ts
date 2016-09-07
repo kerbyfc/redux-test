@@ -10,7 +10,7 @@ import {
 } from './TextLengthValidator';
 
 export interface IOnlyRussianCharsValidatorResults extends ITextLengthValidatorResult {
-    rus: boolean;
+    onlyRus: boolean;
 }
 
 @injectable()
@@ -24,7 +24,7 @@ export class OnlyRussianCharsValidator extends Validator<ITextLengthValidatorRul
 
     validate(value: string, rules?: ITextLengthValidatorRules) {
         const result = this.textLengthValidator.validate(value, rules);
-        result.rus = value.match(/[а-я]+/) !== null;
+        result.onlyRus = !/[^а-я]+/i.test(value);
         return result;
     }
 }
