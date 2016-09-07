@@ -13,7 +13,7 @@ import {RouterContext} from 'react-router';
 /**
  * Local imports
  */
-import {startApplication} from '../common/bootstrap';
+import {bootstrap} from '../common/bootstrap';
 import {VARS} from '../constants/vars';
 
 const layout = fs.readFileSync(path.join(__dirname, '../index.html')).toString();
@@ -24,7 +24,7 @@ function embedReactApplictionToLayout({view, state}) {
 export function render(renderProps) {
     return new Promise<string>((resolve) => {
 
-        const {store, state} = startApplication();
+        const {store, state} = bootstrap();
 
         let view = renderToString(
             <Provider store={store}>

@@ -11,13 +11,12 @@ import {injector} from '../core/Injector';
 /**
  * Import providers
  */
-import {AppReducer, IState} from './reducers/AppReducer';
+import {AppReducer} from './reducers/AppReducer';
 import {ClientFormReducer} from './reducers/ClientFormReducer';
 import {Dispatcher} from '../core/Dispatcher';
 import {OnlyRussianCharsValidator} from './validators/OnlyRussianCharsValidator';
 import {TextLengthValidator} from './validators/TextLengthValidator';
 import {Validator} from '../core/Validator';
-import {CarretPositionReducer} from './reducers/CarretPositionReducer';
 
 injector.bindSingleton<Dispatcher>(Dispatcher);
 
@@ -27,13 +26,11 @@ injector.registerProviders([
      */
     Validator,
 
-    /*
-    * *
+    /**
      * Reducers
      */
     AppReducer,
     ClientFormReducer,
-    CarretPositionReducer,
 
     /**
      * Validators
@@ -44,7 +41,7 @@ injector.registerProviders([
 
 export const reducers = injector.get(AppReducer).release();
 
-export function startApplication(state?) {
+export function bootstrap(state?) {
     const dispatcher: Dispatcher = injector.get(Dispatcher);
     const store = createStore(reducers, state);
     dispatcher.attachStore(store);

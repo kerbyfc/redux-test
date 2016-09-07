@@ -3,33 +3,38 @@
  */
 import * as React from 'react';
 import {connect} from 'react-redux';
-import * as _ from 'lodash';
 
 /**
  * Local imports
  */
-import {TextInputKeyDownAction} from '../actions/TextInputKeyDownAction';
-
-export class ClientFormInputKeyDownAction extends TextInputKeyDownAction {}
+import {Component} from '../../core/Component';
+import {InputChangeAction} from '../actions/InputChangeAction';
 
 @connect((state) => {
     return {
-        name: state.clientForm.data.name,
-        surname: state.clientForm.data.surname,
-        cursors: _.clone(state.clientForm.inputCarretPositions)
+        data: state.clientForm.data,
+        refs: state.refs.clientForm.data
     };
 })
-export class ClientFormComponent extends React.Component<any, any> {
+export class ClientFormComponent extends Component<any, any> {
 
-    handleKeyDown = (event) => {
-        new ClientFormInputKeyDownAction({event}).emit();
+    handleChange = (event) => {
+        new InputChangeAction(event).emit();
     };
 
     render() {
+        // TODO: add input components
         return (
             <form>
-                {/*<input type="text" ref="name" name={state.map.clientForm.data.name} value={this.props.name} onKeyDown={this.handleKeyDown} />*/}
-                {/*<input type="text" name={CLIENT_FORM_FIELDS.surname} value={this.props.surname} onKeyDown={this.handleKeyDown} />*/}
+                <input type="text"
+                    name={this.props.refs.name}
+                    onChange={this.handleChange}
+                />
+
+                <input type="text"
+                    name={this.props.refs.surname}
+                    onChange={this.handleChange}
+                />
             </form>
         );
     }

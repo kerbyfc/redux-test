@@ -12,10 +12,10 @@ import {Router} from 'react-router';
  */
 import {ROUTES} from '../common/routes';
 import {VARS} from '../constants/vars';
-import {startApplication} from '../common/bootstrap';
+import {bootstrap} from '../common/bootstrap';
 
 const state = JSON.parse(window['__INITIAL_STATE__']);
-const {store} = startApplication(state);
+const {store} = bootstrap(state);
 
 render(
     <Provider store={store}>

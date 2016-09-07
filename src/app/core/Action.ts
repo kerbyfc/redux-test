@@ -12,6 +12,10 @@ export interface IAction {
 @injectable()
 export class Action<TActionPayload> implements IAction {
 
+    static getPayload<TActionPayload>(action): TActionPayload {
+        return action.__payload;
+    }
+
     static resolveType(): string {
         return this.name || this.toString().match(/function ([^\(]+)/)[1];
     }
@@ -51,12 +55,13 @@ export class Action<TActionPayload> implements IAction {
          * as it gives an ability to use prototype chain
          *
          * @example in reducer
-         *   if (action.is instanceof KeyboardAction) { ...
+         *   if (action.is instanceof KeyboardAction) {
+         *      const payload = KeyboardAction.getPayload<KeyboardActionPayload>();
          */
         const data = {
             is: this,
-            payload: this.payload,
-            type: this.type
+            type: this.type,
+            __payload: this.payload
         };
 
         if (actor) {
@@ -75,7 +80,7 @@ export class Action<TActionPayload> implements IAction {
 
         if (this.shouldBeEmitted()) {
             // TODO: use middleware
-            console.log(`[ACTION] ${data.type}`, data.payload);
+            console.log(`[ACTION] ${data.type}`, data.__payload);
             this.dispatcher.dispatch(data);
 
             this.emitted = true;

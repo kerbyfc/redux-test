@@ -9,9 +9,7 @@ import * as R from 'ramda';
 import {inject, injectable} from '../../core/Injector';
 import {OnlyRussianCharsValidator} from '../validators/OnlyRussianCharsValidator';
 import {Reducer} from '../../core/Reducer';
-import {zipObjProps} from '../../core/helpers';
-import {ClientFormInputKeyDownAction} from '../components/ClientFormComponent';
-import {ITextInputAction} from '../actions/TextInputKeyboardAction';
+import {InputChangeAction, IInputChangeActionPayload} from '../actions/InputChangeAction';
 
 /*
 TODO:
@@ -70,30 +68,29 @@ export class ClientFormReducer extends Reducer<IClientFormState> {
     }
 
     reduce(state, action) {
-        console.log('FORM', state);
-        if (action.is instanceof ClientFormInputKeyDownAction) {
-            return this.reduceInputValue(state, action.payload) || state;
+        if (action.is instanceof InputChangeAction) {
+            const payload = InputChangeAction.getPayload<IInputChangeActionPayload>(action);
+            if (this.validateValue(payload.value, payload.name)) {
+                return this.reduceInputValue(state, payload.value, payload.name);
+            }
         }
         return state;
     }
 
-    protected validateValue(value) {
+    protected validateValue(value: string, name: string) {
         return this.onlyRussianCharsValidator.check(value, {
             minLength: 0,
             maxLength: 127
         });
     }
 
-    protected reduceInputValue(state, payload: ITextInputAction) {
-        if (this.validateValue(payload.value.next)) {
+    protected reduceInputValue(state, value: string, name: string) {
+        if (this.validateValue(value, name)) {
             return R.merge(state, {
                 data: R.merge(state.data, {
-                    [payload.attrs.name]: payload.value.next
-                }),
-
-                // TODO: move to top of app state
-                inputCarretPositions: R.merge(state.inputCarretPositions, {
-                    [payload.attrs.name]: payload.value.cursor
+                    // TODO: add method to get values by absolute ref relative to
+                    // current reducer key (pass key to release)
+                    [name.split('.').slice(-1)[0]]: value
                 })
             });
         }
