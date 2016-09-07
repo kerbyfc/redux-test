@@ -73,6 +73,11 @@ export abstract class Reducer<TState> implements IReducer<TState> {
             }
             const origin = this.reduce;
 
+            // TODO:
+            // Set the mutability/immutability functions
+            // setToImmutableStateFunc((mutableState) => Immutable.fromJS(mutableState));
+            // setToMutableStateFunc((immutableState) => immutableState.toJS());
+
             /**
              * No needs to call getInitialState in reducer
              */
