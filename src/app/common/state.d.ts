@@ -13,6 +13,8 @@ interface IClientFormState {
     data: {
         name: $<string>;
         surname: $<string>;
+        middlename: $<string>;
+        birthday: $<string>;
     };
     disabled: boolean;
 }

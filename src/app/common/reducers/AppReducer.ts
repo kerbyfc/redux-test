@@ -28,6 +28,12 @@ export class AppReducer extends Reducer<IState> {
         );
     }
 
+    // combine(): IState {
+    //     return {
+    //         clientForm: this.clientFormReducer.release(['app'])
+    //     };
+    // }
+
     reduce(state: IState, action): IState {
         return state;
     }

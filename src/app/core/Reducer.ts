@@ -22,6 +22,7 @@ interface IReducerReleaseData<TState> {
 export interface IReducer<TState> {
     getInitialState?(): TState;
     reduce(state: TState, action: IAction<any>): TState;
+    release(path: string[]);
 }
 
 interface IReducersMapObject {

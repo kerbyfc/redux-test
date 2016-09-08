@@ -26,13 +26,14 @@ export class InputChangeAction extends Action<IInputChangeActionPayload> {
 
     emit({event, selection, ref}) {
         const input: HTMLInputElement = <HTMLInputElement>event.target;
+        const [start, end] = selection;
 
         const payload = {
-            event,
+            value: input.value,
             selection,
+            event,
             input,
-            ref,
-            value: input.value
+            ref
         };
 
         // TODO: use injector
@@ -40,12 +41,14 @@ export class InputChangeAction extends Action<IInputChangeActionPayload> {
             /**
              * Get state value by Ref.path
              */
-            const value = _.get<string>(state, this.payload.ref.path);
+            const stateValue = _.get<string>(state, this.payload.ref.path);
 
-            if (value !== this.payload.value) {
-                const [start, end] = this.payload.selection;
-
-                this.payload.input.value = value;
+            /**
+             * Check if stateValue was applyed by reducer
+             * and revert input value if not
+             */
+            if (stateValue !== this.payload.value) {
+                this.payload.input.value = stateValue;
                 this.payload.input.setSelectionRange(start, end);
             }
         });

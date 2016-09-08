@@ -10,13 +10,12 @@ import {injectable} from './Injector';
 
 export interface IValidator<TValidationRules, TValidationResult> {
     validate(value: any, rules?: TValidationRules): TValidationResult;
-    check(value: any, rules?: TValidationRules): boolean;
 }
 
 @injectable()
 export abstract class Validator<TValidationRules, TValidationResult> implements IValidator<TValidationRules, TValidationResult> {
 
-    check(value, rules?) {
+    protected check(value, rules?) {
         return _.every(<any>this.validate(value, rules), result => !!result);
     }
 

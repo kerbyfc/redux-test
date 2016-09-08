@@ -18,6 +18,7 @@ import {OnlyRussianCharsValidator} from './validators/OnlyRussianCharsValidator'
 import {TextLengthValidator} from './validators/TextLengthValidator';
 import {Validator} from '../core/Validator';
 import {InputChangeAction} from './actions/InputChangeAction';
+import {DateValidator} from './validators/DateValidator';
 
 /**
  * Singletons
@@ -49,7 +50,8 @@ injector.registerProviders([
      * Validators
      */
     TextLengthValidator,
-    OnlyRussianCharsValidator
+    OnlyRussianCharsValidator,
+    DateValidator
 ]);
 
 // TODO: refactor, there should not be imports from coommon bootstrap in code

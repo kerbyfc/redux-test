@@ -13,6 +13,7 @@
   "globalDependencies": {
     "flat": "registry:dt/flat#0.0.0+20160317120654",
     "inversify": "registry:dt/inversify#2.0.0-rc.12+20160830145920",
+    "moment": "registry:dt/moment#2.11.1+20160829143156",
     "node": "registry:dt/node#6.0.0+20160831021119",
     "redux": "registry:dt/redux#3.5.2+20160703092728",
     "reflect-metadata": "registry:dt/reflect-metadata#0.0.0+20160630155503"
