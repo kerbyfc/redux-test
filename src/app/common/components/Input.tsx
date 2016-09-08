@@ -11,7 +11,14 @@ import {InputChangeAction} from '../actions/InputChangeAction';
 import {Ref} from '../../core/Ref';
 
 interface IProps {
-    state: IRef<string>;
+    /**
+     * Required
+     */
+    $: IRef<string>;
+
+    /**
+     * Optional
+     */
     value?: string;
     error?: string;
 }
@@ -24,7 +31,7 @@ export class Input extends Component<IProps, IState> {
 
     handleChange = (event) => {
         this.createAction<InputChangeAction>(InputChangeAction).emit({
-            event, selection: this.state.selection, ref: this.props.state
+            event, selection: this.state.selection, ref: this.props.$
         });
     };
 
@@ -37,7 +44,7 @@ export class Input extends Component<IProps, IState> {
     render() {
         return (
             <input type="text"
-                defaultValue={this.props.value}
+                defaultValue={this.props.$.val}
                 onChange={this.handleChange}
                 onSelect={this.handleSelect}
             />

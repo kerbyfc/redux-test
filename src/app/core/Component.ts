@@ -11,8 +11,13 @@ import {refs} from '../common/bootstrap';
 
 export class Component<TProps, TState> extends React.Component<TProps, TState> {
 
-    getRefs(): IState {
+    // global state
+    get $(): IState {
         return refs;
+    }
+
+    ref<T>(input: $<T>): IRef<T> {
+        return <IRef<T>>input;
     }
 
     createAction<ActionType>(actionClass): ActionType {

@@ -1,5 +1,3 @@
-import * as _ from 'lodash';
-
 export class Ref<TType> implements IRef<TType> {
 
     protected _key: string;

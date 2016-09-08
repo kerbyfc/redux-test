@@ -4,12 +4,17 @@ interface IRef<TType> {
     path: string;
 }
 
+/**
+ * use '$' like in components for convinience
+ */
+type $<TType> = TType | IRef<TType>;
+
 interface IClientFormState {
-    disabled: IRef<boolean> | boolean;
     data: {
-        name: IRef<string> | string;
-        surname: IRef<string> | string;
+        name: $<string>;
+        surname: $<string>;
     };
+    disabled: boolean;
 }
 
 interface IState {
