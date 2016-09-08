@@ -4,15 +4,19 @@
 import {injectable, inject, injector} from './Injector';
 import {Dispatcher} from './Dispatcher';
 
-export interface IAction {
+export interface IAction<TPayload> {
     type: string;
-    emit(): void;
+    emit(payload: TPayload): boolean;
 }
 
 @injectable()
-export class Action<TActionPayload> implements IAction {
+export class Action<TPayload> implements IAction<TPayload> {
 
-    static getPayload<TActionPayload>(action): TActionPayload {
+    /**
+     * Static
+     */
+
+    static getPayload<TPayload>(action): TPayload {
         return action.__payload;
     }
 
@@ -24,29 +28,36 @@ export class Action<TActionPayload> implements IAction {
         return this.resolveType();
     }
 
+    /**
+     * Properties
+     */
+
+    protected actors: any[] = [];
+    protected emitted = false;
+    protected payload: TPayload = null;
     protected dispatcher: Dispatcher;
 
-    constructor(
-        protected payload: TActionPayload
-    ) {
+    constructor() {
         this.dispatcher = injector.get(Dispatcher);
-        this.type = Action.resolveType.call(this.constructor);
     }
 
-    public type: string;
+    /**
+     * Interface
+     */
 
-    protected shouldBeEmitted(): boolean {
+    get type() {
+        return Action.resolveType.call(this.constructor);
+    }
+
+    shouldBeEmitted(): boolean {
         return true;
     }
 
-    protected emitted = false;
+    emit(payload: TPayload): boolean {
+        this.payload = payload;
 
-    // TODO: docs
-    protected actors: any[] = [];
-
-    emit(actor?): boolean {
+        // TODO: check environment
         if (this.emitted) {
-            // TODO: check environment
             throw new Error(`Action can be emitted only once (${this.type})`);
         }
 
@@ -61,12 +72,8 @@ export class Action<TActionPayload> implements IAction {
         const data = {
             is: this,
             type: this.type,
-            __payload: this.payload
+            __payload: this.payload,
         };
-
-        if (actor) {
-            this.actors.push(actor);
-        }
 
         /**
          * Each actor should be envoked once after reducing

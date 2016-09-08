@@ -12,18 +12,26 @@ import {Input} from './Input';
 
 @connect((state) => {
     return {
-        data: state.clientForm.data,
-        refs: state.refs.clientForm.data
+        data: state.clientForm.data
     };
 })
 export class ClientFormComponent extends Component<any, any> {
 
     render() {
-        // TODO: add input components
+        const refs = this.getRefs().clientForm;
+
         return (
             <form>
-                <Input name={this.props.refs.name} value={this.props.data.name} />
-                <Input name={this.props.refs.surname} value={this.props.data.surname} />
+                <Input
+                    state={refs.data.name}
+                    value={this.props.data.name}
+                />
+
+
+                <Input
+                    state={refs.data.surname}
+                    value={this.props.data.surname}
+                />
             </form>
         );
     }

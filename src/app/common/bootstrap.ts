@@ -17,7 +17,12 @@ import {Dispatcher} from '../core/Dispatcher';
 import {OnlyRussianCharsValidator} from './validators/OnlyRussianCharsValidator';
 import {TextLengthValidator} from './validators/TextLengthValidator';
 import {Validator} from '../core/Validator';
+import {InputChangeAction} from './actions/InputChangeAction';
 
+/**
+ * Singletons
+ */
+injector.bindSingleton<AppReducer>(AppReducer);
 injector.bindSingleton<Dispatcher>(Dispatcher);
 
 injector.registerProviders([
@@ -29,8 +34,16 @@ injector.registerProviders([
     /**
      * Reducers
      */
-    AppReducer,
     ClientFormReducer,
+
+    /**
+     * Actions
+     */
+    InputChangeAction,
+
+    /**
+     * Actors // TODO
+     */
 
     /**
      * Validators
@@ -39,11 +52,15 @@ injector.registerProviders([
     OnlyRussianCharsValidator
 ]);
 
-export const reducers = injector.get(AppReducer).release();
+// TODO: refactor, there should not be imports from coommon bootstrap in code
+// search '../common/bootstrap'
+const {reduceFunction, refs: references} = injector.get(AppReducer).release();
+export const reducers = reduceFunction;
+export const refs = references;
 
 export function bootstrap(state?) {
     const dispatcher: Dispatcher = injector.get(Dispatcher);
-    const store = createStore(reducers, state);
+    const store = createStore(reduceFunction, state);
     dispatcher.attachStore(store);
     return {store, state: store.getState()};
 }

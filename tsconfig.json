@@ -4,6 +4,7 @@
         "noImplicitAny": false,
         "noLib": false,
         "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
         "jsx": "react"
     },
     "exclude": [

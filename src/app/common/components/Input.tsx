@@ -8,10 +8,12 @@ import * as React from 'react';
  */
 import {Component} from '../../core/Component';
 import {InputChangeAction} from '../actions/InputChangeAction';
+import {Ref} from '../../core/Ref';
 
 interface IProps {
-    name: string;
+    state: IRef<string>;
     value?: string;
+    error?: string;
 }
 
 interface IState {
@@ -21,7 +23,9 @@ interface IState {
 export class Input extends Component<IProps, IState> {
 
     handleChange = (event) => {
-        new InputChangeAction(event, this.state.selection).emit();
+        this.createAction<InputChangeAction>(InputChangeAction).emit({
+            event, selection: this.state.selection, ref: this.props.state
+        });
     };
 
     handleSelect = (event) => {
@@ -33,7 +37,7 @@ export class Input extends Component<IProps, IState> {
     render() {
         return (
             <input type="text"
-                name={this.props.name}
+                defaultValue={this.props.value}
                 onChange={this.handleChange}
                 onSelect={this.handleSelect}
             />

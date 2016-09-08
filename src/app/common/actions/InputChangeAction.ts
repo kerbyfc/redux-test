@@ -7,33 +7,40 @@ import * as _ from 'lodash';
  * Local imports
  */
 import {Action} from '../../core/Action';
+import {injectable} from '../../core/Injector';
 
 export interface IInputChangeActionPayload {
     event: Event;
+    ref: IRef<string>;
     selection: number[];
 
     /**
-     * Should be computed by action
+     * must be added by action
      */
-    name?: string;
     value?: string;
     input?: HTMLInputElement;
 }
 
+@injectable()
 export class InputChangeAction extends Action<IInputChangeActionPayload> {
-    constructor(event: Event, selection: number[]) {
-        super({event, selection});
 
+    emit({event, selection, ref}) {
         const input: HTMLInputElement = <HTMLInputElement>event.target;
 
-        _.assign(this.payload, {
-            input: input,
-            value: input.value,
-            name: input.getAttribute('name')
-        });
+        const payload = {
+            event,
+            selection,
+            input,
+            ref,
+            value: input.value
+        };
 
+        // TODO: use injector
         this.actors.push((state) => {
-            const value = _.get<string>(state, this.payload.name);
+            /**
+             * Get state value by Ref.path
+             */
+            const value = _.get<string>(state, this.payload.ref.path);
 
             if (value !== this.payload.value) {
                 const [start, end] = this.payload.selection;
@@ -42,5 +49,7 @@ export class InputChangeAction extends Action<IInputChangeActionPayload> {
                 this.payload.input.setSelectionRange(start, end);
             }
         });
+
+        return super.emit(payload);
     }
 }
