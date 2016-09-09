@@ -12,6 +12,9 @@ import {Reducer} from '../../core/Reducer';
 import {InputChangeAction, IInputChangeActionPayload} from '../actions/InputChangeAction';
 import {Ref} from '../../core/Ref';
 import {DateValidator} from '../validators/DateValidator';
+import {IClientFormState} from '../state';
+import {PatternValidator} from '../validators/PatternValidator';
+import {PassportValidator} from '../validators/PassportValidator';
 
 @injectable()
 export class ClientFormReducer extends Reducer<IClientFormState> {
@@ -19,8 +22,9 @@ export class ClientFormReducer extends Reducer<IClientFormState> {
     static key = 'clientForm';
 
     constructor(
-        @inject(OnlyRussianCharsValidator) protected onlyRussianCharsValidator,
-        @inject(DateValidator) protected dateValidator
+        @inject(OnlyRussianCharsValidator) protected onlyRussianCharsValidator: OnlyRussianCharsValidator,
+        @inject(PassportValidator) protected passwordValidator: PassportValidator,
+        @inject(DateValidator) protected dateValidator: DateValidator
     ) {
         super();
     }
@@ -32,7 +36,8 @@ export class ClientFormReducer extends Reducer<IClientFormState> {
                 name: new Ref<string>(''),
                 surname: new Ref<string>(''),
                 middlename: new Ref<string>(''),
-                birthday: new Ref<string>('MM.DD.YYYY')
+                birthday: new Ref<string>('MM.DD.YYYY'),
+                passport: new Ref<string>('____ ______')
             }
         };
     }
@@ -41,13 +46,13 @@ export class ClientFormReducer extends Reducer<IClientFormState> {
         if (action.is instanceof InputChangeAction) {
             const payload = InputChangeAction.getPayload<IInputChangeActionPayload>(action);
             if (this.hasRef(payload.ref)) {
-                return this.reduceInputValue(state, payload.value, payload);
+                return this.reduceInputValue(state, payload);
             }
         }
         return state;
     }
 
-    protected validateValue(value: string, payload) {
+    protected validateFormValue(payload) {
         switch (payload.ref) {
             case this.refs.data.name:
             case this.refs.data.surname:
@@ -55,6 +60,11 @@ export class ClientFormReducer extends Reducer<IClientFormState> {
                 return this.onlyRussianCharsValidator.check(payload.value, {
                     minLength: 0,
                     maxLength: 127
+                });
+            }
+            case this.refs.data.passport: {
+                return this.passwordValidator.check(payload.value, {
+                    length: payload.selection[1]
                 });
             }
             case this.refs.data.birthday: {
@@ -68,11 +78,11 @@ export class ClientFormReducer extends Reducer<IClientFormState> {
         }
     }
 
-    protected reduceInputValue(state, value: string, payload) {
-        if (this.validateValue(value, payload)) {
+    protected reduceInputValue(state, payload) {
+        if (this.validateFormValue(payload)) {
             return R.merge(state, {
                 data: R.merge(state.data, {
-                    [payload.ref.key]: value
+                    [payload.ref.key]: payload.value
                 })
             });
         }

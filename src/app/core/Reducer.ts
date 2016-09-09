@@ -12,6 +12,7 @@ import {IReducer as IReduxReducer} from '~react-redux~redux';
 import {IAction} from './Action';
 import {injectable} from './Injector';
 import {Ref} from './Ref';
+import {IRef} from '../common/state';
 
 
 interface IReducerReleaseData<TState> {
@@ -22,8 +23,10 @@ interface IReducerReleaseData<TState> {
 export interface IReducer<TState> {
     getInitialState?(): TState;
     reduce(state: TState, action: IAction<any>): TState;
-    release(path: string[]);
+    release(path: string);
 }
+
+export type TReducer<TState> = TState | IReducer<TState>;
 
 interface IReducersMapObject {
     [key: string]: IReducer<any>;
@@ -36,43 +39,19 @@ interface IReduxReducersMapObject {
 @injectable()
 export class Reducer<TState> implements IReducer<TState> {
 
-    static key: string;
-
-    get key() {
-        return this.constructor['key'];
-    }
-
-    constructor(...reducers: IReducer<any>[]) {
-        if (!this.constructor['key']) {
-            /**
-             * Key should be specified, as it should be class name independed
-             */
-            throw new Error(`Reducer ${this.constructor.name} hasn't key`);
-        }
-        this.combineInjectedReducers(reducers);
-    }
-
-    protected _path: string[];
-
-    get path(): string {
-        return this._path.slice(1).join('.');
-    }
-
-    protected children: IReducersMapObject = {};
+    protected path: string = '';
     protected state: any;
     protected refs: TState;
 
-    protected combineInjectedReducers(reducers): void {
-        _.each(reducers, (reducer) => {
-            this.children[reducer.key] = reducer;
-        });
+    protected concatPath(current: string, next: string) {
+        return current ? current + '.' + next : next;
     }
 
-    protected getChildrenReducers(path: string[]): [IReduxReducersMapObject, TState] {
+    protected getChildrenReducers(): [IReduxReducersMapObject, TState] {
         const _refs = {};
-        const _reducers = _.mapValues(
-            this.children, (reducer: Reducer<any>, key: string) => {
-                const {reduceFunction, refs} = reducer.release(path);
+        const _reducers = <IReduxReducersMapObject>_.mapValues<TReducer<any>, IReduxReducer<any>>(
+            this.combine(), (reducer: IReducer<any>, key: string) => {
+                const {reduceFunction, refs} = <IReducerReleaseData<any>>reducer.release(this.concatPath(this.path, key));
                 _refs[key] = refs;
                 return reduceFunction;
             }
@@ -84,13 +63,14 @@ export class Reducer<TState> implements IReducer<TState> {
         return null;
     }
 
-    replaceRefs(refs: {}, target: {}, path: string[]): {} {
+    replaceRefs(refs: {}, target: {}, path: string = this.path): {} {
         return _.mapValues(target, (value, key) => {
+            const refPath = this.concatPath(path, key);
 
             if (value instanceof Ref) {
                 // TODO: refactor Reducers struct to remove slice
                 // TODO: now refs inside refs are not supported
-                refs[key] = value.setPath(path.slice(1).join('.') + '.' + key);
+                refs[key] = value.setPath(refPath);
                 return value.val;
             }
 
@@ -100,7 +80,7 @@ export class Reducer<TState> implements IReducer<TState> {
             if (_.isObject(value)) {
                 const nestedRefs = {};
                 refs[key] = nestedRefs;
-                return this.replaceRefs(nestedRefs, value, path.concat(key));
+                return this.replaceRefs(nestedRefs, value, refPath);
             }
 
             return value;
@@ -119,13 +99,13 @@ export class Reducer<TState> implements IReducer<TState> {
         }
     }
 
-    release(path: string[] = []): IReducerReleaseData<TState> {
-        path.push(this.key);
+    release(path: string = this.path): IReducerReleaseData<TState> {
+        this.path = path;
+        console.log('>>>>>>>>', this, 'path = ', this.path);
 
-        const [children, refs] = this.getChildrenReducers(path);
+        const [children, refs] = this.getChildrenReducers();
 
         this.refs = refs;
-        this._path = path;
 
         if (_.isEmpty(children)) {
             if (!_.hasIn(this, 'getInitialState')) {
@@ -141,7 +121,7 @@ export class Reducer<TState> implements IReducer<TState> {
 
             this.getInitialState = (): TState => {
                 const initialState = origin.getInitialState();
-                return <TState>this.replaceRefs(refs, initialState, path);
+                return <TState>this.replaceRefs(refs, initialState);
             };
 
             // TODO:
@@ -159,7 +139,7 @@ export class Reducer<TState> implements IReducer<TState> {
                 let result = origin.reduce.call(this, state || this.getInitialState(), action) || state || this.getInitialState();
 
                 // TODO: remove prom prod, use middleware
-                console.log('[UPDATE]', this.key, result);
+                console.log('[UPDATE]', this.path, result);
                 return result;
             };
 
@@ -169,7 +149,7 @@ export class Reducer<TState> implements IReducer<TState> {
             };
 
         } else {
-            const childReducer = <IReduxReducer<TState>>combineReducers(children);
+            const childReducer = <IReduxReducer<TState>>combineReducers<TState>(children);
 
             /**
              * Wrap childReducer properties
@@ -182,6 +162,10 @@ export class Reducer<TState> implements IReducer<TState> {
                 }
             };
         }
+    }
+
+    combine(): TState {
+        return null;
     }
 
     reduce(state: TState, action: IAction<any>): TState  {

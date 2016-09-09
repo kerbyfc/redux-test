@@ -3,14 +3,13 @@
  */
 import * as React from 'react';
 import {connect} from 'react-redux';
+import {IAppState} from '../state';
 
 /**
  * Local imports
  */
-import {IState} from '../reducers/AppReducer';
-
 interface AppProps {
-    app: IState;
+    app: IAppState;
 }
 
 @connect((state) => state)
@@ -20,7 +19,6 @@ export class AppComponent extends React.Component<AppProps, any> {
         return (
             <div id="app">
                 <h1>Virtu test app</h1>
-                <pre>{JSON.stringify(this.props.app, null, 4)}</pre>
                 <hr />
                 {this.props.children}
             </div>

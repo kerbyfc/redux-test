@@ -1,3 +1,5 @@
+import {IRef} from '../common/state';
+
 export class Ref<TType> implements IRef<TType> {
 
     protected _key: string;

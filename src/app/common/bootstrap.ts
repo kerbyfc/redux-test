@@ -19,6 +19,8 @@ import {TextLengthValidator} from './validators/TextLengthValidator';
 import {Validator} from '../core/Validator';
 import {InputChangeAction} from './actions/InputChangeAction';
 import {DateValidator} from './validators/DateValidator';
+import {PatternValidator} from './validators/PatternValidator';
+import {PassportValidator} from './validators/PassportValidator';
 
 /**
  * Singletons
@@ -51,6 +53,8 @@ injector.registerProviders([
      */
     TextLengthValidator,
     OnlyRussianCharsValidator,
+    PatternValidator,
+    PassportValidator,
     DateValidator
 ]);
 

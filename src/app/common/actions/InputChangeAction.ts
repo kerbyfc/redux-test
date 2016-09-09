@@ -8,6 +8,7 @@ import * as _ from 'lodash';
  */
 import {Action} from '../../core/Action';
 import {injectable} from '../../core/Injector';
+import {IRef} from '../state';
 
 export interface IInputChangeActionPayload {
     event: Event;

@@ -10,12 +10,13 @@ import {connect} from 'react-redux';
 import {Component} from '../../core/Component';
 import {Input} from './Input';
 import {FormRow} from '../templates/FormRow';
+import {IClientFormState} from '../state';
 
 @connect()
 export class ClientFormComponent extends Component<any, any> {
 
     render() {
-        const refs = this.$.clientForm;
+        const refs = this.$.clientForm as IClientFormState;
 
         return (
             <form>
@@ -32,7 +33,11 @@ export class ClientFormComponent extends Component<any, any> {
                 </FormRow>
 
                 <FormRow title="День рождения">
-                    <Input key="birthday" $={refs.data.birthday} ignore="." mask="true" />
+                    <Input key="birthday" $={refs.data.birthday} mask="." />
+                </FormRow>
+
+                <FormRow title="Серия и номер паспорта">
+                    <Input key="passport" $={refs.data.passport} mask=" " />
                 </FormRow>
             </form>
         );

@@ -9,14 +9,14 @@ import Store = Redux.Store;
  * Local imports
  */
 import {injectable} from './Injector';
-import {IState} from '../common/reducers/AppReducer';
+import {IAppState} from '../common/state';
 
 // TODO: -> Dispatcher<IState> & .store<IState>
 @injectable()
 export class Dispatcher {
 
     protected acting: boolean = false;
-    protected lastState: IState;
+    protected lastState: IAppState;
 
     // TODO: typings
     protected actors: any[] = [];

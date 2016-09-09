@@ -5,8 +5,8 @@ import {injectable, inject} from '../../core/Injector';
 import {Validator} from '../../core/Validator';
 
 export interface ITextLengthValidatorRules {
-    minLength?: boolean;
-    maxLength?: boolean;
+    minLength?: number;
+    maxLength?: number;
 }
 
 export interface ITextLengthValidatorResult {

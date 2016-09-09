@@ -8,11 +8,12 @@ import * as React from 'react';
  */
 import {injector} from './Injector';
 import {refs} from '../common/bootstrap';
+import {IRef, $, IAppState} from '../common/state';
 
 export class Component<TProps, TState> extends React.Component<TProps, TState> {
 
     // global state
-    get $(): IState {
+    get $(): IAppState {
         return refs;
     }
 

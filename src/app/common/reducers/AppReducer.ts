@@ -9,32 +9,23 @@ import * as _ from 'lodash';
 import {ClientFormReducer} from './ClientFormReducer';
 import {inject} from '../../core/Injector';
 import {Reducer, IReducer} from '../../core/Reducer';
+import {IAppState, IClientFormState} from '../state';
 
-// TODO: think about reducer key invalidation
-export interface IState {
-    clientForm: IClientFormState;
-    refs?: IState;
-}
-
-export class AppReducer extends Reducer<IState> {
-
-    static key = 'app';
+export class AppReducer extends Reducer<IAppState> {
 
     constructor(
         @inject(ClientFormReducer) protected clientFormReducer: IReducer<IClientFormState>
     ) {
-        super(
-            clientFormReducer
-        );
+        super();
     }
 
-    // combine(): IState {
-    //     return {
-    //         clientForm: this.clientFormReducer.release(['app'])
-    //     };
-    // }
+    combine(): IAppState {
+        return {
+            clientForm: this.clientFormReducer
+        };
+    }
 
-    reduce(state: IState, action): IState {
+    reduce(state: IAppState, action): IAppState {
         return state;
     }
 }

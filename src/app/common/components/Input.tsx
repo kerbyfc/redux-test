@@ -8,7 +8,7 @@ import * as React from 'react';
  */
 import {Component} from '../../core/Component';
 import {InputChangeAction} from '../actions/InputChangeAction';
-import {Ref} from '../../core/Ref';
+import {IRef} from '../state';
 
 interface IProps {
     /**
@@ -21,8 +21,7 @@ interface IProps {
      */
     value?: string;
     error?: string;
-    mask?: boolean;
-    ignore?: string;
+    mask?: string | boolean;
     delimiter?: string;
 }
 
@@ -32,15 +31,11 @@ interface IState {
 
 export class Input extends Component<IProps, IState> {
 
-    handleChange = (event) => {
-        this.createAction<InputChangeAction>(InputChangeAction).emit({
-            event,
-            ref: this.props.$,
-            selection: this.state.selection,
-        });
-    };
+    isMasked() {
+        return this.props.mask !== undefined;
+    }
 
-    select = (el: HTMLInputElement, start: number, end: number, direction: number = 1) => {
+    select(el: HTMLInputElement, start: number, end: number, direction: number = 1) {
         start = Math.max(0, start);
 
         if (el.value.length + 1 <= end) {
@@ -49,7 +44,7 @@ export class Input extends Component<IProps, IState> {
             end = start + 1;
         }
 
-        if (el.value.slice(start, end) === this.props.ignore) {
+        if (el.value.slice(start, end) === this.props.mask) {
             (start += direction) && (end += direction);
         }
 
@@ -60,8 +55,16 @@ export class Input extends Component<IProps, IState> {
         });
     };
 
+    handleChange = (event) => {
+        this.createAction<InputChangeAction>(InputChangeAction).emit({
+            event,
+            ref: this.props.$,
+            selection: this.state.selection,
+        });
+    };
+
     updateMouseSelection = (event) => {
-        if (this.props.mask) {
+        if (this.isMasked()) {
             const el = event.target;
             this.select(el, el.selectionStart, el.selectionStart + 1);
         }
@@ -81,19 +84,19 @@ export class Input extends Component<IProps, IState> {
             case 40: start = el.value.length - 1; break; // down -> end
         }
 
-        if (this.props.mask) {
+        if (this.isMasked()) {
             this.select(el, start, start + 1, direction);
         }
     };
 
-    /*
-        MM.DD.YYYY
-
-
-     */
     checkMask = (event) => {
-
-    }
+        if (this.isMasked()) {
+            const el = event.target;
+            if (el.selectionEnd - el.selectionStart !== 1) {
+                event.preventDefault();
+            }
+        }
+    };
 
     handleSelect = (event) => {
         const el = event.target;
