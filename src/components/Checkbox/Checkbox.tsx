@@ -8,7 +8,6 @@ import * as React from 'react';
  */
 import {ToggleCheckbox} from '../../actions/ToggleCheckbox';
 import {Component} from '../../core/Component';
-import {IRef} from '../../core/Ref';
 
 /* tslint:disable:no-var-requires */
 const styles = require('./Checkbox.style.scss');

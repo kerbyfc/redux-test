@@ -10,15 +10,6 @@ import {injectable, inject} from './Injector';
 import {Dispatcher} from './Dispatcher';
 
 /**
- * Interfaces
- */
-export interface IRef<TType> {
-    key: string;
-    val: TType;
-    path: string;
-}
-
-/**
  * Reference to state value
  */
 @injectable()

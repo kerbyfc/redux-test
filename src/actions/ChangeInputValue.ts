@@ -8,8 +8,10 @@ import * as _ from 'lodash';
  */
 import {injectable} from '../core/Injector';
 import {Action} from '../core/Action';
-import {IRef} from '../core/Ref';
 
+/**
+ * Interfaces
+ */
 export interface IChangeInputValuePayload {
     event: Event;
     ref: IRef<string>;
@@ -22,6 +24,10 @@ export interface IChangeInputValuePayload {
     input?: HTMLInputElement;
 }
 
+/**
+ * Try to change state value by Ref and rollback if
+ * if wasn't applyed by reducer
+ */
 @injectable()
 export class ChangeInputValue extends Action<IChangeInputValuePayload> {
 

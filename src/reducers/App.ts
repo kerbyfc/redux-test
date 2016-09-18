@@ -5,17 +5,16 @@ import {Reducer, IReducer} from '../core/Reducer';
 import {inject} from '../core/Injector';
 import {ClientFormReducer} from './ClientForm';
 import ReducersMapObject = Redux.ReducersMapObject;
-import {IClientForm, IState} from '../state';
 import {NotificationsReducer} from './NotificationsReducer';
 import {INotification} from '../interfaces/INotification';
 
 /**
  * Root application reducer
  */
-export class AppReducer extends Reducer<IState> {
+export class AppReducer extends Reducer<IAppState> {
 
     constructor(
-        @inject(ClientFormReducer) protected clientFormReducer: IReducer<IClientForm>,
+        @inject(ClientFormReducer) protected clientFormReducer: IReducer<IClientFormState>,
         @inject(NotificationsReducer) protected notificationsReducer: IReducer<INotification[]>
     ) {
         super();
@@ -28,7 +27,7 @@ export class AppReducer extends Reducer<IState> {
         };
     }
 
-    reduce(state: IState, action): IState {
+    reduce(state: IAppState, action): IAppState {
         return state;
     }
 }

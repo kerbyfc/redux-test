@@ -4,6 +4,7 @@ tmp/
 typings/*
 !typings/custom/
 src/state.ts
+src/interfaces/IState.d.ts
 src/**/**.scss.d.ts
 .DS_Store
 *.log

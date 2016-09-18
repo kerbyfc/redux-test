@@ -4,18 +4,6 @@
 import {injectable, injector} from './Injector';
 import {Dispatcher} from './Dispatcher';
 
-export interface IAction<TPayload> {
-    type: string;
-    emit(payload: TPayload): boolean;
-}
-
-export interface IDispatcherAction {
-    is: Action<any>,
-    type: string;
-    class: Function;
-    __payload: any;
-}
-
 @injectable()
 export class Action<TPayload> implements IAction<TPayload> {
 
@@ -58,6 +46,10 @@ export class Action<TPayload> implements IAction<TPayload> {
 
     shouldBeEmitted(): boolean {
         return true;
+    }
+
+    enqueue(...actions: IActor[]) {
+
     }
 
     emit(payload?: TPayload): boolean {

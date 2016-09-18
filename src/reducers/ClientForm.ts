@@ -8,7 +8,7 @@ import * as _ from 'lodash';
  */
 import {DateValidator} from '../validators/DateValidator';
 import {EmailValidator} from '../validators/EmailValidator';
-import {initialState, IClientForm, IClientFormRef, getStateRefs} from '../state';
+import {initialState, getStateRefs} from '../state';
 import {injectable, inject} from '../core/Injector';
 import {ChangeInputValue, IChangeInputValuePayload} from '../actions/ChangeInputValue';
 import {OnlyRussianCharsValidator} from '../validators/OnlyRussianCharsValidator';
@@ -20,11 +20,11 @@ import {SaveClient} from '../actions/SaveClient';
 import {ShowClientSaved} from '../actions/ShowClientSaved';
 
 @injectable()
-export class ClientFormReducer extends Reducer<IClientForm> {
+export class ClientFormReducer extends Reducer<IClientFormState> {
 
     static key = 'clientForm';
 
-    protected get refs(): IClientFormRef {
+    protected get refs(): IClientFormStateRef {
         return getStateRefs().clientForm;
     }
 
@@ -59,7 +59,7 @@ export class ClientFormReducer extends Reducer<IClientForm> {
         }
     }
 
-    setLoading(state: IClientForm, isLoading: boolean) {
+    setLoading(state: IClientFormState, isLoading: boolean) {
         // TODO: use immutable
         return _.assign({}, state, {
             loading: isLoading

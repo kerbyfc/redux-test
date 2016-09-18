@@ -8,9 +8,7 @@ import {IReducer as IReduxReducer} from '~react-router-redux~redux';
 /**
  * Local imports
  */
-import {IAction, IDispatcherAction} from './Action';
 import {injectable} from './Injector';
-import {IRef} from './Ref';
 import {initialState} from '../state';
 
 

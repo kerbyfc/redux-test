@@ -9,12 +9,12 @@ import * as classname from 'classnames';
  * Local imports
  */
 import {injector} from './Injector';
-import {IStateRef, getStateRefs} from '../state';
+import {getStateRefs} from '../state';
 
 export class Component<TProps, TState> extends React.Component<TProps, TState> {
 
     // global state
-    get $(): IStateRef {
+    get $(): IAppStateRef {
         return getStateRefs();
     }
 

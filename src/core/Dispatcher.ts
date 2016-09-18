@@ -8,15 +8,13 @@ import Store = Redux.Store;
  * Local imports
  */
 import {injectable} from './Injector';
-import {IState} from '../state';
-import {IDispatcherAction} from './Action';
 
-// TODO: -> Dispatcher<IState> & .store<IState>
+// TODO: -> Dispatcher<IAppState> & .store<IAppState>
 @injectable()
 export class Dispatcher {
 
     protected acting: boolean = false;
-    protected lastState: IState;
+    protected lastState: IAppState;
 
     protected actors: any[] = [];
     protected singularActors: any[] = [];
@@ -84,11 +82,11 @@ export class Dispatcher {
      *      .subscribe(updateProgress)
      *      .until(state => !state.loading)
      */
-    subscribe(actor): {until: (fn: (state: IState) => boolean) => void} {
+    subscribe(actor): {until: (fn: (state: IAppState) => boolean) => void} {
         this.actors.push(actor);
 
         return {
-            until: (fn: (state: IState) => boolean) => {
+            until: (fn: (state: IAppState) => boolean) => {
                 if (fn(this.getState())) {
                     this.actors = _.without(this.actors, actor);
                 }
@@ -105,7 +103,7 @@ export class Dispatcher {
         /*
             new ActionWithActor().emit(data)
                                       /
-              Reducer.reduce(state, data): IState
+              Reducer.reduce(state, data): IAppState
                        ____________________/
                       /
                actor(newState, dispatcher) { dispatcher.dispatch(); }

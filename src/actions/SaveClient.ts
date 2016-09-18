@@ -2,29 +2,22 @@
  * Local imports
  */
 import {Action} from '../core/Action';
-import {IState} from '../state';
-import {ShowClientSaved} from './ShowClientSaved';
+import {injectable, inject} from '../core/Injector';
+import {SaveDataToServer} from '../core/Actor';
 
 /**
  * Save client on server
  */
+@injectable()
 export class SaveClient extends Action<void> {
 
-    constructor() {
+    constructor(
+        @inject(SaveDataToServer) saveDataToServer: IActor
+    ) {
         super();
 
-        // TODO: create actor via DI
-        this.actors.push(this.saveDataToServer.bind(this));
-    }
-
-    saveDataToServer(state: IState) {
-        if (state.clientForm.loading) {
-            // dummy server call
-            setTimeout(() => {
-                this.createAction<ShowClientSaved>(ShowClientSaved).emit(
-                    // here should be server response data
-                );
-            }, 1000);
-        }
+        this.enqueue(
+            saveDataToServer
+        );
     }
 }

@@ -171,7 +171,7 @@ export class Json2Ts {
 
         objectName = this.removeMajority(objectName, options);
 
-        return "export interface " + objectName + " " + result;
+        return "interface " + objectName + " " + result;
     }
 
     private removeMajority(objectName: string, options: IOptions): string {

@@ -15,6 +15,8 @@ var DtsCreator = require('typed-css-modules');
 var dtsCreator = new DtsCreator();
 var json2ts = new Json2Ts();
 
+var nl = "\n\n";
+
 function makeRefs(initialState) {
     var state = JSON.parse(initialState);
     flatten = flat.flatten(state);
@@ -32,24 +34,28 @@ function makeRefs(initialState) {
     return JSON.stringify(state, null, 4).replace(/"<% (.*) %>"/g, "$1");
 }
 
-gulp.task('gen-state', function () {
+gulp.task('gen-state', function() {
     gulp.src('./src/state.yml')
         .pipe(yaml())
         .pipe(tap(function(file) {
             var content = file.contents.toString();
-            file.contents = new Buffer([
+
+            var interfaces = [
+                json2ts.convert(content, "App", "I$State"),
+                json2ts.convert(content, "App", "I$StateRef", "IRef<$>")
+            ].join(nl);
+
+            var state = [
                 "import {memoize} from 'lodash'",
-                "import {Ref, IRef} from './core/Ref';",
                 "import injector from './core/Injector';",
-                json2ts.convert(content, "State", "I$"),
-                json2ts.convert(content, "State", "I$Ref", "IRef<$>"),
-                "export const initialState: IState = " + JSON.stringify(JSON.parse(content), null, 4) + ";",
-                "export const getStateRefs: () => IStateRef = memoize(() => { return " + makeRefs(content) + "});"
-                ].join('\n\n')
-            );
-        }))
-        .pipe(rename('state.ts'))
-        .pipe(gulp.dest('./src'));
+                "import {Ref} from './core/Ref';",
+                "export const initialState: IAppState = " + JSON.stringify(JSON.parse(content), null, 4) + ";",
+                "export const getStateRefs: () => IAppStateRef = memoize(() => { return " + makeRefs(content) + "});"
+            ].join(nl);
+
+            fs.writeFileSync('./src/interfaces/IState.d.ts', interfaces);
+            fs.writeFileSync('./src/state.ts', state);
+        }));
 });
 
 function compileStyleDts(filepath) {

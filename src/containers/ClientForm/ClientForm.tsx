@@ -12,7 +12,6 @@ import {FormRow} from '../../components/FormRow/FormRow';
 import {Input} from '../../components/Input/Input';
 import {Checkbox} from '../../components/Checkbox/Checkbox';
 import {Select} from '../../components/Select/Select';
-import {IState, IClientForm, IClientFormRef} from '../../state';
 import {Button} from '../../components/Button/Button';
 import {SaveClient} from '../../actions/SaveClient';
 import {Form} from '../../components/Form/Form';
@@ -34,7 +33,7 @@ const carModels = {
 /**
  * Redux
  */
-function mapStateToProps(state: IState) {
+function mapStateToProps(state: IAppState) {
     return state.clientForm;
 }
 
@@ -42,14 +41,14 @@ function mapStateToProps(state: IState) {
  * Form to add client to database
  */
 @connect(mapStateToProps)
-export class ClientForm extends Component<IClientForm, any> {
+export class ClientForm extends Component<IClientFormState, any> {
 
     save = (event) => {
         this.createAction<SaveClient>(SaveClient).emit();
     };
 
     render() {
-        const refs: IClientFormRef = this.$.clientForm;
+        const refs: IClientFormStateRef = this.$.clientForm;
 
         return (
             <Form loading={this.props.loading}>

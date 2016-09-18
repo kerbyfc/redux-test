@@ -9,7 +9,6 @@ import * as cx from 'classnames';
  */
 import {Component} from '../../core/Component';
 import {SelectOption} from '../../actions/SelectOption';
-import {IRef} from '../../core/Ref';
 
 /* tslint:disable:no-var-requires */
 const styles = require('./Select.style.scss');
