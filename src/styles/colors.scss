@@ -1,0 +1,35 @@
+.body {
+  background-color: #eee;
+  color: #000;
+}
+
+.meta {
+  color: #555;
+}
+
+.panel {
+  background-color: #fff;
+  color: #000;
+}
+
+.field {
+  composes: panel;
+}
+
+.action {
+  composes: panel;
+
+  &:hover {
+    background-color: #f5f5f5;
+    color: #000;
+  }
+
+  &:active {
+    background-color: #a50000;
+    color: #fff;
+  }
+}
+
+.loader {
+  color: #a50000;
+}

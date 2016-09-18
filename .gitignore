@@ -1,3 +1,9 @@
-node_modules
-build
-typings
+dist/
+node_modules/
+tmp/
+typings/*
+!typings/custom/
+src/state.ts
+src/**/**.scss.d.ts
+.DS_Store
+*.log

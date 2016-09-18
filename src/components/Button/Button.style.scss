@@ -1,0 +1,7 @@
+.button {
+    composes: bold regular text from "../../styles/typography.scss";
+    composes: rounded outline bordered from "../../styles/effects.scss";
+    padding: .5rem 1rem;
+    background-color: #0275d8;
+    color: white;
+}

@@ -1,0 +1,8 @@
+.container {
+    composes: container from "../Input/Input.style.scss";
+}
+
+.field {
+    composes: field from "../Input/Input.style.scss";
+    -webkit-appearance: initial;
+}

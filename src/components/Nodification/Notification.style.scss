@@ -1,0 +1,14 @@
+.container {
+    composes: rounded bordered from "../../styles/effects.scss";
+    max-width: 25rem;
+    padding: 1rem;
+    margin: 1rem 0;
+}
+
+.success {
+    background: #dff0d8;
+}
+
+.error {
+    background: #f2dede;
+}

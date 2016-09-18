@@ -1,0 +1,20 @@
+.container {
+    composes: container from "../Input/Input.style.scss";
+}
+
+.field {
+    composes: field from "../Input/Input.style.scss";
+    height: 3rem;
+    width: 3rem;
+    -webkit-appearance: initial;
+}
+
+.field:checked:before {
+    content: "✓";
+    font-size: 2rem;
+    color: #bddb62;
+    top: -0.6rem;
+    left: -0.4rem;
+    position: relative;
+    font-weight: bold;
+}

@@ -1,0 +1,25 @@
+.container {
+    height: 4.3rem;
+}
+
+.field {
+  composes: large text from "../../styles/typography.scss";
+  composes: field from "../../styles/colors.scss";
+  composes: rounded bordered outline from "../../styles/effects.scss";
+  padding: .5rem 1rem;
+  width: 100%;
+}
+
+.invalid {
+    color: red;
+    .field {
+        border-color: red;
+    }
+}
+
+.error {
+    display: inline-block;
+    height: 1rem;
+    line-height: 1rem;
+    padding-left: 0.5rem;
+}
