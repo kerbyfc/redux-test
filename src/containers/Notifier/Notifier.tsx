@@ -12,7 +12,7 @@ import * as styles from './Notifier.style.scss';
 import {Component} from '../../core/Component';
 import {IState} from '../../state';
 import {Notification} from '../../components/Nodification/Notification';
-import {INotification} from '../../actions/ShowNotification';
+import {INotification} from '../../interfaces/INotification';
 
 /**
  * Redux

@@ -10,7 +10,7 @@ import {injectable} from '../core/Injector';
 import {Action} from '../core/Action';
 import {IRef} from '../core/Ref';
 
-export interface IInputChangeActionPayload {
+export interface IChangeInputValuePayload {
     event: Event;
     ref: IRef<string>;
     selection: number[];
@@ -23,7 +23,7 @@ export interface IInputChangeActionPayload {
 }
 
 @injectable()
-export class InputChangeAction extends Action<IInputChangeActionPayload> {
+export class ChangeInputValue extends Action<IChangeInputValuePayload> {
 
     emit({event, selection, ref}) {
         const input: HTMLInputElement = <HTMLInputElement>event.target;
@@ -37,7 +37,7 @@ export class InputChangeAction extends Action<IInputChangeActionPayload> {
             ref
         };
 
-        // TODO: use injector
+        // TODO: use DI
         this.actors.push((state) => {
             /**
              * Get state value by Ref.path

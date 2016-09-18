@@ -1,12 +1,15 @@
 import {Action} from '../core/Action';
 import {IRef} from '../core/Ref';
 
-interface ISelectActionPayload {
+/**
+ * Interfaces
+ */
+interface ISelectOptionPayload {
   ref: IRef<boolean>;
   value?: string;
 }
 
-export class SelectAction extends Action<ISelectActionPayload> {
+export class SelectOption extends Action<ISelectOptionPayload> {
 
   emit({event, ref}) {
     const input:HTMLSelectElement = <HTMLSelectElement>event.target;

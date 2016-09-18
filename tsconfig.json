@@ -26,6 +26,7 @@
     "./test/**/*.tsx",
     "./typings/**/*.d.ts",
     "./typings/index.d.ts",
+    "./src/typings/**.d.ts",
     "!./node_modules/**/*"
   ],
   "atom": {

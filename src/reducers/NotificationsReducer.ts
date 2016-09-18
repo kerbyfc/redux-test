@@ -7,10 +7,13 @@ import * as _ from 'lodash';
  * Local imports
  */
 import {Reducer} from '../core/Reducer';
-import {Action} from '../core/Action';
-import {INotification, ShowNotification, HideNotificationByTimeOut} from '../actions/ShowNotification';
+import {ShowNotification, HideNotificationByTimeOut} from '../actions/ShowNotification';
+import {INotification} from '../interfaces/INotification';
 
-export class NotificationsReducer extends Reducer<INotification> {
+/**
+ * Handle actions, that affects current visible notifications
+ */
+export class NotificationsReducer extends Reducer<INotification[]> {
 
     reduce(state, action) {
         switch(action.class) {
@@ -18,6 +21,7 @@ export class NotificationsReducer extends Reducer<INotification> {
                 return state.concat([ShowNotification.getPayload(action)]);
 
             case HideNotificationByTimeOut:
+                // Hide action by it's id
                 return _.filter(state, (notification: INotification) => {
                     return notification.id !== HideNotificationByTimeOut.getPayload(action);
                 });

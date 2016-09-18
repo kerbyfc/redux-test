@@ -3,7 +3,7 @@ index beffa30..c3f6353 100644
 --- a/.editorconfig
 +++ b/.editorconfig
 @@ -2,7 +2,7 @@ root = true
- 
+
  [*]
  indent_style = space
 -indent_size = 2
@@ -281,21 +281,21 @@ index 7f27be5..5acae1f 100644
 +    "typed-css-modules": "^0.1.12"
    }
  }
-diff --git a/src/actions/CheckboxAction.ts b/src/actions/CheckboxAction.ts
+diff --git a/src/actions/ToggleCheckbox.ts b/src/actions/ToggleCheckbox.ts
 new file mode 100644
 index 0000000..574de97
 --- /dev/null
-+++ b/src/actions/CheckboxAction.ts
++++ b/src/actions/ToggleCheckbox.ts
 @@ -0,0 +1,20 @@
 +import {Action} from '../core/Action';
 +import {IRef} from '../core/Ref';
 +
-+interface ICheckboxActionPayload {
++interface IToggleCheckboxPayload {
 +  ref: IRef<boolean>;
 +  value?: boolean;
 +}
 +
-+export class CheckboxAction extends Action<ICheckboxActionPayload> {
++export class ToggleCheckbox extends Action<IToggleCheckboxPayload> {
 +
 +  emit({event, ref}) {
 +    const input:HTMLInputElement = <HTMLInputElement>event.target;
@@ -307,11 +307,11 @@ index 0000000..574de97
 +    });
 +  }
 +}
-diff --git a/src/actions/InputChangeAction.ts b/src/actions/InputChangeAction.ts
+diff --git a/src/actions/ChangeInputValue.ts b/src/actions/ChangeInputValue.ts
 new file mode 100644
 index 0000000..760ca35
 --- /dev/null
-+++ b/src/actions/InputChangeAction.ts
++++ b/src/actions/ChangeInputValue.ts
 @@ -0,0 +1,59 @@
 +/**
 + * External imports
@@ -325,7 +325,7 @@ index 0000000..760ca35
 +import {Action} from '../core/Action';
 +import {IRef} from '../core/Ref';
 +
-+export interface IInputChangeActionPayload {
++export interface IChangeInputValuePayload {
 +    event: Event;
 +    ref: IRef<string>;
 +    selection: number[];
@@ -338,7 +338,7 @@ index 0000000..760ca35
 +}
 +
 +@injectable()
-+export class InputChangeAction extends Action<IInputChangeActionPayload> {
++export class ChangeInputValue extends Action<IChangeInputValuePayload> {
 +
 +    emit({event, selection, ref}) {
 +        const input: HTMLInputElement = <HTMLInputElement>event.target;
@@ -372,18 +372,18 @@ index 0000000..760ca35
 +        return super.emit(payload);
 +    }
 +}
-diff --git a/src/actions/SaveClientAction.ts b/src/actions/SaveClientAction.ts
+diff --git a/src/actions/SaveClient.ts b/src/actions/SaveClient.ts
 new file mode 100644
 index 0000000..6de2375
 --- /dev/null
-+++ b/src/actions/SaveClientAction.ts
++++ b/src/actions/SaveClient.ts
 @@ -0,0 +1,43 @@
 +import {Action} from '../core/Action';
 +import {IState} from '../state';
 +import {ShowNotification} from './ShowNotification';
 +import {NotificationType} from '../vars';
 +
-+export class ClientDataSavedAction extends Action<void> {
++export class ShowClientSaved extends Action<void> {
 +
 +    constructor() {
 +        super();
@@ -401,7 +401,7 @@ index 0000000..6de2375
 +    }
 +}
 +
-+export class SaveClientAction extends Action<void> {
++export class SaveClient extends Action<void> {
 +
 +    constructor() {
 +        super();
@@ -414,28 +414,28 @@ index 0000000..6de2375
 +        if (state.clientForm.loading) {
 +            // dummy server call
 +            setTimeout(() => {
-+                this.createAction<ClientDataSavedAction>(ClientDataSavedAction).emit(
++                this.createAction<ShowClientSaved>(ShowClientSaved).emit(
 +                    // here should be server response data
 +                );
 +            }, 1000);
 +        }
 +    }
 +}
-diff --git a/src/actions/SelectAction.ts b/src/actions/SelectAction.ts
+diff --git a/src/actions/SelectOption.ts b/src/actions/SelectOption.ts
 new file mode 100644
 index 0000000..b4fe720
 --- /dev/null
-+++ b/src/actions/SelectAction.ts
++++ b/src/actions/SelectOption.ts
 @@ -0,0 +1,21 @@
 +import {Action} from '../core/Action';
 +import {IRef} from '../core/Ref';
 +
-+interface ISelectActionPayload {
++interface ISelectOptionPayload {
 +  ref: IRef<boolean>;
 +  value?: string;
 +}
 +
-+export class SelectAction extends Action<ISelectActionPayload> {
++export class SelectOption extends Action<ISelectOptionPayload> {
 +
 +  emit({event, ref}) {
 +    const input:HTMLSelectElement = <HTMLSelectElement>event.target;
@@ -815,7 +815,7 @@ index 0000000..532eec1
 +/**
 + * Local imports
 + */
-+import {CheckboxAction} from '../../actions/CheckboxAction';
++import {ToggleCheckbox} from '../../actions/ToggleCheckbox';
 +import {Component} from '../../core/Component';
 +import {IRef} from '../../core/Ref';
 +
@@ -831,7 +831,7 @@ index 0000000..532eec1
 +export class Checkbox extends Component<any, any> {
 +
 +    toggle = (event) => {
-+        this.createAction<CheckboxAction>(CheckboxAction).emit({
++        this.createAction<ToggleCheckbox>(ToggleCheckbox).emit({
 +            event, ref: this.props.$
 +        })
 +    };
@@ -1478,7 +1478,7 @@ index 0000000..4b0b113
 +import * as styles from './Input.style.scss';
 +import {ARROW_KEYS} from '../../vars';
 +import {Component} from '../../core/Component';
-+import {InputChangeAction} from '../../actions/InputChangeAction';
++import {ChangeInputValue} from '../../actions/ChangeInputValue';
 +import {IRef} from '../../core/Ref';
 +
 +/**
@@ -1551,7 +1551,7 @@ index 0000000..4b0b113
 +    };
 +
 +    handleChange = (event) => {
-+        this.createAction<InputChangeAction>(InputChangeAction).emit({
++        this.createAction<ChangeInputValue>(ChangeInputValue).emit({
 +            event,
 +            ref: this.props.$,
 +            selection: this.state.selection,
@@ -1994,7 +1994,7 @@ index 0000000..64bb959
 + * Local imports
 + */
 +import {Component} from '../../core/Component';
-+import {SelectAction} from '../../actions/SelectAction';
++import {SelectOption} from '../../actions/SelectOption';
 +import {IRef} from '../../core/Ref';
 +
 +/* tslint:disable:no-var-requires */
@@ -2009,7 +2009,7 @@ index 0000000..64bb959
 +export class Select extends Component<any, any> {
 +
 +    toggle = (event) => {
-+        this.createAction<SelectAction>(SelectAction).emit({
++        this.createAction<SelectOption>(SelectOption).emit({
 +            event, ref: this.props.$
 +        });
 +    };
@@ -2181,7 +2181,7 @@ index 0000000..3bf6cae
 +import {Select} from '../../components/Select/Select';
 +import {IState, IClientForm, IClientFormRef} from '../../state';
 +import {Button} from '../../components/Button/Button';
-+import {SaveClientAction} from '../../actions/SaveClientAction';
++import {SaveClient} from '../../actions/SaveClient';
 +import {Form} from '../../components/Form/Form';
 +
 +/**
@@ -2212,7 +2212,7 @@ index 0000000..3bf6cae
 +export class ClientForm extends Component<IClientForm, any> {
 +
 +    save = (event) => {
-+        this.createAction<SaveClientAction>(SaveClientAction).emit();
++        this.createAction<SaveClient>(SaveClient).emit();
 +    };
 +
 +    render() {
@@ -3288,17 +3288,17 @@ index 582e0c8..035a9a8 100644
 +import './providers';
 +import configureStore from './store';
 +import routes from './routes';
- 
+
  /* tslint:disable:no-var-requires */
 -require("./styles/global.scss");
 +require('./styles/global.scss');
  /* tslint:enable:no-var-requires */
- 
+
  /* tslint:disable:no-string-literal */
 -const preloadedState = global["window"] && global["window"]["__PRELOADED__"];
 +const preloadedState = global['window'] && global['window']['__PRELOADED__'];
 +/* tslint:enable:no-string-literal */
- 
+
 -if (module["hot"]) {
 -  module["hot"].accept();
 +/* tslint:disable:no-string-literal */
@@ -3306,7 +3306,7 @@ index 582e0c8..035a9a8 100644
 +  module['hot'].accept();
  }
  /* tslint:enable:no-string-literal */
- 
+
 @@ -25,5 +35,5 @@ render(
    <Provider store={store}>
      <Router history={history} routes={routes} />
@@ -3334,18 +3334,18 @@ index 0000000..d497b5a
 + * Import providers
 + */
 +import {AppReducer} from './reducers/App';
-+import {CheckboxAction} from './actions/CheckboxAction';
++import {ToggleCheckbox} from './actions/ToggleCheckbox';
 +import {ClientFormReducer} from './reducers/ClientForm';
 +import {DateValidator} from './validators/DateValidator';
 +import {Dispatcher} from './core/Dispatcher';
 +import {EmailValidator} from './validators/EmailValidator';
-+import {InputChangeAction} from './actions/InputChangeAction';
++import {ChangeInputValue} from './actions/ChangeInputValue';
 +import {OnlyRussianCharsValidator} from './validators/OnlyRussianCharsValidator';
 +import {PassportValidator} from './validators/PassportValidator';
 +import {PatternValidator} from './validators/PatternValidator';
 +import {Ref} from './core/Ref';
-+import {SaveClientAction, ClientDataSavedAction} from './actions/SaveClientAction';
-+import {SelectAction} from './actions/SelectAction';
++import {SaveClient, ShowClientSaved} from './actions/SaveClient';
++import {SelectOption} from './actions/SelectOption';
 +import {TextLengthValidator} from './validators/TextLengthValidator';
 +import {Validator} from './core/Validator';
 +import {NotificationsReducer} from './reducers/NotificationsReducer';
@@ -3374,11 +3374,11 @@ index 0000000..d497b5a
 +    /**
 +     * Actions
 +     */
-+    InputChangeAction,
-+    CheckboxAction,
-+    SelectAction,
-+    SaveClientAction,
-+    ClientDataSavedAction,
++    ChangeInputValue,
++    ToggleCheckbox,
++    SelectOption,
++    SaveClient,
++    ShowClientSaved,
 +    ShowNotification,
 +    HideNotificationByTimeOut,
 +
@@ -3454,13 +3454,13 @@ index 0000000..7360a4d
 +import {EmailValidator} from '../validators/EmailValidator';
 +import {initialState, IClientForm, IClientFormRef, getStateRefs} from '../state';
 +import {injectable, inject} from '../core/Injector';
-+import {InputChangeAction, IInputChangeActionPayload} from '../actions/InputChangeAction';
++import {ChangeInputValue, IChangeInputValuePayload} from '../actions/ChangeInputValue';
 +import {OnlyRussianCharsValidator} from '../validators/OnlyRussianCharsValidator';
 +import {PassportValidator} from '../validators/PassportValidator';
 +import {Reducer} from '../core/Reducer';
-+import {CheckboxAction} from '../actions/CheckboxAction';
-+import {SelectAction} from '../actions/SelectAction';
-+import {SaveClientAction, ClientDataSavedAction} from '../actions/SaveClientAction';
++import {ToggleCheckbox} from '../actions/ToggleCheckbox';
++import {SelectOption} from '../actions/SelectOption';
++import {SaveClient, ShowClientSaved} from '../actions/SaveClient';
 +
 +@injectable()
 +export class ClientFormReducer extends Reducer<IClientForm> {
@@ -3482,19 +3482,19 @@ index 0000000..7360a4d
 +
 +    reduce(state, action) {
 +        switch (action.class) {
-+            case InputChangeAction:
-+            case CheckboxAction:
-+            case SelectAction:
-+                const payload = InputChangeAction.getPayload<IInputChangeActionPayload>(action);
++            case ChangeInputValue:
++            case ToggleCheckbox:
++            case SelectOption:
++                const payload = ChangeInputValue.getPayload<IChangeInputValuePayload>(action);
 +                if (this.hasRef(payload.ref)) {
 +                    return this.reduceInputValue(state, payload);
 +                }
 +                return state;
 +
-+            case SaveClientAction:
++            case SaveClient:
 +                return this.setLoading(state, true);
 +
-+            case ClientDataSavedAction:
++            case ShowClientSaved:
 +                return this.getInitialState();
 +
 +            default:
@@ -3738,7 +3738,7 @@ index cb57187..dc1d8fe 100644
 +import { Route, IndexRoute } from 'react-router';
 +import App from './containers/App/App';
 +import {ClientForm} from './containers/ClientForm/ClientForm';
- 
+
  export default (
 -  <Route path="/" component={App} >
 -    <IndexRoute component={Search}/>
@@ -3832,7 +3832,7 @@ index c7cdaee..6ee7833 100644
 +      }
      };
    }
- 
+
 diff --git a/src/server/index.ts b/src/server/index.ts
 index 112af72..5cbe705 100644
 --- a/src/server/index.ts
@@ -3863,10 +3863,10 @@ index 112af72..5cbe705 100644
 +
 +import handleRoute from './handleRoute';
 +import routes from '../routes';
- 
+
  const port = process.env.PORT || 3000;
  const app = express();
- 
+
 -if (process.env.NODE_ENV === "development") {
 +/**
 + * Webpack
@@ -3878,12 +3878,12 @@ index 112af72..5cbe705 100644
    /* tslint:enable:no-var-requires */
 +
    const compiler = webpack(config);
- 
+
    app.use(webpackHotMiddleware(compiler));
 @@ -23,18 +36,17 @@ if (process.env.NODE_ENV === "development") {
    }));
  }
- 
+
 -app.use("/api/", proxy({
 -  changeOrigin: true,
 -  pathRewrite: { "^/api/": "/" },
@@ -3901,7 +3901,7 @@ index 112af72..5cbe705 100644
 +  extensions: ['css', 'js'],
 +  index: false
  }));
- 
+
 +/**
 + * Server rendering
 + */
@@ -3911,7 +3911,7 @@ index 112af72..5cbe705 100644
 @@ -43,6 +55,9 @@ app.use((req, res, next) => {
    }, handleRoute(req, res, next));
  });
- 
+
 +/**
 + * Initialization
 + */
@@ -3940,7 +3940,7 @@ index 2583f6c..1888bc7 100644
 +import { renderToString } from 'react-dom/server';
 +import { Provider } from 'react-redux';
 +import { RouterContext } from 'react-router';
- 
+
  /**
 - * Wait for all preload sagas to complete.
 - * @param  {Array} sagas Preload sagas.
@@ -3955,12 +3955,12 @@ index 2583f6c..1888bc7 100644
 +import configureStore from '../store';
 +import compileAssets from './compileAssets';
 +import Document from '../containers/Document/Document';
- 
+
  function render(req, res, renderProps) {
 -  const { components, params } = renderProps;
 -  const store = configureStore();
 +    const store = configureStore();
- 
+
 -  const preloaders = components
 -    .filter(component => component && component.preload)
 -    .map(component => component.preload(params))
@@ -3971,7 +3971,7 @@ index 2583f6c..1888bc7 100644
 +    //     .filter(component => component && component.preload)
 +    //     .map(component => component.preload(params))
 +    //     .reduce((result, preloader) => result.concat(preloader), []);
- 
+
 -  store.runSaga(waitAll(preloaders)).done
 -    .then(() => {
 -      const app = (
@@ -3982,7 +3982,7 @@ index 2583f6c..1888bc7 100644
          </Provider>
 -      );
 +    );
- 
+
 -      res.send("<!DOCTYPE HTML>\n" + renderToString(
 +    res.send('<!DOCTYPE HTML>\n' + renderToString(
          <Document app={app} assets={compileAssets()} server store={store} />
@@ -3993,7 +3993,7 @@ index 2583f6c..1888bc7 100644
 -    });
 +    ));
  }
- 
+
  export default render;
 diff --git a/src/state.yml b/src/state.yml
 new file mode 100644
@@ -4044,12 +4044,12 @@ index df2ea68..72c77fb 100644
 +import {Dispatcher} from './core/Dispatcher';
 +import {injector} from './core/Injector';
 +import {routerReducer} from 'react-router-redux';
- 
+
  /* tslint:disable:no-string-literal */
 -const devTools = global["devToolsExtension"] || (() => noop => noop);
 +const devTools = global['devToolsExtension'] || (() => noop => noop);
  /* tslint:enable:no-string-literal */
- 
+
 -export default function configureStore(initialState: Object = {}) {
 -  const sagaMiddleware = createSagaMiddleware();
 -
@@ -4144,7 +4144,7 @@ index 07d677a..57add00 100644
 --- a/src/styles/effects.scss
 +++ b/src/styles/effects.scss
 @@ -9,13 +9,13 @@
- 
+
  .outline {
    &:focus {
 -    border: 2px solid #a50000;
@@ -4152,12 +4152,12 @@ index 07d677a..57add00 100644
      outline: 0;
    }
  }
- 
+
  .rounded {
 -  border-radius: 1.5rem;
 +  border-radius: 0.5rem;
  }
- 
+
  .shadowed {
 diff --git a/src/styles/effects.scss.d.ts b/src/styles/effects.scss.d.ts
 new file mode 100644
@@ -4178,7 +4178,7 @@ index 9cfce74..24a3c79 100644
 +++ b/src/styles/global.scss
 @@ -1,5 +1,5 @@
  @import "~ress";
- 
+
 -body {
 +html {
    background-color: #eee;
@@ -4193,7 +4193,7 @@ index 538c90c..4b3f7ac 100644
 @@ -24,10 +24,6 @@
    font-size: 1.4rem;
  }
- 
+
 -.undecorated {
 -  text-decoration: none;
 -}
@@ -6963,14 +6963,14 @@ index 5e338dd..c6f63b7 100644
 +const autoprefixer = require('autoprefixer');
 +const CopyWebpackPlugin = require('copy-webpack-plugin');
 +const ExtractTextPlugin = require('extract-text-webpack-plugin');
- 
+
 -const path = require('path')
 -const webpack = require('webpack')
 -const autoprefixer = require('autoprefixer')
 -const CopyWebpackPlugin = require('copy-webpack-plugin')
 -const ExtractTextPlugin = require('extract-text-webpack-plugin')
 +const extractCSS = new ExtractTextPlugin('static/[name].css');
- 
+
  module.exports = {
 -  debug: true,
 -  devtool: 'eval',

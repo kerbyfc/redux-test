@@ -11,7 +11,7 @@ import 'react-dom';
 import * as styles from './Input.style.scss';
 import {ARROW_KEYS} from '../../vars';
 import {Component} from '../../core/Component';
-import {InputChangeAction} from '../../actions/InputChangeAction';
+import {ChangeInputValue} from '../../actions/ChangeInputValue';
 import {IRef} from '../../core/Ref';
 
 /**
@@ -84,7 +84,7 @@ export class Input extends Component<IInputProps, IInputState> {
     };
 
     handleChange = (event) => {
-        this.createAction<InputChangeAction>(InputChangeAction).emit({
+        this.createAction<ChangeInputValue>(ChangeInputValue).emit({
             event,
             ref: this.props.$,
             selection: this.state.selection,

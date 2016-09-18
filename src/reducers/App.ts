@@ -7,7 +7,7 @@ import {ClientFormReducer} from './ClientForm';
 import ReducersMapObject = Redux.ReducersMapObject;
 import {IClientForm, IState} from '../state';
 import {NotificationsReducer} from './NotificationsReducer';
-import {INotification} from '../actions/ShowNotification';
+import {INotification} from '../interfaces/INotification';
 
 /**
  * Root application reducer

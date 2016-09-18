@@ -12,22 +12,23 @@ import {injector} from './core/Injector';
  * Import providers
  */
 import {AppReducer} from './reducers/App';
-import {CheckboxAction} from './actions/CheckboxAction';
+import {ToggleCheckbox} from './actions/ToggleCheckbox';
 import {ClientFormReducer} from './reducers/ClientForm';
 import {DateValidator} from './validators/DateValidator';
 import {Dispatcher} from './core/Dispatcher';
 import {EmailValidator} from './validators/EmailValidator';
-import {InputChangeAction} from './actions/InputChangeAction';
+import {ChangeInputValue} from './actions/ChangeInputValue';
 import {OnlyRussianCharsValidator} from './validators/OnlyRussianCharsValidator';
 import {PassportValidator} from './validators/PassportValidator';
 import {PatternValidator} from './validators/PatternValidator';
 import {Ref} from './core/Ref';
-import {SaveClientAction, ClientDataSavedAction} from './actions/SaveClientAction';
-import {SelectAction} from './actions/SelectAction';
+import {SaveClient} from './actions/SaveClient';
+import {SelectOption} from './actions/SelectOption';
 import {TextLengthValidator} from './validators/TextLengthValidator';
 import {Validator} from './core/Validator';
 import {NotificationsReducer} from './reducers/NotificationsReducer';
 import {ShowNotification, HideNotificationByTimeOut} from './actions/ShowNotification';
+import {ShowClientSaved} from './actions/ShowClientSaved';
 
 
 /**
@@ -52,11 +53,11 @@ injector.registerProviders([
     /**
      * Actions
      */
-    InputChangeAction,
-    CheckboxAction,
-    SelectAction,
-    SaveClientAction,
-    ClientDataSavedAction,
+    ChangeInputValue,
+    ToggleCheckbox,
+    SelectOption,
+    SaveClient,
+    ShowClientSaved,
     ShowNotification,
     HideNotificationByTimeOut,
 

@@ -6,7 +6,7 @@ import * as React from 'react';
 /**
  * Local imports
  */
-import {CheckboxAction} from '../../actions/CheckboxAction';
+import {ToggleCheckbox} from '../../actions/ToggleCheckbox';
 import {Component} from '../../core/Component';
 import {IRef} from '../../core/Ref';
 
@@ -22,7 +22,7 @@ interface ICheckboxProps {
 export class Checkbox extends Component<any, any> {
 
     toggle = (event) => {
-        this.createAction<CheckboxAction>(CheckboxAction).emit({
+        this.createAction<ToggleCheckbox>(ToggleCheckbox).emit({
             event, ref: this.props.$
         })
     };

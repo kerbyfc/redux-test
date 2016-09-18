@@ -10,13 +10,14 @@ import {DateValidator} from '../validators/DateValidator';
 import {EmailValidator} from '../validators/EmailValidator';
 import {initialState, IClientForm, IClientFormRef, getStateRefs} from '../state';
 import {injectable, inject} from '../core/Injector';
-import {InputChangeAction, IInputChangeActionPayload} from '../actions/InputChangeAction';
+import {ChangeInputValue, IChangeInputValuePayload} from '../actions/ChangeInputValue';
 import {OnlyRussianCharsValidator} from '../validators/OnlyRussianCharsValidator';
 import {PassportValidator} from '../validators/PassportValidator';
 import {Reducer} from '../core/Reducer';
-import {CheckboxAction} from '../actions/CheckboxAction';
-import {SelectAction} from '../actions/SelectAction';
-import {SaveClientAction, ClientDataSavedAction} from '../actions/SaveClientAction';
+import {ToggleCheckbox} from '../actions/ToggleCheckbox';
+import {SelectOption} from '../actions/SelectOption';
+import {SaveClient} from '../actions/SaveClient';
+import {ShowClientSaved} from '../actions/ShowClientSaved';
 
 @injectable()
 export class ClientFormReducer extends Reducer<IClientForm> {
@@ -38,19 +39,19 @@ export class ClientFormReducer extends Reducer<IClientForm> {
 
     reduce(state, action) {
         switch (action.class) {
-            case InputChangeAction:
-            case CheckboxAction:
-            case SelectAction:
-                const payload = InputChangeAction.getPayload<IInputChangeActionPayload>(action);
+            case ChangeInputValue:
+            case ToggleCheckbox:
+            case SelectOption:
+                const payload = ChangeInputValue.getPayload<IChangeInputValuePayload>(action);
                 if (this.hasRef(payload.ref)) {
                     return this.reduceInputValue(state, payload);
                 }
                 return state;
 
-            case SaveClientAction:
+            case SaveClient:
                 return this.setLoading(state, true);
 
-            case ClientDataSavedAction:
+            case ShowClientSaved:
                 return this.getInitialState();
 
             default:
@@ -120,7 +121,7 @@ export class ClientFormReducer extends Reducer<IClientForm> {
         }
     }
 
-    // TODO: typings
+    // TODO: interfaces
     protected reduceInputValue(state, payload) {
         if (this.validateFormValue(state, payload)) {
             // TODO: use immutable

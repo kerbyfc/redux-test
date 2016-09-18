@@ -8,7 +8,7 @@ import * as cx from 'classnames';
  * Local imports
  */
 import {Component} from '../../core/Component';
-import {SelectAction} from '../../actions/SelectAction';
+import {SelectOption} from '../../actions/SelectOption';
 import {IRef} from '../../core/Ref';
 
 /* tslint:disable:no-var-requires */
@@ -23,7 +23,7 @@ interface ICheckboxProps {
 export class Select extends Component<any, any> {
 
     toggle = (event) => {
-        this.createAction<SelectAction>(SelectAction).emit({
+        this.createAction<SelectOption>(SelectOption).emit({
             event, ref: this.props.$
         });
     };

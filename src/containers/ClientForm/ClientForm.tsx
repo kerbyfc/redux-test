@@ -14,7 +14,7 @@ import {Checkbox} from '../../components/Checkbox/Checkbox';
 import {Select} from '../../components/Select/Select';
 import {IState, IClientForm, IClientFormRef} from '../../state';
 import {Button} from '../../components/Button/Button';
-import {SaveClientAction} from '../../actions/SaveClientAction';
+import {SaveClient} from '../../actions/SaveClient';
 import {Form} from '../../components/Form/Form';
 
 /**
@@ -45,7 +45,7 @@ function mapStateToProps(state: IState) {
 export class ClientForm extends Component<IClientForm, any> {
 
     save = (event) => {
-        this.createAction<SaveClientAction>(SaveClientAction).emit();
+        this.createAction<SaveClient>(SaveClient).emit();
     };
 
     render() {
