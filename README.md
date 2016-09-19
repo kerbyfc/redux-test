@@ -23,6 +23,7 @@ So much work to do. Later... The closest steps are:
 * generate reducers structure typings to avoid errors in _Reducer_.combine
 * format code according tslint
 * isomorphic data fetch
+* localization (with i18next & gettext & customm JSX loader)
 
 #### Preview
 ![preview](https://dl.dropboxusercontent.com/spa/cm6sytebldipwst/rs0r965a.png)
