@@ -9,7 +9,7 @@
     "watch": "NODE_ENV=development nodemon scripts/startServer.js",
     "gulp": "gulp dev",
     "start": "NODE_ENV=production node scripts/startServer.js",
-    "build": "NODE_ENV=production webpack --config=webpack.config.production.js -p --progress"
+    "build": "NODE_ENV=production webpack --config=webpack.prod.js -p --progress"
   },
   "author": "kerbyfc@gmail.com",
   "license": "MIT",
