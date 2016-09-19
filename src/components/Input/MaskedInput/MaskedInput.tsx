@@ -8,7 +8,7 @@ import {autobind} from 'core-decorators';
  * Local imports
  */
 import {Input} from '../Input';
-import {ARROW_KEYS} from '../../../vars';
+import {KeyCode, ARROW_KEY_CODES, REMOVE_KEY_CODES} from '../../../vars';
 
 export class MaskedInput extends Input {
 
@@ -24,6 +24,7 @@ export class MaskedInput extends Input {
 
     @autobind
     onKeyDown(event) {
+        this.preventRemove(event);
         this.preventOriginArrowNavigation(event);
         this.preventInputWithoutSelection(event);
     }
@@ -68,10 +69,10 @@ export class MaskedInput extends Input {
          * Support navigation
          */
         switch (event.keyCode) {
-            case 37: start -= 1; direction = -1; break;  // up -> start
-            case 38: start = 0; break;
-            case 39: start += 1; break;
-            case 40: start = el.value.length - 1; break; // down -> end
+            case KeyCode.left: start -= 1; direction = -1; break;
+            case KeyCode.up: start = 0; break;
+            case KeyCode.right: start += 1; break;
+            case KeyCode.down: start = el.value.length - 1; break;
         }
 
         this.select(el, start, start + 1, direction);
@@ -82,13 +83,19 @@ export class MaskedInput extends Input {
      * as it will be processed in keyUp event handler
      */
     preventOriginArrowNavigation(event) {
-        if (_.includes(ARROW_KEYS, event.keyCode)) {
+        if (_.includes(ARROW_KEY_CODES, event.keyCode)) {
             event.preventDefault();
         }
     }
 
     preventInputWithoutSelection(event) {
         if (this.state.selection[1] - this.state.selection[0] !== 1) {
+            event.preventDefault();
+        }
+    }
+
+    preventRemove(event) {
+        if (_.includes(REMOVE_KEY_CODES, event.keyCode)) {
             event.preventDefault();
         }
     }
