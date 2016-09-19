@@ -22,3 +22,6 @@ So much work to do. Later... The closest steps are:
 * tests
 * generate reducers structure typings to avoid errors in _Reducer_.combine
 * format code accoring tslint
+
+#### Preview
+![preview](https://dl.dropboxusercontent.com/spa/cm6sytebldipwst/rs0r965a.png)
