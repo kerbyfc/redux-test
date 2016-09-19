@@ -8,8 +8,6 @@ import * as c from 'classnames';
  * Local imports
  */
 import * as styles from './Notification.style.scss';
-import {NotificationType} from '../../vars';
-import {INotification} from '../../interfaces/INotification';
 
 /**
  * Interfaces

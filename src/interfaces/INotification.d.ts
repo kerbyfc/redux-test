@@ -1,4 +1,7 @@
-import {NotificationType} from '../vars';
+declare enum NotificationType {
+    SUCCESS,
+    ERROR
+}
 
 interface INotification {
     text: string;

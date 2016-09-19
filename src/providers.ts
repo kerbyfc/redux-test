@@ -27,10 +27,12 @@ import {SelectOption} from './actions/SelectOption';
 import {TextLengthValidator} from './validators/TextLengthValidator';
 import {Validator} from './core/Validator';
 import {NotificationsReducer} from './reducers/NotificationsReducer';
-import {ShowNotification, HideNotificationByTimeOut} from './actions/ShowNotification';
+import {ShowNotification} from './actions/ShowNotification';
 import {ShowClientSaved} from './actions/ShowClientSaved';
 import {FallbackInputValue} from './actors/FallbackInputValue';
 import {SaveClientToServer} from './actors/SaveClient';
+import {HideNotificationByTimeout} from './actors/HideNotificationByTimeout';
+import {HideNotification} from './actions/HideNotification';
 
 
 /**
@@ -61,13 +63,14 @@ injector.registerProviders([
     SaveClient,
     ShowClientSaved,
     ShowNotification,
-    HideNotificationByTimeOut,
+    HideNotification,
 
     /**
      * Actors
      */
     FallbackInputValue,
     SaveClientToServer,
+    HideNotificationByTimeout,
 
     /**
      * Validators

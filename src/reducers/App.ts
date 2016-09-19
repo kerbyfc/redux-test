@@ -6,7 +6,6 @@ import {inject} from '../core/Injector';
 import {ClientFormReducer} from './ClientForm';
 import ReducersMapObject = Redux.ReducersMapObject;
 import {NotificationsReducer} from './NotificationsReducer';
-import {INotification} from '../interfaces/INotification';
 
 /**
  * Root application reducer
