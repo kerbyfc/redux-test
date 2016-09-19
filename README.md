@@ -18,6 +18,7 @@ This is my first exp in working with redux. I choosed next:
 For develoment use `npm run dev`, for production - `npm run build` and `npm start`
 
 #### Roadmap
-So much work to do. Later... The closest: * tests
+So much work to do. Later... The closest steps are:
+* tests
 * generate reducers structure typings to avoid errors in _Reducer_.combine
 * format code accoring tslint
