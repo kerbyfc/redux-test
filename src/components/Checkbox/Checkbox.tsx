@@ -7,19 +7,19 @@ import * as c from 'classnames';
 /**
  * Local imports
  */
+import * as styles from './Checkbox.style.scss';
 import {ToggleCheckbox} from '../../actions/input/ToggleCheckbox';
 import {Component} from '../../core/Component';
 
-/* tslint:disable:no-var-requires */
-const styles = require('./Checkbox.style.scss');
-/* tslint:enable:no-var-requires */
-
+/**
+ * Interfaces
+ */
 interface ICheckboxProps {
     $: IRef<boolean>;
     checked: boolean;
 }
 
-export class Checkbox extends Component<any, any> {
+export class Checkbox extends Component<ICheckboxProps, any> {
 
     toggle = (event) => {
         this.createAction<ToggleCheckbox>(ToggleCheckbox).emit({

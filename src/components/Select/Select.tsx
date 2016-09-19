@@ -2,24 +2,25 @@
  * External imports
  */
 import * as React from 'react';
-import * as cx from 'classnames';
+import * as c from 'classnames';
 
 /**
  * Local imports
  */
+import * as styles from './Select.style.scss';
 import {Component} from '../../core/Component';
 import {SelectOption} from '../../actions/input/SelectOption';
 
-/* tslint:disable:no-var-requires */
-const styles = require('./Select.style.scss');
-/* tslint:enable:no-var-requires */
-
+/**
+ * Interfaces
+ */
 interface ICheckboxProps {
-    $: IRef<boolean>;
+    $: IRef<string>;
+    options: string[];
     value: string;
 }
 
-export class Select extends Component<any, any> {
+export class Select extends Component<ICheckboxProps, any> {
 
     toggle = (event) => {
         this.createAction<SelectOption>(SelectOption).emit({
@@ -29,8 +30,8 @@ export class Select extends Component<any, any> {
 
     render() {
         return (
-            <div className={cx(styles.container)}>
-                <select className={cx(styles.field)} onChange={this.toggle} value={this.props.value}>
+            <div className={c(styles.container)}>
+                <select className={c(styles.field)} onChange={this.toggle} value={this.props.value}>
                     {(this.props.options || []).map((option) => {
                         return <option key={option} value={option}>{option}</option>;
                     })}
