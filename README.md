@@ -21,7 +21,8 @@ For develoment use `npm run dev`, for production - `npm run build` and `npm star
 So much work to do. Later... The closest steps are:
 * tests
 * generate reducers structure typings to avoid errors in _Reducer_.combine
-* format code accoring tslint
+* format code according tslint
+* isomorphic data fetch
 
 #### Preview
 ![preview](https://dl.dropboxusercontent.com/spa/cm6sytebldipwst/rs0r965a.png)
