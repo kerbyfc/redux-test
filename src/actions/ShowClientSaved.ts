@@ -2,25 +2,22 @@
  * Local imports
  */
 import {Action} from '../core/Action';
-import {ShowNotification} from './ShowNotification';
+import {injectable, inject} from '../core/Injector';
+import {NotifyDataIsSaved} from '../actors/NotifyDataIsSaved';
 
 /**
  * Indicate the client was successfully saved
  */
+@injectable()
 export class ShowClientSaved extends Action<void> {
 
-    constructor() {
+    constructor(
+        @inject(NotifyDataIsSaved) notifyDataIsSaved: IActor
+    ) {
         super();
 
-        // TODO: create actor via DI
-        this.actors.push(this.showSuccessMessage.bind(this));
-    }
-
-    showSuccessMessage() {
-        this.createAction<ShowNotification>(ShowNotification)
-            .emit({
-                text: 'Данные успешно сохранены',
-                type: NotificationType.SUCCESS
-            });
+        this.enqueue(
+            notifyDataIsSaved
+        )
     }
 }

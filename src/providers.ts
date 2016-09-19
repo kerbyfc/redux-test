@@ -33,6 +33,7 @@ import {FallbackInputValue} from './actors/FallbackInputValue';
 import {SaveClientToServer} from './actors/SaveClient';
 import {HideNotificationByTimeout} from './actors/HideNotificationByTimeout';
 import {HideNotification} from './actions/HideNotification';
+import {NotifyDataIsSaved} from './actors/NotifyDataIsSaved';
 
 
 /**
@@ -71,6 +72,7 @@ injector.registerProviders([
     FallbackInputValue,
     SaveClientToServer,
     HideNotificationByTimeout,
+    NotifyDataIsSaved,
 
     /**
      * Validators

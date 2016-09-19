@@ -1,11 +1,6 @@
-declare enum NotificationType {
-    SUCCESS,
-    ERROR
-}
-
 interface INotification {
     text: string;
-    type: NotificationType;
+    type: number;
     delay?: number;
 
     /**
