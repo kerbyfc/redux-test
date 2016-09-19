@@ -32,35 +32,34 @@ module.exports = {
                 PORT: JSON.stringify(process.env.PORT)
             }
         }),
+
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NoErrorsPlugin(),
+
         new CopyWebpackPlugin([
             {context: 'assets', from: '**/*', to: '.'}
         ]),
+
         new ExtractTextPlugin('./static/main.css'),
         new ExtractTextPlugin('main.css')
     ],
+
     module: {
         loaders: [
             {
                 test: /\.tsx?$/,
-                loader: 'react-hot!babel?cacheDirectory!ts?sourceMap',
+                loader: 'react-hot!babel?cacheDirectory!ts?sourceMap!tslint',
                 exclude: /node_modules/,
-                include: path.join(__dirname, 'src')
-            },
-            {
-                test: /\.css$/,
-                loader: 'style?sourceMap!css?importLoaders=1&modules&sourceMap&localIdentName=[name]__[local]___[hash:base64:5]',
                 include: path.join(__dirname, 'src')
             },
 
             {
                 test: /\.scss$/,
                 loader: ExtractTextPlugin.extract(
-                    'style-loader',
+                    'style',
                     [
-                        'css-loader?modules&importLoaders=2&localIdentName=[name]__[local]___[hash:base64:5]',
-                        // 'postcss-loader',
+                        'css?modules&importLoaders=2&localIdentName=[name]__[local]___[hash:base64:5]',
+                        'postcss',
                         'sass'
                     ]
                 )
@@ -72,6 +71,7 @@ module.exports = {
             }
         ]
     },
+
     postcss: function () {
         return [autoprefixer];
     }
