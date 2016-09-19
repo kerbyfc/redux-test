@@ -2,7 +2,7 @@
 
 This is my first exp in working with redux. I choosed next:
 
-* Typescript - as it's one of the most (top 15) trending languages, that gives me great benefits in development (but development is _dangerously slower_ at first steps);
+* Typescript - as it's one of the most (top 15) trending languages, that gives me great benefitsw while development and especially while refactoring (rename is awesome). The only weakness is slow project bootstraping.;
 * Typed css modules - to avoid typo-bugs not only while typescript developing/refactoring;
 * Webpack - as it has incredible support for react & redux development (hot module replacement, isomorphic tools).
 
@@ -18,7 +18,6 @@ This is my first exp in working with redux. I choosed next:
 For develoment use `npm run dev`, for production - `npm run build` and `npm start`
 
 #### Roadmap
-So much work to do. Later... The closest:
-* tests
+So much work to do. Later... The closest: * tests
 * generate reducers structure typings to avoid errors in _Reducer_.combine
 * format code accoring tslint
