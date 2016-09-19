@@ -9,7 +9,9 @@ This is my first exp in working with redux. I choosed next:
 #### Project conventions:
 * There are a _Ref_'s object with same structure as _IAppState_. It should be used to get _state data path_ by object structure (with typecheck) and use it later to modify state in _Reducer_ (see _ClienForm_ reducer for example);
 * Initial state must be specifiend in _state.yml_ file. _IState_ and _StateRef_ typings are generated automatically and placed in _state.ts_;
-* Store cross-file interfaces in interfaces directory to avoid extra imports and to avoid class types usage inside interfaces.
+* Store cross-file interfaces in interfaces directory to avoid extra imports and to avoid class types usage inside interfaces;
+* Use stateless component if possible (_templates_ folder);
+* Use _Actors_ for side effects, such as data fetch. Actors also can emit _Actions_, _Dispatcher will enqueue them, then dispatch.
 
 #### Install
 `npm i`
