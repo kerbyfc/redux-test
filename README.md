@@ -21,3 +21,4 @@ For develoment use `npm run dev`, for production - `npm run build` and `npm star
 So much work to do. Later... The closest:
 * tests
 * generate reducers structure typings to avoid errors in _Reducer_.combine
+* format code accoring tslint
