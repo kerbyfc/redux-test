@@ -1,4 +1,9 @@
 /**
+ * External imports
+ */
+import * as _ from 'lodash';
+
+/**
  * Local imports
  */
 import {injectable, injector} from './Injector';
@@ -11,8 +16,8 @@ export class Action<TPayload> implements IAction<TPayload> {
      * Static
      */
 
-    static getPayload<TPayload>(action: IDispatcherAction): TPayload {
-        return <TPayload>action.__payload;
+    static getPayload<TPayload>(action: Action<TPayload> | IDispatcherAction): TPayload {
+        return <TPayload>action._payload;
     }
 
     static resolveType(): string {
@@ -27,9 +32,10 @@ export class Action<TPayload> implements IAction<TPayload> {
      * Properties
      */
 
+    _payload: TPayload = null;
+
     protected actors: any[] = [];
     protected emitted = false;
-    protected payload: TPayload = null;
     protected dispatcher: Dispatcher;
 
     constructor() {
@@ -44,16 +50,26 @@ export class Action<TPayload> implements IAction<TPayload> {
         return Action.resolveType.call(this.constructor);
     }
 
+    get is() {
+        return this;
+    }
+
+    get class() {
+        return this.constructor;
+    }
+
     shouldBeEmitted(): boolean {
         return true;
     }
 
-    enqueue(...actions: IActor[]) {
-
+    enqueue(...actors: IActor[]) {
+        this.actors = this.actors.concat(_.map(actors, (actor: IActor) => {
+            return actor.attach(this);
+        }));
     }
 
     emit(payload?: TPayload): boolean {
-        this.payload = payload || null;
+        this._payload = payload || null;
 
         // TODO: check environment
         if (this.emitted) {
@@ -72,7 +88,7 @@ export class Action<TPayload> implements IAction<TPayload> {
             is: this,
             type: this.type,
             class: this.constructor,
-            __payload: this.payload,
+            _payload: this._payload,
         };
 
         /**
@@ -86,10 +102,8 @@ export class Action<TPayload> implements IAction<TPayload> {
         }
 
         if (this.shouldBeEmitted()) {
-            // TODO: use middleware
-            console.log(`[ACTION] ${data.type}`, data.__payload);
+            console.log(`[ACTION] ${data.type}`, data._payload);
             this.dispatcher.dispatch(data);
-
             this.emitted = true;
         }
         return this.emitted;

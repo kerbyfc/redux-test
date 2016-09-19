@@ -6,8 +6,9 @@ import * as _ from 'lodash';
 /**
  * Local imports
  */
-import {injectable} from '../core/Injector';
+import {injectable, inject} from '../core/Injector';
 import {Action} from '../core/Action';
+import {FallbackInputValue} from '../actors/FallbackInputValue';
 
 /**
  * Interfaces
@@ -22,6 +23,8 @@ export interface IChangeInputValuePayload {
      */
     value?: string;
     input?: HTMLInputElement;
+    start?: number;
+    end?: number;
 }
 
 /**
@@ -31,6 +34,16 @@ export interface IChangeInputValuePayload {
 @injectable()
 export class ChangeInputValue extends Action<IChangeInputValuePayload> {
 
+    constructor(
+        @inject(FallbackInputValue) fallbackInputValue: IActor
+    ) {
+        super();
+
+        this.enqueue(
+            fallbackInputValue
+        );
+    }
+
     emit({event, selection, ref}) {
         const input: HTMLInputElement = <HTMLInputElement>event.target;
         const [start, end] = selection;
@@ -38,27 +51,12 @@ export class ChangeInputValue extends Action<IChangeInputValuePayload> {
         const payload = {
             value: input.value,
             selection,
+            start,
+            end,
             event,
             input,
             ref
         };
-
-        // TODO: use DI
-        this.actors.push((state) => {
-            /**
-             * Get state value by Ref.path
-             */
-            const stateValue = _.get<string>(state, this.payload.ref.path);
-
-            /**
-             * Check if stateValue was applyed by reducer
-             * and revert input value if not
-             */
-            if (stateValue !== this.payload.value) {
-                this.payload.input.value = stateValue;
-                this.payload.input.setSelectionRange(start, end);
-            }
-        });
 
         return super.emit(payload);
     }

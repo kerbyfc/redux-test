@@ -1,4 +1,4 @@
 interface IActor {
-    attach(action: IDispatcherAction);
-    // apply(state: IAppState);
+    attach(action: IAction<any>);
+    perform(state: IAppState, previousState: IAppState);
 }

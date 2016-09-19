@@ -1,40 +1,23 @@
 /**
  * Local imports
  */
-import {ShowClientSaved} from '../actions/ShowClientSaved';
-import {injectable, inject} from './Injector';
+import {injectable} from './Injector';
 
 /**
  * Actor do some logic after action
  */
+@injectable()
 export abstract class Actor implements IActor {
 
-    protected action: IDispatcherAction;
+    protected action: IAction<any>;
 
-    attach(action: IDispatcherAction) {
+    attach(action: IAction<any>): Actor {
         if (this.action) {
             throw new Error(`Action may be attached once (${this.constructor.name})`);
         }
         this.action = action;
+        return this;
     }
 
-    abstract apply(state: IAppState);
-}
-
-@injectable()
-export class SaveDataToServer extends Actor {
-
-    constructor(
-        @inject(ShowClientSaved) protected showClientSaved: IAction<void>
-    ) {
-        super();
-    }
-
-    apply(state: IAppState) {
-        if (state.clientForm.loading) {
-            setTimeout(() => {
-                this.showClientSaved.emit(null);
-            }, 1000);
-        }
-    }
+    abstract perform(state: IAppState);
 }

@@ -9,15 +9,17 @@ import Store = Redux.Store;
  */
 import {injectable} from './Injector';
 
-// TODO: -> Dispatcher<IAppState> & .store<IAppState>
+/**
+ * TODO: -> Dispatcher<IAppState> & .store<IAppState>
+ */
 @injectable()
 export class Dispatcher {
 
     protected acting: boolean = false;
     protected lastState: IAppState;
 
-    protected actors: any[] = [];
-    protected singularActors: any[] = [];
+    protected actors: IActor[] = [];
+    protected singularActors: IActor[] = [];
     protected dispatchQueue: IDispatcherAction[] = [];
     protected store;
 
@@ -42,14 +44,14 @@ export class Dispatcher {
                  */
                 while (actor = this.singularActors.shift()) {
                     // TODO: actor should not be a pure function, it's inconvenient
-                    actor(this.getState(), this.lastState, this);
+                    actor.perform(this.getState(), this.lastState);
                 }
             }
 
             /**
              * Invoke actors
              */
-            this.actors.forEach((actor) => actor(this.getState(), this.lastState, this));
+            this.actors.forEach((actor) => actor.perform(this.getState(), this.lastState));
 
             /**
              * After all actors have been processed, it's time
@@ -94,29 +96,15 @@ export class Dispatcher {
         };
     };
 
-    dispatch(data: IDispatcherAction) {
-        // TODO: think about:
-        // implement queue to be able to
-        // dispatch inside actors
-        // (they may should take dispatcher in params)
-
-        /*
-            new ActionWithActor().emit(data)
-                                      /
-              Reducer.reduce(state, data): IAppState
-                       ____________________/
-                      /
-               actor(newState, dispatcher) { dispatcher.dispatch(); }
-        */
-
+    dispatch(action: IDispatcherAction) {
         if (this.acting) {
-            this.dispatchQueue.push(data);
+            this.dispatchQueue.push(action);
         } else {
-            this.store.dispatch(data);
+            this.store.dispatch(action);
         }
     };
 
-    getState() {
+    getState(): IAppState {
         return this.store.getState();
     }
 }

@@ -3,7 +3,7 @@
  */
 import {Action} from '../core/Action';
 import {injectable, inject} from '../core/Injector';
-import {SaveDataToServer} from '../core/Actor';
+import {SaveClientToServer} from '../actors/SaveClient';
 
 /**
  * Save client on server
@@ -12,7 +12,7 @@ import {SaveDataToServer} from '../core/Actor';
 export class SaveClient extends Action<void> {
 
     constructor(
-        @inject(SaveDataToServer) saveDataToServer: IActor
+        @inject(SaveClientToServer) saveDataToServer: IActor
     ) {
         super();
 

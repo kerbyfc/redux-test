@@ -24,16 +24,16 @@ export class ShowNotification extends Action<INotification> {
     constructor() {
         super();
 
-        // TODO: create actor via DI
-        this.actors.push(this.hideByTimeout.bind(this));
+        // // TODO: create actor via DI
+        // this.actors.push(this.hideByTimeout.bind(this));
     }
 
-    hideByTimeout() {
-        setTimeout(() => {
-            this.createAction<HideNotificationByTimeOut>(HideNotificationByTimeOut)
-                .emit(this.payload.id);
-        }, this.payload.delay || this.defaultDelay);
-    }
+    // hideByTimeout() {
+    //     setTimeout(() => {
+    //         this.createAction<HideNotificationByTimeOut>(HideNotificationByTimeOut)
+    //             .emit(this.payload.id);
+    //     }, this.payload.delay || this.defaultDelay);
+    // }
 
     emit(payload: INotification) {
         payload.id = _.uniqueId('notification');
