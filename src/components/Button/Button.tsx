@@ -2,6 +2,7 @@
  * External imports
  */
 import * as React from 'react';
+import * as c from 'classnames';
 import SyntheticEvent = __React.SyntheticEvent;
 
 /**
@@ -30,7 +31,7 @@ export class Button extends Component<IButtonProps, any> {
 
     render() {
         return (
-            <button className={this.class(styles.button)} onClick={this.onClick}>
+            <button className={c(styles.button)} onClick={this.onClick}>
                 {this.props.children || this.props.text}
             </button>
         );

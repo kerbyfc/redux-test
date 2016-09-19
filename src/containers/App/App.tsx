@@ -2,7 +2,6 @@
  * External imports
  */
 import * as React from 'react';
-import 'react-dom';
 
 /**
  * Local imports

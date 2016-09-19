@@ -1,5 +1,4 @@
 import * as React from 'react';
-import 'react-dom';
 import { renderToString } from 'react-dom/server';
 import * as Helmet from 'react-helmet';
 import serialize = require('serialize-javascript');

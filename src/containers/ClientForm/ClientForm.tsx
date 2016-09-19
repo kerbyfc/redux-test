@@ -15,6 +15,7 @@ import {Select} from '../../components/Select/Select';
 import {Button} from '../../components/Button/Button';
 import {SaveClient} from '../../actions/clientForm/SaveClient';
 import {Form} from '../../templates/Form/Form';
+import {MaskedInput} from '../../components/Input/MaskedInput/MaskedInput';
 
 /**
  * Constants
@@ -43,7 +44,7 @@ function mapStateToProps(state: IAppState) {
 @connect(mapStateToProps)
 export class ClientForm extends Component<IClientFormState, any> {
 
-    save = (event) => {
+    save = () => {
         this.createAction<SaveClient>(SaveClient).emit();
     };
 
@@ -66,11 +67,11 @@ export class ClientForm extends Component<IClientFormState, any> {
                 </FormRow>
 
                 <FormRow title="День рождения">
-                    <Input key="birthday" val={this.props.data.birthday} $={refs.data.birthday} mask="." />
+                    <MaskedInput key="birthday" val={this.props.data.birthday} $={refs.data.birthday} mask="." />
                 </FormRow>
 
                 <FormRow title="Серия и номер паспорта">
-                    <Input key="passport" val={this.props.data.passport} $={refs.data.passport} mask=" " />
+                    <MaskedInput key="passport" val={this.props.data.passport} $={refs.data.passport} mask=" " />
                 </FormRow>
 
                 <FormRow title="Почта">

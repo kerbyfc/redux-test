@@ -2,7 +2,6 @@
  * External imports
  */
 import * as React from 'react';
-import 'react-dom';
 import { renderToString } from 'react-dom/server';
 import { Provider } from 'react-redux';
 import { RouterContext } from 'react-router';

@@ -2,14 +2,13 @@
  * External imports
  */
 import * as React from 'react';
-import * as _ from 'lodash';
-import 'react-dom';
+import * as c from 'classnames';
+import {autobind} from 'core-decorators';
 
 /**
  * Local imports
  */
 import * as styles from './Input.style.scss';
-import {ARROW_KEYS} from '../../vars';
 import {Component} from '../../core/Component';
 import {ChangeInputValue} from '../../actions/input/ChangeInputValue';
 
@@ -36,9 +35,12 @@ interface IInputProps {
      * Optional
      */
     error?: string;
-    mask?: string | boolean;
     className?: string;
-    delimiter?: string;
+
+    /**
+     * MaskeInput optional props
+     */
+    mask?: string | boolean;
 }
 
 interface IInputState {
@@ -57,89 +59,37 @@ export class Input extends Component<IInputProps, IInputState> {
         selection: [0, 0]
     };
 
-    isMasked() {
-        return this.props.mask !== undefined;
-    }
+    onKeyDown(event) {}
+    onMouseUp(event) {}
+    onKeyPress(event) {}
 
-    select(el: HTMLInputElement, start: number, end: number, direction: number = 1) {
-        start = Math.max(0, start);
-
-        if (el.value.length + 1 <= end) {
-            start = el.value.length - 1;
-        } else {
-            end = start + 1;
-        }
-
-        if (el.value.slice(start, end) === this.props.mask) {
-            (start += direction) && (end += direction);
-        }
-
-        el.setSelectionRange(start, end);
-
+    @autobind
+    onKeyUp(event) {
         /**
          * No needs to use setState to update component
          */
-        this.state.selection = [start, end];
-    };
+        this.state.repeat = 0;
+    }
 
-    handleChange = (event) => {
+    @autobind
+    onSelect(event) {
+        this.handleSelect(event);
+    }
+
+    @autobind
+    onChange(event) {
+        this.handleChange(event);
+    }
+
+    handleChange(event)  {
         this.createAction<ChangeInputValue>(ChangeInputValue).emit({
             event,
             ref: this.props.$,
             selection: this.state.selection,
         });
-    };
-
-    updateSelectionOnMouseUp = (event) => {
-        if (this.isMasked()) {
-            const el = event.target;
-            this.select(el, el.selectionStart, el.selectionStart + 1);
-        }
-    };
-
-    /**
-     * Update mask selection on user input
-     */
-    updateSelectionOnKeyUp = (event) => {
-        if (this.isMasked()) {
-            const el = event.target;
-
-            let direction: number = 1;
-            let {selectionStart: start} = el;
-
-            /**
-             * Support navigation
-             */
-            switch (event.keyCode) {
-                case 37: start -= 1; direction = -1; break;  // up -> start
-                case 38: start = 0; break;
-                case 39: start += 1; break;
-                case 40: start = el.value.length - 1; break; // down -> end
-            }
-
-            this.select(el, start, start + 1, direction);
-        }
-    };
-
-    /**
-     * Do not process arrow navigation on keyDown,
-     * as it will be processed in keyUp event handler
-     */
-    preventOriginArrowNavigation = (event) => {
-        if (this.isMasked()) {
-            if (_.includes(ARROW_KEYS, event.keyCode)) {
-                event.preventDefault();
-            }
-        }
-    };
-
-    preventInputWithoutSelection(event) {
-        if (this.state.selection[1] - this.state.selection[0] !== 1) {
-            event.preventDefault();
-        }
     }
 
-    handleSelect = (event) => {
+    handleSelect(event) {
         const el = event.target;
         let {selectionStart: start, selectionEnd: end} = el;
 
@@ -147,56 +97,25 @@ export class Input extends Component<IInputProps, IInputState> {
          * No needs to use setState to update component
          */
         this.state.selection = [start, end];
-    };
+    }
 
-    handleKeyRepeat = (event) => {
-        if (this.isMasked()) {
-            if (this.state.repeat > 1) {
-                event.preventDefault();
-            }
-            /**
-             * No needs to use setState to update component
-             */
-            this.state.repeat = this.state.repeat + 1;
-        }
-    };
+    getContainerClass() {
+        return c(
+            styles.container,
+            this.props.className,
+            (this.props.error && styles.invalid || '')
+        );
+    }
 
-    onKeyDown = (event) => {
-        if (this.isMasked()) {
-            this.preventOriginArrowNavigation(event);
-            this.preventInputWithoutSelection(event);
-        }
-    };
-
-    onKeyUp = (event) => {
-        this.updateSelectionOnKeyUp(event);
-        /**
-         * No needs to use setState to update component
-         */
-        this.state.repeat = 0;
-    };
-
-    onMouseUp = (event) => {
-        this.updateSelectionOnMouseUp(event);
-    };
-
-    onKeyPress = (event) => {
-        this.handleKeyRepeat(event);
-    };
-
-    onSelect = (event) => {
-        this.handleSelect(event);
-    };
-
-    onChange = (event) => {
-        this.handleChange(event);
-    };
+    getInputClass() {
+        return c(styles.field);
+    }
 
     render() {
         return (
-            <div className={this.class(styles.container, this.props.className, (this.props.error && styles.invalid || ''))}>
+            <div className={this.getContainerClass()}>
                 <input type='text'
-                       className={this.class(styles.field)}
+                       className={this.getInputClass()}
                        value={this.props.val}
                        onChange={this.onChange}
                        onSelect={this.onSelect}

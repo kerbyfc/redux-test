@@ -2,6 +2,7 @@
  * External imports
  */
 import * as React from 'react';
+import * as c from 'classnames';
 
 /**
  * Local imports
@@ -28,8 +29,8 @@ export class Checkbox extends Component<any, any> {
 
     render() {
         return (
-            <div className={this.class(styles.container)}>
-                <input className={this.class(styles.field)} type="checkbox" checked={this.props.checked} onChange={this.toggle} />
+            <div className={c(styles.container)}>
+                <input className={c(styles.field)} type="checkbox" checked={this.props.checked} onChange={this.toggle} />
             </div>
         );
     }

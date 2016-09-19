@@ -2,8 +2,6 @@
  * External imports
  */
 import * as React from 'react';
-import * as _ from 'lodash';
-import * as classname from 'classnames';
 
 /**
  * Local imports
@@ -19,10 +17,6 @@ export class Component<TProps, TState> extends React.Component<TProps, TState> {
     }
 
     set $(value) {}
-
-    class = (...args: any[]) => {
-        return classname(...args);
-    };
 
     /**
      * TODO: use metadata reflection api
