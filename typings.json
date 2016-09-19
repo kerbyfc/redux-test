@@ -12,6 +12,7 @@
   },
   "globalDependencies": {
     "classnames": "registry:dt/classnames#0.0.0+20160316155526",
+    "core-decorators": "registry:dt/core-decorators#0.10.0+20160316155526",
     "express": "registry:dt/express#4.0.0+20160708185218",
     "express-serve-static-core": "registry:dt/express-serve-static-core#4.0.0+20160819131900",
     "inversify": "registry:dt/inversify#2.0.0-rc.12+20160830145920",
