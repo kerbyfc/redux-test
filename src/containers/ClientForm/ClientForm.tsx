@@ -82,13 +82,17 @@ export class ClientForm extends Component<IClientFormState, any> {
                     <Checkbox key="hascar" checked={this.props.data.car.exists} $={refs.data.car.exists} />
                 </FormRow>
 
-                {this.props.data.car.exists? (() => (<FormRow title="Марка автомобиля">
-                    <Select key="carMark" options={carMarks} value={this.props.data.car.brand} $={refs.data.car.brand} />
-                </FormRow>))() : ''}
+                {this.props.data.car.exists ?
+                    <FormRow title="Марка автомобиля">
+                        <Select key="carMark" options={carMarks} value={this.props.data.car.brand} $={refs.data.car.brand} />
+                    </FormRow>
+                : ''}
 
-                {this.props.data.car.exists ? (() => (<FormRow title="Модель автомобиля">
-                    <Select key="carModel" options={carModels[this.props.data.car.brand]} value={this.props.data.car.model} $={refs.data.car.model} />
-                </FormRow>))() : ''}
+                {this.props.data.car.exists ?
+                    <FormRow title="Модель автомобиля">
+                        <Select key="carModel" options={carModels[this.props.data.car.brand]} value={this.props.data.car.model} $={refs.data.car.model} />
+                    </FormRow>
+                : ''}
 
                 <Button onClick={this.save}>
                     Сохранить
