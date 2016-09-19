@@ -9,7 +9,7 @@ var fs = require('fs');
 
 require('typescript-require');
 
-var Json2Ts = require('./tools/json2ts').Json2Ts;
+var Json2Ts = require('./scripts/json2ts').Json2Ts;
 var DtsCreator = require('typed-css-modules');
 
 var dtsCreator = new DtsCreator();

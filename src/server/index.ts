@@ -24,7 +24,7 @@ const app = express();
  */
 if (process.env.NODE_ENV === 'development') {
   /* tslint:disable:no-var-requires */
-  const config = require('../../webpack.config');
+  const config = require('../../webpack.js');
   /* tslint:enable:no-var-requires */
 
   const compiler = webpack(config);
