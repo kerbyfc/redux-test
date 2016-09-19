@@ -1,9 +1,9 @@
 /**
  * Local imports
  */
-import {Action} from '../core/Action';
-import {injectable, inject} from '../core/Injector';
-import {NotifyDataIsSaved} from '../actors/NotifyDataIsSaved';
+import {Action} from '../../core/Action';
+import {injectable, inject} from '../../core/Injector';
+import {NotifyDataIsSaved} from '../../actors/notifications/NotifyDataIsSaved';
 
 /**
  * Indicate the client was successfully saved

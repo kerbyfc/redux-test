@@ -29,6 +29,3 @@ export function Header(props: IHeaderProps) {
         </header>
     );
 }
-
-export default Header;
-

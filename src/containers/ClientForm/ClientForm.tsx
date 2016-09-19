@@ -8,13 +8,13 @@ import {connect} from 'react-redux';
  * Local imports
  */
 import {Component} from '../../core/Component';
-import {FormRow} from '../../components/FormRow/FormRow';
+import {FormRow} from '../../templates/FormRow/FormRow';
 import {Input} from '../../components/Input/Input';
 import {Checkbox} from '../../components/Checkbox/Checkbox';
 import {Select} from '../../components/Select/Select';
 import {Button} from '../../components/Button/Button';
-import {SaveClient} from '../../actions/SaveClient';
-import {Form} from '../../components/Form/Form';
+import {SaveClient} from '../../actions/clientForm/SaveClient';
+import {Form} from '../../templates/Form/Form';
 
 /**
  * Constants

@@ -7,8 +7,8 @@ import * as _ from 'lodash';
  * Local imports
  */
 import {Reducer} from '../core/Reducer';
-import {ShowNotification} from '../actions/ShowNotification';
-import {HideNotification} from '../actions/HideNotification';
+import {ShowNotification} from '../actions/notifications/ShowNotification';
+import {HideNotification} from '../actions/notifications/HideNotification';
 
 /**
  * Handle actions, that affects current visible notifications

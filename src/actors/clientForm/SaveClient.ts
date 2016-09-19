@@ -1,9 +1,9 @@
 /**
  * Local imports
  */
-import {injectable, inject} from '../core/Injector';
-import {Actor} from '../core/Actor';
-import {ShowClientSaved} from '../actions/ShowClientSaved';
+import {injectable, inject} from '../../core/Injector';
+import {Actor} from '../../core/Actor';
+import {ShowClientSaved} from '../../actions/clientForm/ShowClientSaved';
 
 @injectable()
 export class SaveClientToServer extends Actor {

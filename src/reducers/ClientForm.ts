@@ -10,14 +10,14 @@ import {DateValidator} from '../validators/DateValidator';
 import {EmailValidator} from '../validators/EmailValidator';
 import {initialState, getStateRefs} from '../state';
 import {injectable, inject} from '../core/Injector';
-import {ChangeInputValue, IChangeInputValuePayload} from '../actions/ChangeInputValue';
+import {ChangeInputValue, IChangeInputValuePayload} from '../actions/input/ChangeInputValue';
 import {OnlyRussianCharsValidator} from '../validators/OnlyRussianCharsValidator';
 import {PassportValidator} from '../validators/PassportValidator';
 import {Reducer} from '../core/Reducer';
-import {ToggleCheckbox} from '../actions/ToggleCheckbox';
-import {SelectOption} from '../actions/SelectOption';
-import {SaveClient} from '../actions/SaveClient';
-import {ShowClientSaved} from '../actions/ShowClientSaved';
+import {ToggleCheckbox} from '../actions/input/ToggleCheckbox';
+import {SelectOption} from '../actions/input/SelectOption';
+import {SaveClient} from '../actions/clientForm/SaveClient';
+import {ShowClientSaved} from '../actions/clientForm/ShowClientSaved';
 
 @injectable()
 export class ClientFormReducer extends Reducer<IClientFormState> {

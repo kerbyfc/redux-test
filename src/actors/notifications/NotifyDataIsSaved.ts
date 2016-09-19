@@ -1,10 +1,10 @@
 /**
  * Local imports
  */
-import {Actor} from '../core/Actor';
-import {inject, injectable} from '../core/Injector';
-import {ShowNotification} from '../actions/ShowNotification';
-import {NotificationType} from '../vars';
+import {Actor} from '../../core/Actor';
+import {inject, injectable} from '../../core/Injector';
+import {ShowNotification} from '../../actions/notifications/ShowNotification';
+import {NotificationType} from '../../vars';
 
 @injectable()
 export class NotifyDataIsSaved extends Actor {

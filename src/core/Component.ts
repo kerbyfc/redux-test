@@ -31,5 +31,3 @@ export class Component<TProps, TState> extends React.Component<TProps, TState> {
         return injector.get<ActionType>(actionClass);
     }
 }
-
-export default Component;

@@ -6,9 +6,9 @@ import * as _ from 'lodash';
 /**
  * Local imports
  */
-import {Action} from '../core/Action';
-import {injectable, inject} from '../core/Injector';
-import {HideNotificationByTimeout} from '../actors/HideNotificationByTimeout';
+import {Action} from '../../core/Action';
+import {injectable, inject} from '../../core/Injector';
+import {HideNotificationByTimeout} from '../../actors/notifications/HideNotificationByTimeout';
 
 /**
  * Show text notification in top right corner of view port

@@ -6,9 +6,9 @@ import * as _ from 'lodash';
 /**
  * Local imports
  */
-import {injectable, inject} from '../core/Injector';
-import {Action} from '../core/Action';
-import {FallbackInputValue} from '../actors/FallbackInputValue';
+import {injectable, inject} from '../../core/Injector';
+import {Action} from '../../core/Action';
+import {FallbackInputValue} from '../../actors/inputs/FallbackInputValue';
 
 /**
  * Interfaces

@@ -6,9 +6,9 @@ import * as _ from 'lodash';
 /**
  * Local imports
  */
-import {injectable} from '../core/Injector';
-import {Actor} from '../core/Actor';
-import {ChangeInputValue, IChangeInputValuePayload} from '../actions/ChangeInputValue';
+import {injectable} from '../../core/Injector';
+import {Actor} from '../../core/Actor';
+import {ChangeInputValue, IChangeInputValuePayload} from '../../actions/input/ChangeInputValue';
 
 @injectable()
 export class FallbackInputValue extends Actor {

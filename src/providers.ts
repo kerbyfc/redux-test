@@ -12,28 +12,28 @@ import {injector} from './core/Injector';
  * Import providers
  */
 import {AppReducer} from './reducers/App';
-import {ToggleCheckbox} from './actions/ToggleCheckbox';
+import {ToggleCheckbox} from './actions/input/ToggleCheckbox';
 import {ClientFormReducer} from './reducers/ClientForm';
 import {DateValidator} from './validators/DateValidator';
 import {Dispatcher} from './core/Dispatcher';
 import {EmailValidator} from './validators/EmailValidator';
-import {ChangeInputValue} from './actions/ChangeInputValue';
+import {ChangeInputValue} from './actions/input/ChangeInputValue';
 import {OnlyRussianCharsValidator} from './validators/OnlyRussianCharsValidator';
 import {PassportValidator} from './validators/PassportValidator';
 import {PatternValidator} from './validators/PatternValidator';
 import {Ref} from './core/Ref';
-import {SaveClient} from './actions/SaveClient';
-import {SelectOption} from './actions/SelectOption';
+import {SaveClient} from './actions/clientForm/SaveClient';
+import {SelectOption} from './actions/input/SelectOption';
 import {TextLengthValidator} from './validators/TextLengthValidator';
 import {Validator} from './core/Validator';
 import {NotificationsReducer} from './reducers/NotificationsReducer';
-import {ShowNotification} from './actions/ShowNotification';
-import {ShowClientSaved} from './actions/ShowClientSaved';
-import {FallbackInputValue} from './actors/FallbackInputValue';
-import {SaveClientToServer} from './actors/SaveClient';
-import {HideNotificationByTimeout} from './actors/HideNotificationByTimeout';
-import {HideNotification} from './actions/HideNotification';
-import {NotifyDataIsSaved} from './actors/NotifyDataIsSaved';
+import {ShowNotification} from './actions/notifications/ShowNotification';
+import {ShowClientSaved} from './actions/clientForm/ShowClientSaved';
+import {FallbackInputValue} from './actors/inputs/FallbackInputValue';
+import {SaveClientToServer} from './actors/clientForm/SaveClient';
+import {HideNotificationByTimeout} from './actors/notifications/HideNotificationByTimeout';
+import {HideNotification} from './actions/notifications/HideNotification';
+import {NotifyDataIsSaved} from './actors/notifications/NotifyDataIsSaved';
 
 
 /**

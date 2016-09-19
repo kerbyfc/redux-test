@@ -11,7 +11,7 @@ import 'react-dom';
 import * as styles from './Input.style.scss';
 import {ARROW_KEYS} from '../../vars';
 import {Component} from '../../core/Component';
-import {ChangeInputValue} from '../../actions/ChangeInputValue';
+import {ChangeInputValue} from '../../actions/input/ChangeInputValue';
 
 /**
  * Interfaces

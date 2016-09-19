@@ -1,4 +1,4 @@
-import {Action} from '../core/Action';
+import {Action} from '../../core/Action';
 
 interface IToggleCheckboxPayload {
   ref: IRef<boolean>;

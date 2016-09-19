@@ -1,7 +1,7 @@
-import {Actor} from '../core/Actor';
-import {injectable, inject} from '../core/Injector';
-import {HideNotification} from '../actions/HideNotification';
-import {ShowNotification} from '../actions/ShowNotification';
+import {Actor} from '../../core/Actor';
+import {injectable, inject} from '../../core/Injector';
+import {HideNotification} from '../../actions/notifications/HideNotification';
+import {ShowNotification} from '../../actions/notifications/ShowNotification';
 
 @injectable()
 export class HideNotificationByTimeout extends Actor {

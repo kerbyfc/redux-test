@@ -10,7 +10,7 @@ import {connect} from 'react-redux';
  */
 import * as styles from './Notifier.style.scss';
 import {Component} from '../../core/Component';
-import {Notification} from '../../components/Nodification/Notification';
+import {Notification} from '../../templates/Nodification/Notification';
 
 /**
  * Redux

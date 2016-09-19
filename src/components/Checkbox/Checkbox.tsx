@@ -6,7 +6,7 @@ import * as React from 'react';
 /**
  * Local imports
  */
-import {ToggleCheckbox} from '../../actions/ToggleCheckbox';
+import {ToggleCheckbox} from '../../actions/input/ToggleCheckbox';
 import {Component} from '../../core/Component';
 
 /* tslint:disable:no-var-requires */

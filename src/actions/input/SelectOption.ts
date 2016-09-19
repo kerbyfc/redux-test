@@ -1,4 +1,4 @@
-import {Action} from '../core/Action';
+import {Action} from '../../core/Action';
 
 /**
  * Interfaces

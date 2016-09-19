@@ -8,7 +8,7 @@ import * as cx from 'classnames';
  * Local imports
  */
 import {Component} from '../../core/Component';
-import {SelectOption} from '../../actions/SelectOption';
+import {SelectOption} from '../../actions/input/SelectOption';
 
 /* tslint:disable:no-var-requires */
 const styles = require('./Select.style.scss');
