@@ -11,10 +11,10 @@
 
 .field:checked:before {
     content: "✓";
-    font-size: 2rem;
+    font-size: 1.9rem;
     color: #bddb62;
-    top: -0.6rem;
-    left: -0.4rem;
+    top: -0.5rem;
+    left: -0.3rem;
     position: relative;
     font-weight: bold;
 }
