@@ -33,7 +33,7 @@ export abstract class Reducer<TState> implements IReducer<TState> {
         return current ? current + '.' + next : next;
     }
 
-    private getChildrenReducers(): IReduxReducersMapObject {
+    private getReducersToCombine(): IReduxReducersMapObject {
         return <IReduxReducersMapObject> _.mapValues<IReducer<any>, IReduxReducer<any>>(
             this.combine(), (reducer: IReducer<any>, key: string) => {
                 return reducer.release(this.concatPath(this.path, key));
@@ -60,7 +60,7 @@ export abstract class Reducer<TState> implements IReducer<TState> {
     public release(path: string = this.path): IReduxReducersMapObject | IReduxReducer<TState> {
         this.path = path;
 
-        const children = this.getChildrenReducers();
+        const children = this.getReducersToCombine();
 
         if (_.isEmpty(children)) {
             return this.invoke.bind(this);
