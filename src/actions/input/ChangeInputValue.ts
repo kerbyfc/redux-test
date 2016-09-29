@@ -7,24 +7,13 @@ import * as _ from 'lodash';
  * Local imports
  */
 import {injectable, inject} from '../../core/Injector';
-import {Action} from '../../core/Action';
 import {FallbackInputValue} from '../../actors/inputs/FallbackInputValue';
+import {Action} from '../../core/Action';
 
-/**
- * Interfaces
- */
-export interface IChangeInputValuePayload {
+interface IChangeInputValuePayload {
     event: Event;
     ref: IRef<string>;
     selection: number[];
-
-    /**
-     * must be added by action
-     */
-    value?: string;
-    input?: HTMLInputElement;
-    start?: number;
-    end?: number;
 }
 
 /**
@@ -35,7 +24,7 @@ export interface IChangeInputValuePayload {
 export class ChangeInputValue extends Action<IChangeInputValuePayload> {
 
     constructor(
-        @inject(FallbackInputValue) fallbackInputValue: IActor
+        @inject(FallbackInputValue) fallbackInputValue: IActor,
     ) {
         super();
 
@@ -44,20 +33,19 @@ export class ChangeInputValue extends Action<IChangeInputValuePayload> {
         );
     }
 
-    emit({event, selection, ref}) {
-        const input: HTMLInputElement = <HTMLInputElement>event.target;
-        const [start, end] = selection;
+    get input(): HTMLInputElement {
+        return <HTMLInputElement> this.payload.event.target;
+    }
 
-        const payload = {
-            value: input.value,
-            selection,
-            start,
-            end,
-            event,
-            input,
-            ref
-        };
+    get value(): string {
+        return this.input.value;
+    }
 
-        return super.emit(payload);
+    get start(): number {
+        return this.payload.selection[0];
+    }
+
+    get end(): number {
+        return this.payload.selection[1];
     }
 }

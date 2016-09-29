@@ -15,17 +15,15 @@ import {HideNotification} from '../actions/notifications/HideNotification';
  */
 export class NotificationsReducer extends Reducer<INotification[]> {
 
-    reduce(state, action) {
-        switch(action.class) {
-            case ShowNotification:
-                return state.concat([ShowNotification.getPayload(action)]);
-
-            case HideNotification:
-                // Hide action by it's id
-                return _.filter(state, (notification: INotification) => {
-                    return notification.id !== HideNotification.getPayload(action);
-                });
+    public reduce(action) {
+        if (action instanceof ShowNotification) {
+            return this.state.concat([action.payload]);
         }
-        return state;
+
+        if (action instanceof HideNotification) {
+            return _.filter(this.state, (notification: INotification) => {
+                return notification.id !== action.payload.id;
+            });
+        }
     }
 }

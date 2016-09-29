@@ -1,19 +1,17 @@
 import {Action} from '../../core/Action';
 
 interface IToggleCheckboxPayload {
-  ref: IRef<boolean>;
-  value?: boolean;
+    event: Event;
+    ref: IRef<boolean>;
 }
 
 export class ToggleCheckbox extends Action<IToggleCheckboxPayload> {
 
-  emit({event, ref}) {
-    const input:HTMLInputElement = <HTMLInputElement>event.target;
-    const value: boolean = input.checked;
+    get input(): HTMLInputElement {
+        return <HTMLInputElement> this.payload.event.target;
+    }
 
-    return super.emit({
-      ref,
-      value
-    });
-  }
+    get value(): boolean {
+        return this.input.checked;
+    }
 }

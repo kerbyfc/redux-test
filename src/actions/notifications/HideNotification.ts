@@ -1,3 +1,4 @@
 import {Action} from '../../core/Action';
 
-export class HideNotification extends Action<string> {}
+// string
+export class HideNotification extends Action<any> {}

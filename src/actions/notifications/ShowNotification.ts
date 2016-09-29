@@ -6,9 +6,9 @@ import * as _ from 'lodash';
 /**
  * Local imports
  */
-import {Action} from '../../core/Action';
 import {injectable, inject} from '../../core/Injector';
 import {HideNotificationByTimeout} from '../../actors/notifications/HideNotificationByTimeout';
+import {Action} from '../../core/Action';
 
 /**
  * Show text notification in top right corner of view port
@@ -16,18 +16,19 @@ import {HideNotificationByTimeout} from '../../actors/notifications/HideNotifica
 @injectable()
 export class ShowNotification extends Action<INotification> {
 
+    /**
+     * Unique identifier
+     */
+    public readonly id: string;
+
     constructor(
         @inject(HideNotificationByTimeout) hideNotificationByTimeout
     ) {
         super();
+        this.id = _.uniqueId('noty');
 
         this.enqueue(
             hideNotificationByTimeout
         );
-    }
-
-    emit(payload: INotification) {
-        payload.id = _.uniqueId('notification');
-        return super.emit(payload);
     }
 }

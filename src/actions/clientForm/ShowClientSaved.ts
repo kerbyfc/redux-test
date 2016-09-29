@@ -1,23 +1,23 @@
 /**
  * Local imports
  */
-import {Action} from '../../core/Action';
 import {injectable, inject} from '../../core/Injector';
 import {NotifyDataIsSaved} from '../../actors/notifications/NotifyDataIsSaved';
+import {Action} from '../../core/Action';
 
 /**
  * Indicate the client was successfully saved
  */
 @injectable()
-export class ShowClientSaved extends Action<void> {
+export class ShowClientSaved extends Action<any> {
 
     constructor(
-        @inject(NotifyDataIsSaved) notifyDataIsSaved: IActor
+        @inject(NotifyDataIsSaved) notifyDataIsSaved: IActor,
     ) {
         super();
-
-        this.enqueue(
-            notifyDataIsSaved
-        )
+        // TODO
+        // this.enqueue(
+        //     notifyDataIsSaved
+        // )
     }
 }

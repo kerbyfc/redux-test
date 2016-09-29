@@ -10,6 +10,8 @@ export enum KeyCode {
 export const ARROW_KEY_CODES: number[] = [KeyCode.left, KeyCode.right, KeyCode.up, KeyCode.down];
 export const REMOVE_KEY_CODES: number[] = [KeyCode.backspace, KeyCode.delete];
 
+export const DEV: string = "development";
+
 export enum NotificationType {
     SUCCESS,
     ERROR

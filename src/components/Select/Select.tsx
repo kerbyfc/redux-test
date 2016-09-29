@@ -23,9 +23,9 @@ interface ICheckboxProps {
 export class Select extends Component<ICheckboxProps, any> {
 
     toggle = (event) => {
-        this.createAction<SelectOption>(SelectOption).emit({
-            event, ref: this.props.$
-        });
+        // this.createAction<SelectOption>(SelectOption).emit({
+        //     event, ref: this.props.$
+        // });
     };
 
     render() {

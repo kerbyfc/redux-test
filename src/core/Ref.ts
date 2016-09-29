@@ -6,7 +6,7 @@ import * as _ from 'lodash';
 /**
  * Local imports
  */
-import {injectable, inject} from './Injector';
+import {injectable} from './Injector';
 import {Dispatcher} from './Dispatcher';
 
 /**
@@ -14,30 +14,21 @@ import {Dispatcher} from './Dispatcher';
  */
 @injectable()
 export class Ref<TType> implements IRef<TType> {
+    protected static injector: IInjector;
 
-    protected _path: string;
+    public readonly path: string;
+    public readonly initial: TType;
 
-    constructor(
-        @inject(Dispatcher) protected dispatcher: Dispatcher
-    ) {}
+    constructor(value: TType, path: string) {
+        this.initial = value;
+        this.path = path;
+    }
 
     get val(): TType {
-        return <TType>_.get(this.dispatcher.getState(), this.path);
+        return _.get<TType>(Ref.injector.get<IDispatcher>(Dispatcher).getState(), this.path);
     }
 
     get key(): string {
-        return _.last(this._path.split('.'));
-    }
-
-    get path(): string {
-        return this._path;
-    }
-
-    link(path: string): Ref<TType> {
-        if (this._path) {
-            throw `State reference can be linked only once (${this._path})`;
-        }
-        this._path = path;
-        return this;
+        return _.last(this.path.split('.'));
     }
 }

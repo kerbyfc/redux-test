@@ -11,7 +11,7 @@ export abstract class Actor implements IActor {
 
     protected action: IAction<any>;
 
-    attach(action: IAction<any>): Actor {
+    attach(action: IAction<any>): IActor {
         if (this.action) {
             throw new Error(`Action may be attached once (${this.constructor.name})`);
         }

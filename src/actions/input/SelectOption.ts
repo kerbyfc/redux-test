@@ -4,20 +4,21 @@ import {Action} from '../../core/Action';
  * Interfaces
  */
 interface ISelectOptionPayload {
-  ref: IRef<boolean>;
-  value?: string;
+    event: Event;
+    ref: IRef<string>;
 }
 
 export class SelectOption extends Action<ISelectOptionPayload> {
 
-  emit({event, ref}) {
-    const input:HTMLSelectElement = <HTMLSelectElement>event.target;
-    const option: HTMLOptionElement = <HTMLOptionElement>input.selectedOptions[0];
-    const value: string = option.value;
+    get input(): HTMLSelectElement {
+        return <HTMLSelectElement> this.payload.event.target;
+    }
 
-    return super.emit({
-      ref,
-      value
-    });
-  }
+    get option(): HTMLOptionElement {
+        return <HTMLOptionElement> this.input.selectedOptions[0];
+    }
+
+    get value(): string {
+        return this.option.value;
+    }
 }

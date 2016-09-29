@@ -45,7 +45,7 @@ function mapStateToProps(state: IAppState) {
 export class ClientForm extends Component<IClientFormState, any> {
 
     save = () => {
-        this.createAction<SaveClient>(SaveClient).emit();
+        // this.createAction<SaveClient>(SaveClient).emit();
     };
 
     render() {

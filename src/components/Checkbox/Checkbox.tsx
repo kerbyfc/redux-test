@@ -22,9 +22,9 @@ interface ICheckboxProps {
 export class Checkbox extends Component<ICheckboxProps, any> {
 
     toggle = (event) => {
-        this.createAction<ToggleCheckbox>(ToggleCheckbox).emit({
-            event, ref: this.props.$
-        })
+        // this.createAction<ToggleCheckbox>(ToggleCheckbox).emit({
+        //     event, ref: this.props.$
+        // })
     };
 
     render() {

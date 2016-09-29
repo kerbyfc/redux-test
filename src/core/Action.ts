@@ -6,93 +6,65 @@ import * as _ from 'lodash';
 /**
  * Local imports
  */
-import {injectable, injector} from './Injector';
+import {injectable, inject} from './Injector';
 import {Dispatcher} from './Dispatcher';
+import {DEV} from '../vars';
 
 @injectable()
-export class Action<TPayload> implements IAction<TPayload> {
+export abstract class Action<TPayload> {
+    protected static injector: IInjector;
 
-    /**
-     * Static
-     */
-
-    static getPayload<TPayload>(action: Action<TPayload> | IDispatcherAction): TPayload {
-        return <TPayload>action._payload;
-    }
-
-    static resolveType(): string {
-        return this.name || this.toString().match(/function ([^\(]+)/)[1];
+    protected static resolveType(): string {
+        return 'Action:' + this.name || this.toString().match(/function ([^\(]+)/)[1];
     }
 
     static get type(): string {
         return this.resolveType();
     }
 
-    /**
-     * Properties
-     */
-
-    _payload: TPayload = null;
-
-    protected actors: any[] = [];
-    protected emitted = false;
-    protected dispatcher: Dispatcher;
-
-    constructor() {
-        this.dispatcher = injector.get(Dispatcher);
+    static get symbol(): Symbol {
+        return Symbol.for(this.type);
     }
 
-    /**
-     * Interface
-     */
+    protected payloadData: TPayload;
+    protected emitted: boolean = false;
+    protected actors: IActor[] = [];
 
-    get type() {
+    protected get injector(): IInjector {
+        return Action.injector;
+    }
+
+    protected get dispatcher(): IDispatcher {
+        return this.injector.get<IDispatcher>(Dispatcher);
+    }
+
+    get type(): string {
         return Action.resolveType.call(this.constructor);
     }
 
-    get is() {
-        return this;
+    get symbol(): Symbol {
+        return Symbol.for(this.type);
     }
 
-    get class() {
-        return this.constructor;
+    get payload(): TPayload {
+        return this.payloadData;
     }
 
-    shouldBeEmitted(): boolean {
-        return true;
-    }
-
-    enqueue(...actors: IActor[]) {
+    public enqueue(...actors: IActor[]) {
         this.actors = this.actors.concat(_.map(actors, (actor: IActor) => {
             return actor.attach(this);
         }));
     }
 
-    emit(payload?: TPayload): boolean {
-        this._payload = payload || null;
+    public emit(payload?: TPayload): boolean {
+        this.payloadData = payload;
 
-        // TODO: check environment
-        if (this.emitted) {
+        if (process.env === DEV) {
             throw new Error(`Action can be emitted only once (${this.type})`);
         }
 
         /**
-         * The prefer way to detect actions in reducers is by 'is' prop,
-         * as it gives an ability to use prototype chain
-         *
-         * @example in reducer
-         *   if (action.is instanceof KeyboardAction) {
-         *      const payload = KeyboardAction.getPayload<KeyboardActionPayload>();
-         */
-        const data = {
-            is: this,
-            type: this.type,
-            class: this.constructor,
-            _payload: this._payload,
-        };
-
-        /**
-         * Each actor should be envoked once after reducing
+         * Each actor should be invoked once after reducing
          */
         if (this.actors.length) {
             let actor;
@@ -101,18 +73,9 @@ export class Action<TPayload> implements IAction<TPayload> {
             }
         }
 
-        if (this.shouldBeEmitted()) {
-            console.log(`[ACTION] ${data.type}`, data._payload);
-            this.dispatcher.dispatch(data);
-            this.emitted = true;
-        }
-        return this.emitted;
-    }
+        this.dispatcher.dispatch(this);
+        this.emitted = true;
 
-    /**
-     * TODO: use metadata reflection api
-     */
-    protected createAction<ActionType>(actionClass): ActionType {
-        return injector.get<ActionType>(actionClass);
+        return this.emitted;
     }
 }

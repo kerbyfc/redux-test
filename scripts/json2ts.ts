@@ -1,12 +1,10 @@
-///<reference path="../typings/modules/lodash/index.d.ts" />
-
 import * as _ from 'lodash';
 
 interface IOptions {
     wrappers: {
         type: string;
         int: string;
-    },
+    };
     interfaces: string[];
 }
 
@@ -137,7 +135,7 @@ export class Json2Ts {
         return _.every(array.slice(1), _.partial(_.isEqual, array[0]));
     }
 
-    private getMultiArrayBrackets(content: string): string {
+    private getMultiArrayBrackets(content: {}[] | string): string {
         let jsonString = JSON.stringify(content);
         let brackets = "";
 

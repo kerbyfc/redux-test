@@ -7,32 +7,30 @@ import Store = Redux.Store;
 /**
  * Local imports
  */
-import {injectable} from './Injector';
+import {injectable, singleton} from './Injector';
+import {Action} from './Action';
+import {autobind} from 'core-decorators';
 
 /**
  * TODO: -> Dispatcher<IAppState> & .store<IAppState>
  */
+
+@singleton
 @injectable()
 export class Dispatcher {
-
     protected acting: boolean = false;
     protected lastState: IAppState;
 
     protected actors: IActor[] = [];
     protected singularActors: IActor[] = [];
-    protected dispatchQueue: IDispatcherAction[] = [];
+    protected dispatchQueue: Action<any>[] = [];
+    protected action: IAction<any>;
     protected store;
-
-    constructor() {
-        this.onStateUpdate = this.onStateUpdate.bind(this);
-        this.subscribeOnce = this.subscribeOnce.bind(this);
-        this.subscribe = this.subscribe.bind(this);
-        this.dispatch = this.dispatch.bind(this);
-    }
 
     /**
      * TODO: pass to actors callback to queue dispathing
      */
+    @autobind
     protected onStateUpdate() {
         if (!this.acting) {
             this.acting = true;
@@ -69,12 +67,12 @@ export class Dispatcher {
         this.lastState = this.getState();
     }
 
-    attachStore(store) {
+    public attachStore(store) {
         this.store = store;
         this.store.subscribe(this.onStateUpdate);
     };
 
-    subscribeOnce(actor) {
+    public subscribeOnce(actor) {
         this.singularActors.push(actor);
     };
 
@@ -84,7 +82,7 @@ export class Dispatcher {
      *      .subscribe(updateProgress)
      *      .until(state => !state.loading)
      */
-    subscribe(actor): {until: (fn: (state: IAppState) => boolean) => void} {
+    public subscribe(actor): {until: (fn: (state: IAppState) => boolean) => void} {
         this.actors.push(actor);
 
         return {
@@ -96,15 +94,20 @@ export class Dispatcher {
         };
     };
 
-    dispatch(action: IDispatcherAction) {
+    public dispatch(action: Action<any>) {
         if (this.acting) {
             this.dispatchQueue.push(action);
         } else {
-            this.store.dispatch(action);
+            this.action = action;
+
+            this.store.dispatch({
+                type: action.type,
+                payload: action.payload
+            });
         }
     };
 
-    getState(): IAppState {
+    public getState(): IAppState {
         return this.store.getState();
     }
 }

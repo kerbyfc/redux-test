@@ -1,11 +1,48 @@
 {
-  "extends": "tslint:recommended",
-  "rules": {
-    "no-unused-variable": [true, "react"],
-      "quotemark": [
-          true,
-          "single",
-          "jsx-double"
-      ]
-  }
+    "extends": "tslint:recommended",
+    "rules": {
+        "no-unused-variable": [
+            true,
+            "react"
+        ],
+        "quotemark": [
+            true,
+            "single",
+            "jsx-double"
+        ],
+        "object-literal-sort-keys": false,
+        "switch-default": false,
+        "member-ordering": [
+            true,
+            {
+                "order": [
+                    "private-static-field",
+                    "protected-static-field",
+                    "public-static-field",
+
+                    "private-static-method",
+                    "protected-static-method",
+                    "public-static-method",
+
+                    "private-instance-field",
+                    "protected-instance-field",
+                    "public-instance-field",
+
+                    "constructor",
+
+                    "private-instance-method",
+                    "protected-instance-method",
+                    "public-instance-method"
+                ]
+            }
+        ],
+        "no-conditional-assignment": false,
+        "trailing-comma": [
+            true,
+            {
+                "multiline": "never",
+                "singleline": "never"
+            }
+        ]
+    }
 }

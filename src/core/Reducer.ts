@@ -9,92 +9,76 @@ import {IReducer as IReduxReducer} from '~react-router-redux~redux';
  * Local imports
  */
 import {injectable} from './Injector';
-import {initialState} from '../state';
-
-
-export interface IReducer<TState> {
-    getInitialState?(): TState;
-    reduce(state: TState, action: IDispatcherAction): TState;
-    release(path: string);
-}
-
-export type TReducer<TState> = TState | IReducer<TState>;
+import {initialState, stateRefs} from '../state';
+import {Dispatcher} from './Dispatcher';
 
 interface IReduxReducersMapObject {
     [key: string]: IReduxReducer<any>;
 }
 
-
 @injectable()
-export class Reducer<TState> implements IReducer<TState> {
+export abstract class Reducer<TState> implements IReducer<TState> {
+    protected static injector: IInjector;
 
     protected path: string = '';
-    protected refs: any; // TODO
+    protected state: TState;
+
+    protected get refs() {
+        return _.get(stateRefs, this.path);
+    }
+
+    protected getRelativeRefPath(ref: IRef<any>): string {
+        return ref.path.slice(this.path.length + 1);
+    }
 
     protected concatPath(current: string, next: string) {
         return current ? current + '.' + next : next;
     }
 
     protected getChildrenReducers(): IReduxReducersMapObject {
-        return <IReduxReducersMapObject>_.mapValues<TReducer<any>, IReduxReducer<any>>(
+        return <IReduxReducersMapObject> _.mapValues<IReducer<any>, IReduxReducer<any>>(
             this.combine(), (reducer: IReducer<any>, key: string) => {
                 return reducer.release(this.concatPath(this.path, key));
             }
         );
     }
 
-    getInitialState(): TState {
-        return <TState>_.cloneDeep(_.get(initialState, this.path));
+    protected get injector(): IInjector {
+        return Reducer.injector;
     }
 
-    getRelativeRefPath(ref: IRef<any>): string {
-        return ref.path.slice(this.path.length + 1);
+    protected get dispatcher(): IDispatcher {
+        return this.injector.get<IDispatcher>(Dispatcher);
     }
 
-    hasRef(ref: IRef<any> | string): boolean {
-        if (typeof ref === 'string') {
-            return _.has(this.refs, ref);
-        } else {
-            return _.has(this.refs, this.getRelativeRefPath(ref));
-        }
+    protected get initialState(): TState {
+        return _.cloneDeep<TState>(_.get<TState>(initialState, this.path));
     }
 
-    release(path: string = this.path): IReduxReducersMapObject | IReduxReducer<TState> {
+    protected has(ref: IRef<any>): boolean {
+        return _.has(this.refs, this.getRelativeRefPath(ref));
+    }
+
+    protected invoke(state: TState, plainObject: IDispatchObject): TState {
+        this.state = _.cloneDeep(state || this.initialState);
+        this.reduce(this.getAction(plainObject));
+        return this.state;
+    }
+
+    protected getAction(plainObject: IDispatchObject): IAction<any> {
+        const type = Symbol.for(plainObject.type);
+        return this.injector.isBound(type) ? this.dispatcher.action : plainObject;
+    }
+
+    protected abstract reduce(action: IAction<any>);
+
+    public release(path: string = this.path): IReduxReducersMapObject | IReduxReducer<TState> {
         this.path = path;
 
         const children = this.getChildrenReducers();
 
         if (_.isEmpty(children)) {
-            if (!_.hasIn(this, 'getInitialState')) {
-                throw new Error(
-                    `Reducer ${this.constructor.name} hasn't childs. Implement initialState method`
-                );
-            }
-
-            const origin = {
-                reduce: this.reduce
-            };
-
-            // TODO:
-            // Set the mutability/immutability functions
-            // setToImmutableStateFunc((mutableState) => Immutable.fromJS(mutableState));
-            // setToMutableStateFunc((immutableState) => immutableState.toJS());
-
-            /**
-             * No needs to call getInitialState in reducer
-             */
-            this.reduce = (state: TState, action: IDispatcherAction): TState => {
-                /**
-                 * No needs to return unchanged state in reducer
-                 */
-                let result = origin.reduce.call(this, state || this.getInitialState(), action) || state || this.getInitialState();
-
-                // TODO: remove prom prod, use middleware
-                console.log('[UPDATE]', this.path, result);
-                return result;
-            };
-
-            return this.reduce;
+            return this.invoke.bind(this);
 
         } else {
 
@@ -102,24 +86,20 @@ export class Reducer<TState> implements IReducer<TState> {
             if (this.path === '') {
                 return children;
             } else {
-                const childReducer = <IReduxReducer<TState>>combineReducers<TState>(children);
+                const childReducer = <IReduxReducer<TState>> combineReducers<TState>(children);
 
-              /**
-               * Wrap childReducer properties
-               * TODO: docs & examples
-               */
-              return (state: TState, action: IDispatcherAction): TState => {
-                  return this.reduce(childReducer(state, action), action);
-              };
+                /**
+                 * Wrap childReducer properties
+                 * TODO: docs & examples
+                 */
+                return (state: TState, plainObject: IDispatchObject): TState => {
+                    return this.invoke(childReducer(state, plainObject), plainObject);
+                };
             }
         }
     }
 
-    combine(): any { // TODO
+    public combine(): any {
         return null;
-    }
-
-    reduce(state: TState, action: IDispatcherAction): TState  {
-        return state;
     }
 }

@@ -6,6 +6,7 @@ var rename = require('gulp-rename');
 var flat = require('flat');
 var _ = require('lodash');
 var fs = require('fs');
+var cassandraMap = require('cassandra-map');
 
 require('typescript-require');
 
@@ -17,21 +18,46 @@ var json2ts = new Json2Ts();
 
 var nl = "\n\n";
 
-function makeRefs(initialState) {
-    var state = JSON.parse(initialState);
-    flatten = flat.flatten(state);
+function unquoteKey(str) {
+    return "<%" + str.split('.').join("%>.<%") + "%>";
+}
 
-    /**
-     * Create new state reference
-     */
-    state = flat.unflatten(_.mapValues(flatten, function(value, key) {
-        return "<% injector.get(Ref).link('" + key + "') %>";
-    }));
+function unquoteValue(str) {
+    return "<!" + str + "!>";
+}
 
-    /**
-     * Remove quotes
-     */
-    return JSON.stringify(state, null, 4).replace(/"<% (.*) %>"/g, "$1");
+function makeJsObject(obj, valueWrapper) {
+    if (!valueWrapper) {
+        valueWrapper = function (value) {
+            return value;
+        }
+    }
+
+    if (typeof obj === "object") {
+        obj = flat.unflatten(_.reduce(flat.flatten(obj), function(acc, value, key) {
+            acc[unquoteKey(key)] = valueWrapper(value, key, unquoteValue);
+            return acc;
+        }, {}));
+    }
+
+    return JSON.stringify(obj, null, 4)
+        .replace(/"<%(.*)%>"/g, "$1")
+        .replace(/"<!(.*)!>"/g, "$1")
+}
+
+function makeRefs(obj) {
+    return makeJsObject(obj, function(value, key, unquote) {
+        return unquoteValue("new Ref(" + cassandraMap.stringify(value) + ", '" + key + "')");
+    });
+}
+
+function makeInitialState(obj) {
+    return makeJsObject(obj, function(value, key, unquote) {
+        if (typeof value === 'string') {
+            return unquote("'" + value + "'");
+        }
+        return value;
+    });
 }
 
 gulp.task('gen-state', function() {
@@ -46,11 +72,10 @@ gulp.task('gen-state', function() {
             ].join(nl);
 
             var state = [
-                "import {memoize} from 'lodash'",
-                "import injector from './core/Injector';",
                 "import {Ref} from './core/Ref';",
-                "export const initialState: IAppState = " + JSON.stringify(JSON.parse(content), null, 4) + ";",
-                "export const getStateRefs: () => IAppStateRef = memoize(() => { return " + makeRefs(content) + "});"
+                "export const initialState: IAppState = " + makeInitialState(JSON.parse(content)) + ";",
+                "export const stateRefs: IAppStateRef = " + makeRefs(JSON.parse(content)) + ";",
+                ""
             ].join(nl);
 
             fs.writeFileSync('./src/interfaces/IState.d.ts', interfaces);

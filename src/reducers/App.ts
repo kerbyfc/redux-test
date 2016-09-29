@@ -1,15 +1,15 @@
 /**
  * Local imports
  */
-import {Reducer, IReducer} from '../core/Reducer';
-import {inject} from '../core/Injector';
-import {ClientFormReducer} from './ClientForm';
-import ReducersMapObject = Redux.ReducersMapObject;
+import {Reducer} from '../core/Reducer';
+import {inject, singleton} from '../core/Injector';
+import {ClientFormReducer} from './forms/ClientForm';
 import {NotificationsReducer} from './NotificationsReducer';
 
 /**
  * Root application reducer
  */
+@singleton
 export class AppReducer extends Reducer<IAppState> {
 
     constructor(
@@ -19,14 +19,17 @@ export class AppReducer extends Reducer<IAppState> {
         super();
     }
 
-    combine() {
+    /**
+     * TODO: no type cheking
+     */
+    public combine() {
         return {
             notifications: this.notificationsReducer,
             clientForm: this.clientFormReducer
         };
     }
 
-    reduce(state: IAppState, action): IAppState {
-        return state;
+    public reduce(action: IAction<any>): IAppState {
+        return this.state;
     }
 }

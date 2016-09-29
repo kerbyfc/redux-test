@@ -13,7 +13,7 @@ import {injector} from './core/Injector';
  */
 import {AppReducer} from './reducers/App';
 import {ToggleCheckbox} from './actions/input/ToggleCheckbox';
-import {ClientFormReducer} from './reducers/ClientForm';
+import {ClientFormReducer} from './reducers/forms/ClientForm';
 import {DateValidator} from './validators/DateValidator';
 import {Dispatcher} from './core/Dispatcher';
 import {EmailValidator} from './validators/EmailValidator';
@@ -34,24 +34,31 @@ import {SaveClientToServer} from './actors/clientForm/SaveClient';
 import {HideNotificationByTimeout} from './actors/notifications/HideNotificationByTimeout';
 import {HideNotification} from './actions/notifications/HideNotification';
 import {NotifyDataIsSaved} from './actors/notifications/NotifyDataIsSaved';
+import {Actor} from './core/Actor';
+import {Action} from './core/Action';
+import {Reducer} from './core/Reducer';
+import {Component} from './core/Component';
 
 
 /**
  * Singletons
  */
-injector.bindSingleton<AppReducer>(AppReducer);
-injector.bindSingleton<Dispatcher>(Dispatcher);
-
 injector.registerProviders([
     /**
      * Core
      */
     Ref,
     Validator,
+    Dispatcher,
+    Component,
+    Reducer,
+    Action,
+    Actor,
 
     /**
      * Reducers
      */
+    AppReducer,
     ClientFormReducer,
     NotificationsReducer,
 

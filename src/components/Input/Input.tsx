@@ -83,9 +83,7 @@ export class Input extends Component<IInputProps, IInputState> {
 
     handleChange(event)  {
         this.createAction<ChangeInputValue>(ChangeInputValue).emit({
-            event,
-            ref: this.props.$,
-            selection: this.state.selection,
+            event, ref: this.props.$, selection: this.state.selection
         });
     }
 

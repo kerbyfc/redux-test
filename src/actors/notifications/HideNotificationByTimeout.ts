@@ -15,13 +15,13 @@ export class HideNotificationByTimeout extends Actor {
     }
 
     perform() {
-        if (this.action instanceof ShowNotification) {
-            const payload = ShowNotification.getPayload<INotification>(this.action);
-            const delay = payload.delay || this.defaultDelay;
-
-            setTimeout(() => {
-                this.hideNotification.emit(payload.id);
-            }, delay);
-        }
+        // if (this.action instanceof ShowNotification) {
+        //     const payload = ShowNotification.getPayload<INotification>(this.action);
+        //     const delay = payload.delay || this.defaultDelay;
+        //
+        //     setTimeout(() => {
+        //         this.hideNotification.emit(payload.id);
+        //     }, delay);
+        // }
     }
 }

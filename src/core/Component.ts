@@ -6,22 +6,20 @@ import * as React from 'react';
 /**
  * Local imports
  */
-import {injector} from './Injector';
-import {getStateRefs} from '../state';
+import {injectable} from './Injector';
+import {stateRefs} from '../state';
 
+@injectable()
 export class Component<TProps, TState> extends React.Component<TProps, TState> {
+    private static injector: IInjector;
 
-    // global state
-    get $(): IAppStateRef {
-        return getStateRefs();
+    protected readonly $: IAppStateRef = stateRefs;
+
+    protected get injector(): IInjector {
+        return Component.injector;
     }
 
-    set $(value) {}
-
-    /**
-     * TODO: use metadata reflection api
-     */
-    createAction<ActionType>(actionClass): ActionType {
-        return injector.get<ActionType>(actionClass);
+    protected createAction<TAction>(actionClass): TAction {
+        return this.injector.get<TAction>(actionClass);
     }
 }
