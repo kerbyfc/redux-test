@@ -13,7 +13,7 @@ import * as styles from './Form.style.scss';
 /**
  * Interfaces
  */
-interface IFormProps extends React.Attributes {
+interface IFormProps extends IComponentProps {
     disabled?: boolean;
     loading?: boolean;
     children?: any;

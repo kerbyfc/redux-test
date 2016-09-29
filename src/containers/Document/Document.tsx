@@ -3,7 +3,7 @@ import { renderToString } from 'react-dom/server';
 import * as Helmet from 'react-helmet';
 import serialize = require('serialize-javascript');
 
-interface IDocumentProps extends React.ClassAttributes<Document> {
+interface IDocumentProps extends IComponentProps {
   app?: JSX.Element;
   assets?: Object;
   server?: Boolean;

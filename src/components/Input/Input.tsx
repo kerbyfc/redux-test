@@ -15,7 +15,7 @@ import {ChangeInputValue} from '../../actions/input/ChangeInputValue';
 /**
  * Interfaces
  */
-interface IInputProps {
+interface IInputProps extends IComponentProps {
     /**
      * Required
      */
@@ -123,7 +123,7 @@ export class Input extends Component<IInputProps, IInputState> {
     public render() {
         return (
             <div className={this.getContainerClass()}>
-                <input type="text"
+                <input type="text" id={this.props.id}
                        className={this.getInputClass()}
                        value={this.props.val}
                        onChange={this.onChange}

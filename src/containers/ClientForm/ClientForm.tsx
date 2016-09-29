@@ -33,9 +33,14 @@ const carModels = {
 };
 
 /**
+ * Interfaces
+ */
+interface IClientFormProps extends IComponentProps, IClientFormState {}
+
+/**
  * Redux
  */
-function mapStateToProps(state: IAppState) {
+function mapStateToProps(state: IAppState): IClientFormState {
     return state.clientForm;
 }
 
@@ -43,7 +48,7 @@ function mapStateToProps(state: IAppState) {
  * Form to add client to database
  */
 @connect(mapStateToProps)
-export class ClientForm extends Component<IClientFormState, any> {
+export class ClientForm extends Component<IClientFormProps, any> {
 
     @autobind
     private save() {
@@ -57,7 +62,7 @@ export class ClientForm extends Component<IClientFormState, any> {
             <Form loading={this.props.loading}>
 
                 <FormRow title="Фамилия">
-                    <Input key="surname" val={this.props.data.surname} $={refs.data.surname} />
+                    <Input key="surname" id="surname" val={this.props.data.surname} $={refs.data.surname} />
                 </FormRow>
 
                 <FormRow title="Имя">

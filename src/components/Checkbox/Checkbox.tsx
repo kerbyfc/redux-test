@@ -15,7 +15,7 @@ import {autobind} from 'core-decorators';
 /**
  * Interfaces
  */
-interface ICheckboxProps {
+interface ICheckboxProps extends IComponentProps {
     $: IRef<boolean>;
     checked: boolean;
 }

@@ -15,7 +15,7 @@ import {autobind} from 'core-decorators';
 /**
  * Interfaces
  */
-interface IButtonProps {
+interface IButtonProps extends IComponentProps {
     text?: string;
     onClick: (event: SyntheticEvent) => void;
 }

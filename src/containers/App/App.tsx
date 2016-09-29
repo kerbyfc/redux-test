@@ -14,7 +14,7 @@ import {Notifier} from '../Notifier/Notifier';
 /**
  * Main application container
  */
-export class App extends Component<{}, {}> {
+export class App extends Component<any, any> {
 
     public render() {
         return (

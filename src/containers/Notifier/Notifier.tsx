@@ -24,7 +24,7 @@ function mapStateToProps(state: IAppState) {
 /**
  * Interfaces
  */
-interface INotifierProps {
+interface INotifierProps extends IComponentProps {
     notifications?: INotification[];
 }
 
