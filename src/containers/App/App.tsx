@@ -19,9 +19,8 @@ export class App extends Component<{}, {}> {
     public render() {
         return (
             <div className={styles.app}>
-                <Header title='Virtu'/>
+                <Header title="Virtu"/>
                 {this.props.children}
-
                 <Notifier />
             </div>
         );

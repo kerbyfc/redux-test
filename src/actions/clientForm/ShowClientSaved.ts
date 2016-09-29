@@ -18,6 +18,6 @@ export class ShowClientSaved extends Action<any> {
 
         this.enqueue(
             notifyDataIsSaved
-        )
+        );
     }
 }

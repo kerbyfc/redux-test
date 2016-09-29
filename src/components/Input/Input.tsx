@@ -135,6 +135,6 @@ export class Input extends Component<IInputProps, IInputState> {
                 />
                 <span className={styles.error}>{this.props.error}</span>
             </div>
-        )
+        );
     }
 }

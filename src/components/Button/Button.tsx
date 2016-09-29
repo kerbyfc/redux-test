@@ -17,7 +17,7 @@ import {autobind} from 'core-decorators';
  */
 interface IButtonProps {
     text?: string;
-    onClick: (event: SyntheticEvent) => void
+    onClick: (event: SyntheticEvent) => void;
 }
 
 /**
@@ -26,7 +26,7 @@ interface IButtonProps {
 export class Button extends Component<IButtonProps, any> {
 
     @autobind
-    onClick(event) {
+    private onClick(event) {
         event.preventDefault();
         this.props.onClick(event);
     };

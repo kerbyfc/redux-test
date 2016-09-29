@@ -23,7 +23,8 @@ export class MaskedInput extends Input {
         }
 
         if (el.value.slice(start, end) === this.props.mask) {
-            (start += direction) && (end += direction);
+            start += direction;
+            end += direction;
         }
 
         el.setSelectionRange(start, end);
@@ -93,29 +94,29 @@ export class MaskedInput extends Input {
         this.select(el, el.selectionStart, el.selectionStart + 1);
     }
 
-    @autobind
     @override
+    @autobind
     protected onMouseUp(event) {
         super.onMouseUp(event);
         this.updateSelectionOnMouseUp(event);
     }
 
-    @autobind
     @override
+    @autobind
     protected onKeyUp(event) {
         super.onKeyUp(event);
         this.updateSelectionOnKeyUp(event);
     }
 
-    @autobind
     @override
+    @autobind
     protected onKeyPress(event) {
         super.onKeyPress(event);
         this.handleKeyRepeat(event);
     }
 
-    @autobind
     @override
+    @autobind
     protected onKeyDown(event) {
         super.onKeyDown(event);
         this.preventRemove(event);

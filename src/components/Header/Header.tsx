@@ -1,9 +1,9 @@
 /**
  * External imports
  */
-import * as React from "react";
-import * as cx from "classnames";
-import "react-dom";
+import * as React from 'react';
+import * as cx from 'classnames';
+import 'react-dom';
 
 /**
  * Local imports
@@ -14,7 +14,7 @@ import * as styles from './Header.style.scss';
  * Interfaces
  */
 interface IHeaderProps extends React.Attributes {
-    title:string;
+    title: string;
 }
 
 /**

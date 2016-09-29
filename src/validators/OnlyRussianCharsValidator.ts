@@ -5,7 +5,10 @@ import {injectable, inject} from '../core/Injector';
 import {Validator} from '../core/Validator';
 import {ITextLengthValidatorResult, TextLengthValidator, ITextLengthValidatorRules} from './TextLengthValidator';
 
-export interface IOnlyRussianCharsValidatorResults extends ITextLengthValidatorResult {
+/**
+ * Interfaces
+ */
+interface IOnlyRussianCharsValidatorResults extends ITextLengthValidatorResult {
     onlyRus: boolean;
 }
 
@@ -18,7 +21,7 @@ export class OnlyRussianCharsValidator extends Validator<ITextLengthValidatorRul
         super();
     }
 
-    validate(value: string, rules?: ITextLengthValidatorRules) {
+    public validate(value: string, rules?: ITextLengthValidatorRules) {
         const result = this.textLengthValidator.validate(value, rules);
         result.onlyRus = !/[^а-я]+/i.test(value);
         return result;

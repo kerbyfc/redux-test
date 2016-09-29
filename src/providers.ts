@@ -34,7 +34,6 @@ import {Action} from './core/Action';
 import {Reducer} from './core/Reducer';
 import {Component} from './core/Component';
 
-
 /**
  * Singletons
  */

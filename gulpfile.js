@@ -16,8 +16,6 @@ var DtsCreator = require('typed-css-modules');
 var dtsCreator = new DtsCreator();
 var json2ts = new Json2Ts();
 
-var nl = "\n\n";
-
 function unquoteKey(str) {
     return "<%" + str.split('.').join("%>.<%") + "%>";
 }
@@ -69,14 +67,14 @@ gulp.task('gen-state', function() {
             var interfaces = [
                 json2ts.convert(content, "App", "I$State"),
                 json2ts.convert(content, "App", "I$StateRef", "IRef<$>")
-            ].join(nl);
+            ].join('\n');
 
             var state = [
                 "import {Ref} from './core/Ref';",
                 "export const initialState: IAppState = " + makeInitialState(JSON.parse(content)) + ";",
                 "export const stateRefs: IAppStateRef = " + makeRefs(JSON.parse(content)) + ";",
                 ""
-            ].join(nl);
+            ].join('\n');
 
             fs.writeFileSync('./src/interfaces/IState.d.ts', interfaces);
             fs.writeFileSync('./src/state.ts', state);

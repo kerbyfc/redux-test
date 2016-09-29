@@ -1,9 +1,4 @@
 /**
- * External imports
- */
-import * as _ from 'lodash';
-
-/**
  * Local imports
  */
 import {injectable} from './Injector';

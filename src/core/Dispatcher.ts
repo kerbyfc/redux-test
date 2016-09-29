@@ -21,7 +21,7 @@ export class Dispatcher {
     private singularActors: IActor[] = [];
     private dispatchQueue: Action<any>[] = [];
     private action: IAction<any>;
-    private store;
+    private store: Store<IAppState>;
 
     @autobind
     private onStateUpdate() {

@@ -6,8 +6,6 @@ import {ShowNotification} from '../../actions/notifications/ShowNotification';
 @injectable()
 export class HideNotificationByTimeout extends Actor {
 
-    private defaultDelay: number = 3500;
-
     constructor(
         @inject(HideNotification) private hideNotification: IAction<string>
     ) {

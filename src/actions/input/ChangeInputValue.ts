@@ -1,15 +1,13 @@
 /**
- * External imports
- */
-import * as _ from 'lodash';
-
-/**
  * Local imports
  */
 import {injectable, inject} from '../../core/Injector';
 import {FallbackInputValue} from '../../actors/inputs/FallbackInputValue';
 import {Action} from '../../core/Action';
 
+/**
+ * Interfaces
+ */
 interface IChangeInputValuePayload {
     event: Event;
     ref: IRef<string>;

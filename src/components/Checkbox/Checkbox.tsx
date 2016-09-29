@@ -10,6 +10,7 @@ import * as c from 'classnames';
 import * as styles from './Checkbox.style.scss';
 import {ToggleCheckbox} from '../../actions/input/ToggleCheckbox';
 import {Component} from '../../core/Component';
+import {autobind} from 'core-decorators';
 
 /**
  * Interfaces
@@ -21,7 +22,8 @@ interface ICheckboxProps {
 
 export class Checkbox extends Component<ICheckboxProps, any> {
 
-    private toggle = (event) => {
+    @autobind
+    private toggle(event) {
         this.createAction<ToggleCheckbox>(ToggleCheckbox).emit({
             event, ref: this.props.$
         });

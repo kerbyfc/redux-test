@@ -29,7 +29,7 @@ interface IResults {
 
 export class DateValidator extends Validator<IRules, IResults> {
 
-    defaultRules = {
+    private defaultRules = {
         format: 'DD.MM.YYYY',
         partial: false
     };
@@ -42,7 +42,7 @@ export class DateValidator extends Validator<IRules, IResults> {
      *            \_________/
      *                 \_ should be cutted
      */
-    template(val: string, rules): string {
+    private template(val: string, rules): string {
         /**
          * Use Dec in template to to avoid date invalidation in case
          * of days come before month and its value is '31' and first
@@ -56,10 +56,10 @@ export class DateValidator extends Validator<IRules, IResults> {
          */
         const length: number = _.isNumber(rules.length) && rules.length || val.length;
 
-        return val.slice(0, rules.length) + template.slice(rules.length);
+        return val.slice(0, length) + template.slice(length);
     }
 
-    validate(value: string, rules: IRules = this.defaultRules) {
+    public validate(value: string, rules: IRules = this.defaultRules) {
         _.defaults(rules, this.defaultRules);
 
         if (rules.length || rules.partial) {
@@ -70,5 +70,4 @@ export class DateValidator extends Validator<IRules, IResults> {
             format: moment(value, rules.format, true).isValid()
         };
     }
-
 }

@@ -23,20 +23,18 @@ export interface ITextLengthValidatorResult {
 @injectable()
 export class TextLengthValidator extends Validator<ITextLengthValidatorRules, ITextLengthValidatorResult> {
 
-    static validateMinLength(value, min) {
+    private static validateMinLength(value, min) {
         return (min || -Infinity) <= value.length;
     }
 
-    static validateMaxLength(value, max) {
+    private static validateMaxLength(value, max) {
         return value.length <= (max || Infinity);
     }
 
-    validate(value: string, rules?: ITextLengthValidatorRules) {
+    public validate(value: string, rules?: ITextLengthValidatorRules) {
         return {
             minLength: TextLengthValidator.validateMinLength(value, rules.minLength),
             maxLength: TextLengthValidator.validateMaxLength(value, rules.maxLength)
         };
     }
 }
-
-

@@ -12,7 +12,7 @@ import * as styles from './FormRow.style.scss';
  * Interfaces
  */
 interface IFormRowProps extends React.Attributes {
-    title: string
+    title: string;
     children?: any;
 }
 

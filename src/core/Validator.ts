@@ -8,17 +8,17 @@ import * as _ from 'lodash';
  */
 import {injectable} from './Injector';
 
-export interface IValidator<TValidationRules, TValidationResult> {
-    validate(value: any, rules?: TValidationRules): TValidationResult;
-    check(value: any, rules?: TValidationRules): boolean;
+export interface IValidator<TRules, TResult> {
+    validate(value: any, rules?: TRules): TResult;
+    check(value: any, rules?: TRules): boolean;
 }
 
 @injectable()
-export abstract class Validator<TValidationRules, TValidationResult> implements IValidator<TValidationRules, TValidationResult> {
+export abstract class Validator<TRules, TResult> implements IValidator<TRules, TResult> {
 
-    check(value: any, rules?: TValidationRules) {
-        return _.every(<any>this.validate(value, rules), result => !!result);
+    public check(value: any, rules?: TRules) {
+        return _.every(<any> this.validate(value, rules), result => !!result);
     }
 
-    abstract validate(value: any, rules?: TValidationRules): TValidationResult;
+    public abstract validate(value: any, rules?: TRules): TResult;
 }

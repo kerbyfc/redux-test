@@ -25,13 +25,13 @@ function mapStateToProps(state: IAppState) {
  * Interfaces
  */
 interface INotifierProps {
-    notifications?: INotification[]
+    notifications?: INotification[];
 }
 
 @connect(mapStateToProps)
 export class Notifier extends Component<INotifierProps, any> {
 
-    render() {
+    public render() {
         return (
             <div className={styles.container}>
                 {_.map(this.props.notifications, (notification: INotification) => {

@@ -27,7 +27,7 @@ export default function configureStore(initialState: Object = {}) {
     const dispatcher: Dispatcher = injector.get(Dispatcher);
 
     const middlewares = [
-        routerMiddleware(browserHistory),
+        routerMiddleware(browserHistory)
     ];
 
     const store = createStore(

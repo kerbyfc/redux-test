@@ -18,9 +18,7 @@ export interface IPatternValidatorRules {
     length?: number;
 }
 
-/**
- * That rules must be declared in inherited classes
- */
+// That rules must be declared in inherited classes
 export interface IPatternValidatorDefaltRules {
     pattern: RegExp;
 }
@@ -34,11 +32,11 @@ export interface IResults {
  */
 export class PatternValidator extends Validator<IPatternValidatorRules, IResults> {
 
-    defaultRules: IPatternValidatorDefaltRules = {
+    protected defaultRules: IPatternValidatorDefaltRules = {
         pattern: /.*/
     };
 
-    template(val: string, rules: IPatternValidatorRules): string {
+    private template(val: string, rules: IPatternValidatorRules): string {
         if (!rules.template) {
             // TODO: add env check
             throw new Error(`${this.constructor.name} needs template to apply partial validation`);
@@ -50,7 +48,7 @@ export class PatternValidator extends Validator<IPatternValidatorRules, IResults
         return val.slice(0, length) + rules.template.slice(length);
     }
 
-    validate(value: string, rules: IPatternValidatorRules = this.defaultRules) {
+    public validate(value: string, rules: IPatternValidatorRules = this.defaultRules) {
         _.defaults(rules, this.defaultRules);
 
         if (!rules.pattern) {
