@@ -15,9 +15,9 @@ export class ShowClientSaved extends Action<any> {
         @inject(NotifyDataIsSaved) notifyDataIsSaved: IActor,
     ) {
         super();
-        // TODO
-        // this.enqueue(
-        //     notifyDataIsSaved
-        // )
+
+        this.enqueue(
+            notifyDataIsSaved
+        )
     }
 }

@@ -11,14 +11,12 @@ import {ChangeInputValue} from '../../actions/input/ChangeInputValue';
 
 export class FallbackInputValue extends Actor {
 
-    perform(state) {
-        const action = this.action;
-
+    public perform(action, state) {
         if (action instanceof ChangeInputValue) {
             /**
              * Get state value by Ref.path
              */
-            const stateValue = _.get<string>(state, action.payload.ref.path);
+            const stateValue = _.get<string>(state.current, action.payload.ref.path);
 
             /**
              * Check if stateValue was applyed by reducer

@@ -15,9 +15,8 @@ export class SaveClient extends Action<any> {
     ) {
         super();
 
-        // TODO
-        // this.enqueue(
-        //     saveDataToServer
-        // );
+        this.enqueue(
+            saveDataToServer
+        );
     }
 }

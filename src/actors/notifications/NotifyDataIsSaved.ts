@@ -3,19 +3,19 @@
  */
 import {Actor} from '../../core/Actor';
 import {inject, injectable} from '../../core/Injector';
-import {ShowNotification} from '../../actions/notifications/ShowNotification';
 import {NotificationType} from '../../vars';
+import {ShowNotification, IShowNotificationPayload} from '../../actions/notifications/ShowNotification';
 
 @injectable()
 export class NotifyDataIsSaved extends Actor {
 
     constructor(
-        @inject(ShowNotification) protected showNotification: IAction<INotification>
+        @inject(ShowNotification) protected showNotification: IAction<IShowNotificationPayload>
     ) {
         super();
     }
 
-    perform() {
+    public perform() {
         this.showNotification.emit({
             text: 'Данные успешно сохранены',
             type: NotificationType.SUCCESS

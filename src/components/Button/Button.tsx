@@ -10,6 +10,7 @@ import SyntheticEvent = __React.SyntheticEvent;
  */
 import * as styles from './Button.style.scss';
 import {Component} from '../../core/Component';
+import {autobind} from 'core-decorators';
 
 /**
  * Interfaces
@@ -24,12 +25,13 @@ interface IButtonProps {
  */
 export class Button extends Component<IButtonProps, any> {
 
-    onClick = (event) => {
+    @autobind
+    onClick(event) {
         event.preventDefault();
         this.props.onClick(event);
     };
 
-    render() {
+    public render() {
         return (
             <button className={c(styles.button)} onClick={this.onClick}>
                 {this.props.children || this.props.text}

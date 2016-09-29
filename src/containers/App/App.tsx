@@ -7,7 +7,7 @@ import * as React from 'react';
  * Local imports
  */
 import * as styles from './App.style.scss';
-import {Header} from '../../templates/Header/Header';
+import {Header} from '../../components/Header/Header';
 import {Component} from '../../core/Component';
 import {Notifier} from '../Notifier/Notifier';
 

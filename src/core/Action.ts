@@ -6,7 +6,7 @@ import * as _ from 'lodash';
 /**
  * Local imports
  */
-import {injectable, inject} from './Injector';
+import {injectable} from './Injector';
 import {Dispatcher} from './Dispatcher';
 import {DEV} from '../vars';
 
@@ -20,10 +20,6 @@ export abstract class Action<TPayload> {
 
     static get type(): string {
         return this.resolveType();
-    }
-
-    static get symbol(): Symbol {
-        return Symbol.for(this.type);
     }
 
     protected payloadData: TPayload;
@@ -42,18 +38,12 @@ export abstract class Action<TPayload> {
         return Action.resolveType.call(this.constructor);
     }
 
-    get symbol(): Symbol {
-        return Symbol.for(this.type);
-    }
-
     get payload(): TPayload {
         return this.payloadData;
     }
 
     public enqueue(...actors: IActor[]) {
-        this.actors = this.actors.concat(_.map(actors, (actor: IActor) => {
-            return actor.attach(this);
-        }));
+        this.actors = this.actors.concat(actors);
     }
 
     public emit(payload?: TPayload): boolean {

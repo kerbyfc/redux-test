@@ -11,10 +11,6 @@ import {injectable, singleton} from './Injector';
 import {Action} from './Action';
 import {autobind} from 'core-decorators';
 
-/**
- * TODO: -> Dispatcher<IAppState> & .store<IAppState>
- */
-
 @singleton
 @injectable()
 export class Dispatcher {
@@ -30,6 +26,11 @@ export class Dispatcher {
     @autobind
     protected onStateUpdate() {
         if (!this.acting) {
+            const state = {
+                current: this.getState(),
+                previous: this.lastState
+            };
+
             this.acting = true;
 
             if (this.singularActors.length) {
@@ -38,15 +39,16 @@ export class Dispatcher {
                  * Invoke singular actors (to be called once)
                  */
                 while (actor = this.singularActors.shift()) {
-                    // TODO: actor should not be a pure function, it's inconvenient
-                    actor.perform(this.getState(), this.lastState);
+                    actor.perform(this.action, state);
                 }
             }
 
             /**
              * Invoke actors
              */
-            this.actors.forEach((actor) => actor.perform(this.getState(), this.lastState));
+            this.actors.forEach((actor) => {
+                actor.perform(this.action, state);
+            });
 
             /**
              * After all actors have been processed, it's time
@@ -99,8 +101,11 @@ export class Dispatcher {
 
             this.store.dispatch({
                 type: action.type,
-                payload: action.payload
+                payload: action.payload,
+                action: action
             });
+
+            this.action = null;
         }
     };
 

@@ -17,12 +17,12 @@ export class NotificationsReducer extends Reducer<INotification[]> {
 
     public reduce(action) {
         if (action instanceof ShowNotification) {
-            return this.state.concat([action.payload]);
+            this.state.push(action.notification);
         }
 
         if (action instanceof HideNotification) {
             return _.filter(this.state, (notification: INotification) => {
-                return notification.id !== action.payload.id;
+                return notification.id !== action.notificationId;
             });
         }
     }
