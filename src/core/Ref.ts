@@ -14,7 +14,7 @@ import {Dispatcher} from './Dispatcher';
  */
 @injectable()
 export class Ref<TType> implements IRef<TType> {
-    protected static injector: IInjector;
+    private static injector: IInjector;
 
     public readonly path: string;
     public readonly initial: TType;

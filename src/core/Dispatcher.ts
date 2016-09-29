@@ -14,17 +14,17 @@ import {autobind} from 'core-decorators';
 @singleton
 @injectable()
 export class Dispatcher {
-    protected acting: boolean = false;
-    protected lastState: IAppState;
+    private acting: boolean = false;
+    private lastState: IAppState;
 
-    protected actors: IActor[] = [];
-    protected singularActors: IActor[] = [];
-    protected dispatchQueue: Action<any>[] = [];
-    protected action: IAction<any>;
-    protected store;
+    private actors: IActor[] = [];
+    private singularActors: IActor[] = [];
+    private dispatchQueue: Action<any>[] = [];
+    private action: IAction<any>;
+    private store;
 
     @autobind
-    protected onStateUpdate() {
+    private onStateUpdate() {
         if (!this.acting) {
             const state = {
                 current: this.getState(),

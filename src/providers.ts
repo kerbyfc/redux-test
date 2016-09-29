@@ -1,9 +1,4 @@
 /**
- * External imports
- */
-import {createStore} from 'redux';
-
-/**
  * Import injector before providers
  */
 import {injector} from './core/Injector';

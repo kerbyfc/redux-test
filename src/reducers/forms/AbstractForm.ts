@@ -13,6 +13,24 @@ import {SelectOption} from '../../actions/input/SelectOption';
 
 export abstract class AbstractForm<TState> extends Reducer<TState> {
 
+    private applyValue(ref: IRef<any>, value: any) {
+        if (value !== void(0) && ref.val !== value) {
+            _.set<TState>(this.state, this.getRelativeRefPath(ref), value);
+        }
+    }
+
+    protected resolveInputValue(action: ChangeInputValue): string {
+        return action.value;
+    }
+
+    protected resolveCheckboxValue(action: ToggleCheckbox): boolean {
+        return action.value;
+    }
+
+    protected resolveSelectOptionValue(action: SelectOption): string {
+        return action.value;
+    }
+
     protected reduce(action) {
         if (action instanceof ChangeInputValue) {
             if (this.has(action.payload.ref)) {
@@ -31,23 +49,5 @@ export abstract class AbstractForm<TState> extends Reducer<TState> {
                 this.applyValue(action.payload.ref, this.resolveSelectOptionValue(action));
             }
         }
-    }
-
-    protected applyValue(ref: IRef<any>, value: any) {
-        if (value !== void(0) && ref.val !== value) {
-            _.set<TState>(this.state, this.getRelativeRefPath(ref), value);
-        }
-    }
-
-    protected resolveInputValue(action: ChangeInputValue): string {
-        return action.value;
-    }
-
-    protected resolveCheckboxValue(action: ToggleCheckbox): boolean {
-        return action.value;
-    }
-
-    protected resolveSelectOptionValue(action: SelectOption): string {
-        return action.value;
     }
 }

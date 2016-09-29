@@ -13,7 +13,7 @@ export interface IOnlyRussianCharsValidatorResults extends ITextLengthValidatorR
 export class OnlyRussianCharsValidator extends Validator<ITextLengthValidatorRules, IOnlyRussianCharsValidatorResults> {
 
     constructor(
-        @inject(TextLengthValidator) protected textLengthValidator
+        @inject(TextLengthValidator) private textLengthValidator
     ) {
         super();
     }

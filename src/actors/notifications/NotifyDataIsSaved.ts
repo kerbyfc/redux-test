@@ -10,7 +10,7 @@ import {ShowNotification, IShowNotificationPayload} from '../../actions/notifica
 export class NotifyDataIsSaved extends Actor {
 
     constructor(
-        @inject(ShowNotification) protected showNotification: IAction<IShowNotificationPayload>
+        @inject(ShowNotification) private showNotification: IAction<IShowNotificationPayload>
     ) {
         super();
     }

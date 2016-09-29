@@ -9,33 +9,11 @@ import {autobind} from 'core-decorators';
  */
 import {Input} from '../Input';
 import {KeyCode, ARROW_KEY_CODES, REMOVE_KEY_CODES} from '../../../vars';
+import {override} from 'core-decorators';
 
 export class MaskedInput extends Input {
 
-    @autobind
-    onMouseUp(event) {
-        this.updateSelectionOnMouseUp(event);
-    }
-
-    @autobind
-    onKeyPress(event) {
-        this.handleKeyRepeat(event);
-    }
-
-    @autobind
-    onKeyDown(event) {
-        this.preventRemove(event);
-        this.preventOriginArrowNavigation(event);
-        this.preventInputWithoutSelection(event);
-    }
-
-    @autobind
-    onKeyUp(event) {
-        super.onKeyUp(event);
-        this.updateSelectionOnKeyUp(event);
-    }
-
-    select(el: HTMLInputElement, start: number, end: number, direction: number = 1) {
+    private select(el: HTMLInputElement, start: number, end: number, direction: number = 1) {
         start = Math.max(0, start);
 
         if (el.value.length + 1 <= end) {
@@ -59,7 +37,7 @@ export class MaskedInput extends Input {
     /**
      * Update mask selection on user input
      */
-    updateSelectionOnKeyUp(event) {
+    private updateSelectionOnKeyUp(event) {
         const el = event.target;
 
         let direction: number = 1;
@@ -82,25 +60,25 @@ export class MaskedInput extends Input {
      * Do not process arrow navigation on keyDown,
      * as it will be processed in keyUp event handler
      */
-    preventOriginArrowNavigation(event) {
+    private preventOriginArrowNavigation(event) {
         if (_.includes(ARROW_KEY_CODES, event.keyCode)) {
             event.preventDefault();
         }
     }
 
-    preventInputWithoutSelection(event) {
+    private preventInputWithoutSelection(event) {
         if (this.state.selection[1] - this.state.selection[0] !== 1) {
             event.preventDefault();
         }
     }
 
-    preventRemove(event) {
+    private preventRemove(event) {
         if (_.includes(REMOVE_KEY_CODES, event.keyCode)) {
             event.preventDefault();
         }
     }
 
-    handleKeyRepeat(event) {
+    private handleKeyRepeat(event) {
         if (this.state.repeat > 1) {
             event.preventDefault();
         }
@@ -110,9 +88,39 @@ export class MaskedInput extends Input {
         this.state.repeat = this.state.repeat + 1;
     }
 
-    updateSelectionOnMouseUp(event) {
+    private updateSelectionOnMouseUp(event) {
         const el = event.target;
         this.select(el, el.selectionStart, el.selectionStart + 1);
+    }
+
+    @autobind
+    @override
+    protected onMouseUp(event) {
+        super.onMouseUp(event);
+        this.updateSelectionOnMouseUp(event);
+    }
+
+    @autobind
+    @override
+    protected onKeyUp(event) {
+        super.onKeyUp(event);
+        this.updateSelectionOnKeyUp(event);
+    }
+
+    @autobind
+    @override
+    protected onKeyPress(event) {
+        super.onKeyPress(event);
+        this.handleKeyRepeat(event);
+    }
+
+    @autobind
+    @override
+    protected onKeyDown(event) {
+        super.onKeyDown(event);
+        this.preventRemove(event);
+        this.preventOriginArrowNavigation(event);
+        this.preventInputWithoutSelection(event);
     }
 
 }

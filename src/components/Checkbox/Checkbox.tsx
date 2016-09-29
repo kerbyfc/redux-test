@@ -21,7 +21,7 @@ interface ICheckboxProps {
 
 export class Checkbox extends Component<ICheckboxProps, any> {
 
-    protected toggle = (event) => {
+    private toggle = (event) => {
         this.createAction<ToggleCheckbox>(ToggleCheckbox).emit({
             event, ref: this.props.$
         });

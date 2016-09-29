@@ -15,7 +15,7 @@ export class Component<TProps, TState> extends React.Component<TProps, TState> {
 
     protected readonly $: IAppStateRef = stateRefs;
 
-    protected get injector(): IInjector {
+    private get injector(): IInjector {
         return Component.injector;
     }
 

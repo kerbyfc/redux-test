@@ -18,21 +18,22 @@ interface IReduxReducersMapObject {
 @injectable()
 export abstract class Reducer<TState> implements IReducer<TState> {
     protected path: string = '';
+
     protected state: TState;
 
     protected get refs() {
         return _.get(stateRefs, this.path);
     }
 
-    protected getRelativeRefPath(ref: IRef<any>): string {
-        return ref.path.slice(this.path.length + 1);
+    protected get initialState(): TState {
+        return _.cloneDeep<TState>(_.get<TState>(initialState, this.path));
     }
 
-    protected concatPath(current: string, next: string) {
+    private concatPath(current: string, next: string) {
         return current ? current + '.' + next : next;
     }
 
-    protected getChildrenReducers(): IReduxReducersMapObject {
+    private getChildrenReducers(): IReduxReducersMapObject {
         return <IReduxReducersMapObject> _.mapValues<IReducer<any>, IReduxReducer<any>>(
             this.combine(), (reducer: IReducer<any>, key: string) => {
                 return reducer.release(this.concatPath(this.path, key));
@@ -40,18 +41,18 @@ export abstract class Reducer<TState> implements IReducer<TState> {
         );
     }
 
-    protected get initialState(): TState {
-        return _.cloneDeep<TState>(_.get<TState>(initialState, this.path));
+    private invoke(state: TState, plainObject: IDispatchObject): TState {
+        this.state = _.cloneDeep(state || this.initialState);
+        this.reduce(plainObject.action);
+        return this.state;
+    }
+
+    protected getRelativeRefPath(ref: IRef<any>): string {
+        return ref.path.slice(this.path.length + 1);
     }
 
     protected has(ref: IRef<any>): boolean {
         return _.has(this.refs, this.getRelativeRefPath(ref));
-    }
-
-    protected invoke(state: TState, plainObject: IDispatchObject): TState {
-        this.state = _.cloneDeep(state || this.initialState);
-        this.reduce(plainObject.action);
-        return this.state;
     }
 
     protected abstract reduce(action: IAction<any>);

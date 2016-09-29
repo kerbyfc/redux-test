@@ -28,7 +28,7 @@ export function singleton(target) {
  */
 export class Injector implements IInjector {
 
-    protected kernel: Kernel;
+    private kernel: Kernel;
 
     constructor() {
         this.kernel = new inversify.Kernel();

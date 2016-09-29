@@ -12,9 +12,9 @@ import {DEV} from '../vars';
 
 @injectable()
 export abstract class Action<TPayload> {
-    protected static injector: IInjector;
+    private static injector: IInjector;
 
-    protected static resolveType(): string {
+    private static resolveType(): string {
         return 'Action:' + this.name || this.toString().match(/function ([^\(]+)/)[1];
     }
 
@@ -22,15 +22,15 @@ export abstract class Action<TPayload> {
         return this.resolveType();
     }
 
-    protected payloadData: TPayload;
-    protected emitted: boolean = false;
-    protected actors: IActor[] = [];
+    private payloadData: TPayload;
+    private emitted: boolean = false;
+    private actors: IActor[] = [];
 
-    protected get injector(): IInjector {
+    private get injector(): IInjector {
         return Action.injector;
     }
 
-    protected get dispatcher(): IDispatcher {
+    private get dispatcher(): IDispatcher {
         return this.injector.get<IDispatcher>(Dispatcher);
     }
 

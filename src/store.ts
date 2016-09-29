@@ -21,10 +21,10 @@ function getReducers() {
     return injector.get(AppReducer).release();
 }
 
-export default function configureStore(initialState:Object = {}) {
+export default function configureStore(initialState: Object = {}) {
 
     const reducers = getReducers();
-    const dispatcher:Dispatcher = injector.get(Dispatcher);
+    const dispatcher: Dispatcher = injector.get(Dispatcher);
 
     const middlewares = [
         routerMiddleware(browserHistory),
@@ -48,9 +48,10 @@ export default function configureStore(initialState:Object = {}) {
         module['hot'].accept('./reducers', () => {
             const AppReducer = require('./reducers/App').AppReducer;
             injector.bind(AppReducer);
-            const reducers = getReducers();
 
-            store.replaceReducer(combineReducers(Object.assign(reducers, {
+            const newReducers = getReducers();
+
+            store.replaceReducer(combineReducers(Object.assign(newReducers, {
                 routing: routerReducer
             })));
         });

@@ -35,19 +35,18 @@ export class ClientFormReducer extends AbstractForm<IClientFormState> {
      *
      * class ClientFormReducer extends AbstractForm implements IClientFormReducer {}
      */
-
     protected refs: IClientFormStateRef;
 
     constructor(
-        @inject(OnlyRussianCharsValidator) protected onlyRussianCharsValidator: OnlyRussianCharsValidator,
-        @inject(PassportValidator) protected passwordValidator: PassportValidator,
-        @inject(EmailValidator) protected emailValidator: EmailValidator,
-        @inject(DateValidator) protected dateValidator: DateValidator
+        @inject(OnlyRussianCharsValidator) private onlyRussianCharsValidator: OnlyRussianCharsValidator,
+        @inject(PassportValidator) private passwordValidator: PassportValidator,
+        @inject(EmailValidator) private emailValidator: EmailValidator,
+        @inject(DateValidator) private dateValidator: DateValidator
     ) {
         super();
     }
 
-    protected setLoading(isLoading: boolean) {
+    private setLoading(isLoading: boolean) {
         return _.assign<{}, IClientFormState>({}, this.state, {
             loading: isLoading
         });

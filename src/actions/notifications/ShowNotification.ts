@@ -22,7 +22,7 @@ export interface IShowNotificationPayload {
 @injectable()
 export class ShowNotification extends Action<IShowNotificationPayload> {
 
-    protected defaultDelay: number = 3000;
+    private defaultDelay: number = 3000;
 
     /**
      * Unique identifier

@@ -53,40 +53,18 @@ interface IInputState {
  */
 export class Input extends Component<IInputProps, IInputState> {
 
-    state = {
+    public state = {
         repeat: 0,
         selection: [0, 0]
     };
 
-    onKeyDown(event) {}
-    onMouseUp(event) {}
-    onKeyPress(event) {}
-
-    @autobind
-    onKeyUp(event) {
-        /**
-         * No needs to use setState to update component
-         */
-        this.state.repeat = 0;
-    }
-
-    @autobind
-    onSelect(event) {
-        this.handleSelect(event);
-    }
-
-    @autobind
-    onChange(event) {
-        this.handleChange(event);
-    }
-
-    handleChange(event)  {
+    private handleChange(event)  {
         this.createAction<ChangeInputValue>(ChangeInputValue).emit({
             event, ref: this.props.$, selection: this.state.selection
         });
     }
 
-    handleSelect(event) {
+    private handleSelect(event) {
         const el = event.target;
         let {selectionStart: start, selectionEnd: end} = el;
 
@@ -96,7 +74,7 @@ export class Input extends Component<IInputProps, IInputState> {
         this.state.selection = [start, end];
     }
 
-    getContainerClass() {
+    private getContainerClass() {
         return c(
             styles.container,
             this.props.className,
@@ -104,14 +82,48 @@ export class Input extends Component<IInputProps, IInputState> {
         );
     }
 
-    getInputClass() {
+    @autobind
+    private onSelect(event) {
+        this.handleSelect(event);
+    }
+
+    @autobind
+    private onChange(event) {
+        this.handleChange(event);
+    }
+
+    @autobind
+    private getInputClass() {
         return c(styles.field);
     }
 
-    render() {
+    @autobind
+    protected onKeyDown(event) {
+        return;
+    }
+
+    @autobind
+    protected onMouseUp(event) {
+        return;
+    }
+
+    @autobind
+    protected onKeyPress(event) {
+        return;
+    }
+
+    @autobind
+    protected onKeyUp(event) {
+        /**
+         * No needs to use setState to update component
+         */
+        this.state.repeat = 0;
+    }
+
+    public render() {
         return (
             <div className={this.getContainerClass()}>
-                <input type='text'
+                <input type="text"
                        className={this.getInputClass()}
                        value={this.props.val}
                        onChange={this.onChange}

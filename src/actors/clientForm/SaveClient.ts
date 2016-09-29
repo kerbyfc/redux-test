@@ -9,7 +9,7 @@ import {ShowClientSaved} from '../../actions/clientForm/ShowClientSaved';
 export class SaveClientToServer extends Actor {
 
     constructor(
-        @inject(ShowClientSaved) protected showClientSaved: IAction<void>
+        @inject(ShowClientSaved) private showClientSaved: IAction<void>
     ) {
         super();
     }

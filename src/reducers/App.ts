@@ -13,8 +13,8 @@ import {NotificationsReducer} from './NotificationsReducer';
 export class AppReducer extends Reducer<IAppState> {
 
     constructor(
-        @inject(ClientFormReducer) protected clientFormReducer: IReducer<IClientFormState>,
-        @inject(NotificationsReducer) protected notificationsReducer: IReducer<INotification[]>
+        @inject(ClientFormReducer) private clientFormReducer: IReducer<IClientFormState>,
+        @inject(NotificationsReducer) private notificationsReducer: IReducer<INotification[]>
     ) {
         super();
     }
