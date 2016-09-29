@@ -50,7 +50,6 @@ interface IInputState {
 
 /**
  * @note some of handlers are used for mask input
- * TODO create MaskInput component
  */
 export class Input extends Component<IInputProps, IInputState> {
 

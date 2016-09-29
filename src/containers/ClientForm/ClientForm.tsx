@@ -16,6 +16,7 @@ import {Button} from '../../components/Button/Button';
 import {SaveClient} from '../../actions/clientForm/SaveClient';
 import {Form} from '../../templates/Form/Form';
 import {MaskedInput} from '../../components/Input/MaskedInput/MaskedInput';
+import {autobind} from 'core-decorators';
 
 /**
  * Constants
@@ -44,11 +45,12 @@ function mapStateToProps(state: IAppState) {
 @connect(mapStateToProps)
 export class ClientForm extends Component<IClientFormState, any> {
 
-    save = () => {
-        // this.createAction<SaveClient>(SaveClient).emit();
-    };
+    @autobind
+    protected save() {
+        this.createAction<SaveClient>(SaveClient).emit();
+    }
 
-    render() {
+    public render() {
         const refs: IClientFormStateRef = this.$.clientForm;
 
         return (
@@ -71,26 +73,46 @@ export class ClientForm extends Component<IClientFormState, any> {
                 </FormRow>
 
                 <FormRow title="Серия и номер паспорта">
-                    <MaskedInput key="passport" val={this.props.data.passport} $={refs.data.passport} mask=" " />
+                    <MaskedInput key="passport"
+                        val={this.props.data.passport}
+                        $={refs.data.passport}
+                        mask=" "
+                    />
                 </FormRow>
 
                 <FormRow title="Почта">
-                    <Input key="email" val={this.props.data.email} $={refs.data.email} error={this.props.errors.email} />
+                    <Input key="email"
+                        val={this.props.data.email}
+                        $={refs.data.email}
+                        error={this.props.errors.email}
+                    />
                 </FormRow>
 
                 <FormRow title="Автомобиль">
-                    <Checkbox key="hascar" checked={this.props.data.car.exists} $={refs.data.car.exists} />
+                    <Checkbox key="hascar"
+                        checked={this.props.data.car.exists}
+                        $={refs.data.car.exists}
+                    />
                 </FormRow>
 
                 {this.props.data.car.exists ?
                     <FormRow title="Марка автомобиля">
-                        <Select key="carMark" options={carMarks} value={this.props.data.car.brand} $={refs.data.car.brand} />
+                        <Select key="carMark"
+                            options={carMarks}
+                            value={this.props.data.car.brand}
+                            $={refs.data.car.brand}
+                        />
                     </FormRow>
                 : ''}
 
                 {this.props.data.car.exists ?
                     <FormRow title="Модель автомобиля">
-                        <Select key="carModel" options={carModels[this.props.data.car.brand]} value={this.props.data.car.model} $={refs.data.car.model} />
+                        <Select
+                            key="carModel"
+                            options={carModels[this.props.data.car.brand]}
+                            value={this.props.data.car.model}
+                            $={refs.data.car.model}
+                        />
                     </FormRow>
                 : ''}
 

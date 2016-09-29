@@ -27,9 +27,6 @@ export class Dispatcher {
     protected action: IAction<any>;
     protected store;
 
-    /**
-     * TODO: pass to actors callback to queue dispathing
-     */
     @autobind
     protected onStateUpdate() {
         if (!this.acting) {

@@ -21,16 +21,20 @@ interface ICheckboxProps {
 
 export class Checkbox extends Component<ICheckboxProps, any> {
 
-    toggle = (event) => {
-        // this.createAction<ToggleCheckbox>(ToggleCheckbox).emit({
-        //     event, ref: this.props.$
-        // })
+    protected toggle = (event) => {
+        this.createAction<ToggleCheckbox>(ToggleCheckbox).emit({
+            event, ref: this.props.$
+        });
     };
 
-    render() {
+    public render() {
         return (
             <div className={c(styles.container)}>
-                <input className={c(styles.field)} type="checkbox" checked={this.props.checked} onChange={this.toggle} />
+                <input type="checkbox"
+                       className={c(styles.field)}
+                       checked={this.props.checked}
+                       onChange={this.toggle}
+                />
             </div>
         );
     }
