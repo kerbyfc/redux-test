@@ -22,14 +22,14 @@ export class AppReducer extends Reducer<IAppState> {
     /**
      * TODO: no type cheking
      */
-    public combine() {
+    protected combine() {
         return {
             notifications: this.notificationsReducer,
             clientForm: this.clientFormReducer
         };
     }
 
-    public reduce(action: IAction<any>): IAppState {
+    protected reduce(action: IAction<any>): IAppState {
         return this.state;
     }
 }

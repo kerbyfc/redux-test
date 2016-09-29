@@ -55,6 +55,13 @@ export abstract class Reducer<TState> implements IReducer<TState> {
         return _.has(this.refs, this.getRelativeRefPath(ref));
     }
 
+    /**
+     * TODO: see ClientFormReducer.refs todo
+     */
+    protected combine(): {[name: string]: IReducer<any>} {
+        return null;
+    }
+
     protected abstract reduce(action: IAction<any>);
 
     public release(path: string = this.path): IReduxReducersMapObject | IReduxReducer<TState> {
@@ -82,9 +89,5 @@ export abstract class Reducer<TState> implements IReducer<TState> {
                 };
             }
         }
-    }
-
-    public combine(): any {
-        return null;
     }
 }

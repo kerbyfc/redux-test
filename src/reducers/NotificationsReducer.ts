@@ -15,7 +15,7 @@ import {HideNotification} from '../actions/notifications/HideNotification';
  */
 export class NotificationsReducer extends Reducer<INotification[]> {
 
-    public reduce(action) {
+    protected reduce(action) {
         if (action instanceof ShowNotification) {
             this.state.push(action.notification);
         }
