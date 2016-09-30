@@ -6,13 +6,11 @@ import * as _ from 'lodash';
 /**
  * Local imports
  */
-import {injectable} from './Injector';
 import {Dispatcher} from './Dispatcher';
 
 /**
  * Reference to state value
  */
-@injectable()
 export class Ref<TType> implements IRef<TType> {
     private static injector: IInjector;
 

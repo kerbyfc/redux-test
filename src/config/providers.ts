@@ -15,7 +15,6 @@ import {OnlyRussianCharsValidator} from '../validators/OnlyRussianCharsValidator
 import {PassportValidator} from '../validators/PassportValidator';
 import {PatternValidator} from '../validators/PatternValidator';
 import {Reducer} from '../core/Reducer';
-import {Ref} from '../core/Ref';
 import {SaveClientToServer} from '../actors/clientForm/SaveClient';
 import {SaveClient} from '../actions/clientForm/SaveClient';
 import {ShowClientSaved} from '../actions/clientForm/ShowClientSaved';
@@ -43,7 +42,6 @@ injector.registerProviders([
     PassportValidator,
     PatternValidator,
     Reducer,
-    Ref,
     SaveClient,
     SaveClientToServer,
     ShowClientSaved,
