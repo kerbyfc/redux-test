@@ -1,27 +1,42 @@
 /**
+ * External imports
+ */
+import {IStore} from '~react-router-redux~redux';
+
+/**
  * Local imports
  */
-import {injector} from '../config/providers';
-import {ShowNotification} from '../actions/notifications/ShowNotification';
 import configureStore from '../config/store';
-import {IStore} from '../interfaces/IStore';
+import {HideNotification} from '../actions/notifications/HideNotification';
+import {injector} from '../config/providers';
 import {NotificationType} from '../config/vars';
+import {ShowNotification} from '../actions/notifications/ShowNotification';
 
 describe('NotificationReducer', () => {
 
-    let store: IStore<IAppState>;
+    const store: IStore<IAppState> = configureStore();
+    const addNotificationArgs = {
+        text: 'success notification',
+        type: NotificationType.SUCCESS,
+        delay: 5
+    };
 
-    beforeEach(() => {
-        store = configureStore();
+    let firstNotificationId: string;
+
+    it(`should add notification on ${ShowNotification.type}`, () => {
+        const action: ShowNotification = injector.get(ShowNotification);
+        action.emit(addNotificationArgs);
+
+        const state = store.getState();
+        firstNotificationId = (state.notifications[0] as INotification).id;
+
+        state.notifications.length.should.eq(1);
+        state.notifications[0].should.contain(addNotificationArgs);
     });
 
-    it('should work', () => {
-        const action: ShowNotification = injector.get(ShowNotification);
-        const message = 'success message';
-        action.emit({
-            text: message,
-            type: NotificationType.SUCCESS
-        });
-        store.getState().notifications[0].should.haveOwnProperty('text').which.is(message);
+    it(`should remove notification on ${HideNotification.type}`, () => {
+        const action: HideNotification = injector.get(HideNotification);
+        action.emit(firstNotificationId);
+        store.getState().notifications.length.should.eq(0);
     });
 });

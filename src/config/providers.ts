@@ -8,6 +8,7 @@ import {DateValidator} from '../validators/DateValidator';
 import {Dispatcher} from '../core/Dispatcher';
 import {EmailValidator} from '../validators/EmailValidator';
 import {HideNotificationByTimeout} from '../actors/notifications/HideNotificationByTimeout';
+import {HideNotification} from '../actions/notifications/HideNotification';
 import {Injector} from '../core/Injector';
 import {NotificationsReducer} from '../reducers/NotificationsReducer';
 import {NotifyDataIsSaved} from '../actors/notifications/NotifyDataIsSaved';
@@ -34,6 +35,7 @@ injector.registerProviders([
     DateValidator,
     Dispatcher,
     EmailValidator,
+    HideNotification,
     HideNotificationByTimeout,
     Injector,
     NotificationsReducer,

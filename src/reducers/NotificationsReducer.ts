@@ -23,7 +23,7 @@ export class NotificationsReducer extends Reducer<INotification[]> {
         }
 
         if (action instanceof HideNotification) {
-            return _.filter(this.state, (notification: INotification) => {
+            this.state = _.filter(this.state, (notification: INotification) => {
                 return notification.id !== action.notificationId;
             });
         }
