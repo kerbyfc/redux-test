@@ -3,7 +3,7 @@
  */
 import {Actor} from '../../core/Actor';
 import {inject, injectable} from '../../core/Injector';
-import {NotificationType} from '../../vars';
+import {NotificationType} from '../../config/vars';
 import {ShowNotification, IShowNotificationPayload} from '../../actions/notifications/ShowNotification';
 
 @injectable()

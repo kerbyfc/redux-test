@@ -6,5 +6,4 @@ hook({
 });
 
 require('ts-node/register');
-require('./../src/providers');
 require('./../src/server/index');

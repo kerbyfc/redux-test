@@ -8,10 +8,12 @@ import {routerMiddleware} from 'react-router-redux';
 /**
  * Local imports
  */
-import {AppReducer} from './reducers/App';
-import {Dispatcher} from './core/Dispatcher';
-import {injector} from './core/Injector';
+import {injector} from './providers';
+import {AppReducer} from '../reducers/App';
+import {Dispatcher} from '../core/Dispatcher';
 import {routerReducer} from 'react-router-redux';
+import {initialState} from './initialState';
+import {IStore} from '~react-redux~redux';
 
 /* tslint:disable:no-string-literal */
 const devTools = global['devToolsExtension'] || (() => noop => noop);
@@ -21,8 +23,7 @@ function getReducers() {
     return injector.get(AppReducer).release();
 }
 
-export default function configureStore(initialState: Object = {}) {
-
+export default function configureStore(state: Object = initialState): IStore<IAppState> {
     const reducers = getReducers();
     const dispatcher: Dispatcher = injector.get(Dispatcher);
 
@@ -34,7 +35,7 @@ export default function configureStore(initialState: Object = {}) {
         combineReducers(Object.assign(reducers, {
             routing: routerReducer
         })),
-        initialState,
+        state,
         compose(
             applyMiddleware(...middlewares),
             devTools()
@@ -46,7 +47,7 @@ export default function configureStore(initialState: Object = {}) {
     /* tslint:disable:no-string-literal */
     if (process.env.NODE_ENV === 'development' && module['hot']) {
         module['hot'].accept('./reducers', () => {
-            const AppReducer = require('./reducers/App').AppReducer;
+            const AppReducer = require('./../reducers/App').AppReducer;
             injector.bind(AppReducer);
 
             const newReducers = getReducers();

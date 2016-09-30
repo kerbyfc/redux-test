@@ -9,13 +9,15 @@ import * as _ from 'lodash';
 import {Reducer} from '../core/Reducer';
 import {ShowNotification} from '../actions/notifications/ShowNotification';
 import {HideNotification} from '../actions/notifications/HideNotification';
+import {injectable} from '../core/Injector';
 
 /**
  * Handle actions, that affects current visible notifications
  */
+@injectable()
 export class NotificationsReducer extends Reducer<INotification[]> {
 
-    protected reduce(action) {
+    public reduce(action) {
         if (action instanceof ShowNotification) {
             this.state.push(action.notification);
         }

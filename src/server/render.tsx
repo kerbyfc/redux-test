@@ -9,7 +9,7 @@ import { RouterContext } from 'react-router';
 /**
  * Local imports
  */
-import configureStore from '../store';
+import configureStore from '../config/store';
 import compileAssets from './compileAssets';
 import Document from '../containers/Document/Document';
 

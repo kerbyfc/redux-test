@@ -3,14 +3,14 @@
  */
 import {injectable} from './Injector';
 import {Dispatcher} from './Dispatcher';
-import {DEV} from '../vars';
+import {DEV} from '../config/vars';
 
 @injectable()
 export abstract class Action<TPayload> {
     private static injector: IInjector;
 
     private static resolveType(): string {
-        return 'Action:' + this.name || this.toString().match(/function ([^\(]+)/)[1];
+        return 'Action:' + (this as Function).name || (this as Function).toString().match(/function ([^\(]+)/)[1];
     }
 
     static get type(): string {

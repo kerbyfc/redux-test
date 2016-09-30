@@ -7,6 +7,7 @@ import * as _ from 'lodash';
  * Local imports
  */
 import {Validator} from '../core/Validator';
+import {injectable} from '../core/Injector';
 
 /**
  * Interfaces
@@ -30,6 +31,7 @@ export interface IResults {
 /**
  * Validator that accepts rules to validate different types of text
  */
+@injectable()
 export class PatternValidator extends Validator<IPatternValidatorRules, IResults> {
 
     protected defaultRules: IPatternValidatorDefaltRules = {

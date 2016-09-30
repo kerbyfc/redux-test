@@ -8,8 +8,9 @@ import {IReducer as IReduxReducer} from '~react-router-redux~redux';
 /**
  * Local imports
  */
+import {initialState} from '../config/initialState';
 import {injectable} from './Injector';
-import {initialState, stateRefs} from '../state';
+import {refs} from '../config/refs';
 
 interface IReduxReducersMapObject {
     [key: string]: IReduxReducer<any>;
@@ -19,15 +20,15 @@ interface IReduxReducersMapObject {
 export abstract class Reducer<TState> implements IReducer<TState> {
     protected path: string = '';
 
-    protected state: TState;
-
     protected get refs() {
-        return _.get(stateRefs, this.path);
+        return _.get(refs, this.path);
     }
 
     protected get initialState(): TState {
         return _.cloneDeep<TState>(_.get<TState>(initialState, this.path));
     }
+
+    public state: TState;
 
     private concatPath(current: string, next: string) {
         return current ? current + '.' + next : next;
@@ -39,12 +40,6 @@ export abstract class Reducer<TState> implements IReducer<TState> {
                 return reducer.release(this.concatPath(this.path, key));
             }
         );
-    }
-
-    private invoke(state: TState, plainObject: IDispatchObject): TState {
-        this.state = _.cloneDeep(state || this.initialState);
-        this.reduce(plainObject.action);
-        return this.state;
     }
 
     protected getRelativeRefPath(ref: IRef<any>): string {
@@ -63,6 +58,12 @@ export abstract class Reducer<TState> implements IReducer<TState> {
     }
 
     protected abstract reduce(action: IAction<any>);
+
+    public invoke(state: TState, plainObject: IDispatchObject): TState {
+        this.state = _.cloneDeep(state || this.initialState);
+        this.reduce(plainObject.action);
+        return this.state;
+    }
 
     public release(path: string = this.path): IReduxReducersMapObject | IReduxReducer<TState> {
         this.path = path;

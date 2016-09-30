@@ -1,5 +1,5 @@
 interface IInjector {
-    get<TAction>(identifier: any): TAction;
+    get<T>(identifier: any): T;
     bind(identifier: any);
     isBound(idenfier: any);
 }

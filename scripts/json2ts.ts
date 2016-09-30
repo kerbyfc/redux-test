@@ -153,7 +153,7 @@ export class Json2Ts {
     }
 
     private formatCharsToTypeScript(jsonContent: any, objectName: string, optionalKeys: string[], options: IOptions): string {
-        let result = JSON.stringify(jsonContent, null, "\t")
+        let result = JSON.stringify(jsonContent, null, 4)
             .replace(new RegExp("\"", "g"), "")
             .replace(new RegExp(",", "g"), "");
 

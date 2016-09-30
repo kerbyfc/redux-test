@@ -7,13 +7,13 @@ import * as React from 'react';
  * Local imports
  */
 import {injectable} from './Injector';
-import {stateRefs} from '../state';
+import {refs} from '../config/refs';
 
 @injectable()
 export class Component<TProps, TState> extends React.Component<TProps, TState> {
     private static injector: IInjector;
 
-    protected readonly $: IAppStateRef = stateRefs;
+    protected readonly $: IAppStateRef = refs;
 
     private get injector(): IInjector {
         return Component.injector;

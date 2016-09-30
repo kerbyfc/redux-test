@@ -4,6 +4,10 @@
 import 'reflect-metadata';
 import * as inversify from 'inversify';
 import * as _ from 'lodash';
+
+/**
+ * Interfaces
+ */
 import Kernel = inversify.interfaces.Kernel;
 import BindingInWhenOnSyntax = inversify.interfaces.BindingInWhenOnSyntax;
 
@@ -58,14 +62,11 @@ export class Injector implements IInjector {
         }
     }
 
-    public isBound(symbol: Symbol) {
-        return this.kernel.isBound(symbol);
+    public isBound(identifier: any) {
+        return this.kernel.isBound(identifier);
     }
 
     public get<I>(provider): I | typeof provider {
         return this.kernel.get<I | typeof provider>(provider);
     }
 }
-
-export const injector = new Injector();
-export default injector;

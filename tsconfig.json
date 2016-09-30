@@ -1,35 +1,35 @@
 {
-  "buildOnSave": false,
-  "compileOnSave": false,
-  "compilerOptions": {
-    "outDir": "./dist/",
-    "target": "es6",
-    "module": "commonjs",
-    "moduleResolution": "node",
-    "isolatedModules": false,
-    "jsx": "react",
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "declaration": false,
-    "noImplicitAny": false,
-    "noImplicitUseStrict": false,
-    "removeComments": true,
-    "noLib": false,
-    "preserveConstEnums": true,
-    "suppressImplicitAnyIndexErrors": true,
-    "sourceMap": true
-  },
-  "filesGlob": [
-    "./src/**/*.ts",
-    "./src/**/*.tsx",
-    "./test/**/*.ts",
-    "./test/**/*.tsx",
-    "./typings/**/*.d.ts",
-    "./typings/index.d.ts",
-    "./src/typings/**.d.ts",
-    "!./node_modules/**/*"
-  ],
-  "atom": {
-    "rewriteTsconfig": false
-  }
+    "buildOnSave": false,
+    "compileOnSave": false,
+    "compilerOptions": {
+        "outDir": "./dist/",
+        "target": "es6",
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "isolatedModules": false,
+        "jsx": "react",
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "declaration": false,
+        "noImplicitAny": false,
+        "noImplicitUseStrict": false,
+        "removeComments": true,
+        "noLib": false,
+        "preserveConstEnums": true,
+        "suppressImplicitAnyIndexErrors": true,
+        "sourceMap": true
+    },
+    "include": [
+        "./src/**/*.ts",
+        "./src/**/*.tsx",
+        "./test/**/*.ts",
+        "./test/**/*.tsx",
+        "./typings/**/*.d.ts",
+        "./typings/index.d.ts",
+        "./src/typings/**.d.ts",
+        "./node_modules/intern/typings"
+    ],
+    "atom": {
+        "rewriteTsconfig": false
+    }
 }

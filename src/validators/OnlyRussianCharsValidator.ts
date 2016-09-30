@@ -8,7 +8,7 @@ import {ITextLengthValidatorResult, TextLengthValidator, ITextLengthValidatorRul
 /**
  * Interfaces
  */
-interface IOnlyRussianCharsValidatorResults extends ITextLengthValidatorResult {
+export interface IOnlyRussianCharsValidatorResults extends ITextLengthValidatorResult {
     onlyRus: boolean;
 }
 

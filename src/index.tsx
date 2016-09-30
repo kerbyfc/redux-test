@@ -10,23 +10,15 @@ import { syncHistoryWithStore } from 'react-router-redux';
 /**
  * Local imports
  */
-import './providers';
-import configureStore from './store';
-import routes from './routes';
-
-/* tslint:disable:no-var-requires */
-require('./styles/global.scss');
-/* tslint:enable:no-var-requires */
+import configureStore from './config/store';
+import routes from './config/routes';
+import './styles/global.scss';
 
 /* tslint:disable:no-string-literal */
 const preloadedState = global['window'] && global['window']['__PRELOADED__'];
-/* tslint:enable:no-string-literal */
-
-/* tslint:disable:no-string-literal */
 if (module['hot']) {
   module['hot'].accept();
 }
-/* tslint:enable:no-string-literal */
 
 const store = configureStore(preloadedState);
 const history = syncHistoryWithStore(browserHistory, store);

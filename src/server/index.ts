@@ -2,7 +2,6 @@
  * External imports
  */
 import * as express from 'express';
-import proxy = require('http-proxy-middleware');
 import webpack = require('webpack');
 import webpackDevMiddleware = require('webpack-dev-middleware');
 import webpackHotMiddleware = require('webpack-hot-middleware');
@@ -11,10 +10,10 @@ import { browserHistory, match } from 'react-router';
 /**
  * Local imports
  */
-import '../providers';
+import '../config/providers';
 
 import handleRoute from './handleRoute';
-import routes from '../routes';
+import routes from '../config/routes';
 
 const port = process.env.PORT || 3000;
 const app = express();

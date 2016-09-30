@@ -8,7 +8,7 @@ import {autobind} from 'core-decorators';
  * Local imports
  */
 import {Input} from '../Input';
-import {KeyCode, ARROW_KEY_CODES, REMOVE_KEY_CODES} from '../../../vars';
+import {KeyCode, ARROW_KEY_CODES, REMOVE_KEY_CODES} from '../../../config/vars';
 import {override} from 'core-decorators';
 
 export class MaskedInput extends Input {

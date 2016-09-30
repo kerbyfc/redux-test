@@ -1,12 +1,17 @@
 {
   "dependencies": {
+    "chai": "registry:npm/chai#3.5.0+20160723033700",
+    "chalk": "registry:npm/chalk#1.1.1+20160812215109",
     "es6-promise": "registry:npm/es6-promise#3.0.0+20160723033700",
     "immutable": "registry:npm/immutable#3.7.6+20160411060006",
     "lodash": "registry:npm/lodash#4.0.0+20160723033700",
     "mime": "registry:npm/mime#1.3.0+20160723033700",
     "react-redux": "registry:npm/react-redux#4.4.0+20160614222153",
     "react-router": "registry:npm/react-router#2.4.0+20160803174347",
-    "react-router-redux": "registry:npm/react-router-redux#4.0.0+20160602212457"
+    "react-router-redux": "registry:npm/react-router-redux#4.0.0+20160602212457",
+    "sinon": "registry:npm/sinon#1.16.0+20160723033700",
+    "through2": "registry:npm/through2#2.0.0+20160817101636",
+    "vinyl": "registry:npm/vinyl#1.2.0+20160817093728"
   },
   "devDependencies": {
     "webpack": "registry:npm/webpack#1.12.9+20160418172948"
@@ -16,7 +21,10 @@
     "core-decorators": "registry:dt/core-decorators#0.10.0+20160316155526",
     "express": "registry:dt/express#4.0.0+20160708185218",
     "express-serve-static-core": "registry:dt/express-serve-static-core#4.0.0+20160819131900",
+    "flat": "registry:dt/flat#0.0.0+20160317120654",
+    "gulp-util": "registry:dt/gulp-util#0.0.0+20160316155526",
     "inversify": "registry:dt/inversify#2.0.0-rc.12+20160830145920",
+    "mocha": "registry:dt/mocha#2.2.5+20160720003353",
     "node": "registry:env/node#6.0.0+20160813135048",
     "react": "registry:dt/react#0.14.0+20160817201227",
     "react-addons-css-transition-group": "registry:dt/react-addons-css-transition-group#0.14.0+20160316155526",
