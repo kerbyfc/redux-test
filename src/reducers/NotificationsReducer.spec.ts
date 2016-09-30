@@ -1,9 +1,4 @@
 /**
- * External imports
- */
-import 'chai';
-
-/**
  * Local imports
  */
 import {injector} from '../config/providers';

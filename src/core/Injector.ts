@@ -30,6 +30,7 @@ export function singleton(target) {
 /**
  * Facade composition for inversify kernel singleton
  */
+@injectable()
 export class Injector implements IInjector {
 
     private kernel: Kernel;

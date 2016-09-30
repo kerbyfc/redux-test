@@ -4,8 +4,6 @@ const autoprefixer = require('autoprefixer');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-const extractCSS = new ExtractTextPlugin('static/[name].css');
-
 module.exports = {
     debug: true,
     devtool: 'eval',

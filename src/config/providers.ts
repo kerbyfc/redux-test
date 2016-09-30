@@ -1,82 +1,53 @@
-import {Injector} from '../core/Injector';
+import {Action} from '../core/Action';
+import {Actor} from '../core/Actor';
 import {AppReducer} from '../reducers/App';
-import {ToggleCheckbox} from '../actions/input/ToggleCheckbox';
+import {ChangeInputValue} from '../actions/input/ChangeInputValue';
 import {ClientFormReducer} from '../reducers/forms/ClientForm';
+import {Component} from '../core/Component';
 import {DateValidator} from '../validators/DateValidator';
 import {Dispatcher} from '../core/Dispatcher';
 import {EmailValidator} from '../validators/EmailValidator';
-import {ChangeInputValue} from '../actions/input/ChangeInputValue';
+import {HideNotificationByTimeout} from '../actors/notifications/HideNotificationByTimeout';
+import {Injector} from '../core/Injector';
+import {NotificationsReducer} from '../reducers/NotificationsReducer';
+import {NotifyDataIsSaved} from '../actors/notifications/NotifyDataIsSaved';
 import {OnlyRussianCharsValidator} from '../validators/OnlyRussianCharsValidator';
 import {PassportValidator} from '../validators/PassportValidator';
 import {PatternValidator} from '../validators/PatternValidator';
+import {Reducer} from '../core/Reducer';
 import {Ref} from '../core/Ref';
+import {SaveClientToServer} from '../actors/clientForm/SaveClient';
 import {SaveClient} from '../actions/clientForm/SaveClient';
-import {SelectOption} from '../actions/input/SelectOption';
+import {ShowClientSaved} from '../actions/clientForm/ShowClientSaved';
+import {ShowNotification} from '../actions/notifications/ShowNotification';
 import {TextLengthValidator} from '../validators/TextLengthValidator';
 import {Validator} from '../core/Validator';
-import {NotificationsReducer} from '../reducers/NotificationsReducer';
-import {ShowNotification} from '../actions/notifications/ShowNotification';
-import {ShowClientSaved} from '../actions/clientForm/ShowClientSaved';
-import {FallbackInputValue} from '../actors/inputs/FallbackInputValue';
-import {SaveClientToServer} from '../actors/clientForm/SaveClient';
-import {HideNotificationByTimeout} from '../actors/notifications/HideNotificationByTimeout';
-import {HideNotification} from '../actions/notifications/HideNotification';
-import {NotifyDataIsSaved} from '../actors/notifications/NotifyDataIsSaved';
-import {Actor} from '../core/Actor';
-import {Action} from '../core/Action';
-import {Reducer} from '../core/Reducer';
-import {Component} from '../core/Component';
 
 export const injector = new Injector();
 
-/**
- * Singletons
- */
 injector.registerProviders([
-    /**
-     * Core
-     */
-    Ref,
-    Validator,
-    Dispatcher,
-    Component,
-    Reducer,
     Action,
     Actor,
-
-    /**
-     * Reducers
-     */
     AppReducer,
-    ClientFormReducer,
-    NotificationsReducer,
-
-    /**
-     * Actions
-     */
     ChangeInputValue,
-    ToggleCheckbox,
-    SelectOption,
+    ClientFormReducer,
+    Component,
+    DateValidator,
+    Dispatcher,
+    EmailValidator,
+    HideNotificationByTimeout,
+    Injector,
+    NotificationsReducer,
+    NotifyDataIsSaved,
+    OnlyRussianCharsValidator,
+    PassportValidator,
+    PatternValidator,
+    Reducer,
+    Ref,
     SaveClient,
+    SaveClientToServer,
     ShowClientSaved,
     ShowNotification,
-    HideNotification,
-
-    /**
-     * Actors
-     */
-    FallbackInputValue,
-    SaveClientToServer,
-    HideNotificationByTimeout,
-    NotifyDataIsSaved,
-
-    /**
-     * Validators
-     */
     TextLengthValidator,
-    OnlyRussianCharsValidator,
-    PatternValidator,
-    PassportValidator,
-    DateValidator,
-    EmailValidator
+    Validator
 ]);

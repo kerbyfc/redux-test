@@ -2,7 +2,9 @@
  * Local imports
  */
 import {PatternValidator} from './PatternValidator';
+import {injectable} from '../core/Injector';
 
+@injectable()
 export class PassportValidator extends PatternValidator {
 
     protected defaultRules = {

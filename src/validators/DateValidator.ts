@@ -3,11 +3,12 @@
  */
 import * as _ from 'lodash';
 import * as moment from 'moment';
-import {Validator} from '../core/Validator';
 
 /**
  * Local imports
  */
+import {Validator} from '../core/Validator';
+import {injectable} from '../core/Injector';
 
 interface IRules {
     format?: string;
@@ -27,6 +28,7 @@ interface IResults {
     format: boolean;
 }
 
+@injectable()
 export class DateValidator extends Validator<IRules, IResults> {
 
     private defaultRules = {

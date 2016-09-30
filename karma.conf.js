@@ -1,4 +1,4 @@
-var webpackConfig = require('./webpack.prod');
+var webpackConfig = require('./webpack.dev');
 
 const isDebug = process.env.DEBUG || false;
 const runOnce = process.env.BDD || isDebug ? false : true;
@@ -11,7 +11,7 @@ module.exports = function (config) {
         singleRun: runOnce,
         browsers: [isDebug ? 'Chrome' : 'PhantomJS'],
 
-        frameworks: ['mocha', 'sinon-chai'],
+        frameworks: ['mocha', 'chai'],
 
         client: {
             chai: {
@@ -29,18 +29,8 @@ module.exports = function (config) {
             './src/**/*.spec.ts': ['webpack']
         },
 
-        webpack: {
-            entry: {
-                main: [
-                    'babel-polyfill',
-                    './src/index'
-                ]
-            },
-            module: webpackConfig.module,
-            resolve: webpackConfig.resolve
-        },
+        webpack: webpackConfig,
 
-        port: 9876,
         colors: true,
         logLevel: config.LOG_INFO,
 
@@ -51,6 +41,7 @@ module.exports = function (config) {
             'karma-mocha-reporter',
             'karma-clear-screen-reporter',
             'karma-mocha',
+            'karma-chai',
             'sinon-chai'
         ],
 

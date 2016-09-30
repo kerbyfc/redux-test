@@ -13,6 +13,7 @@ import {autobind} from 'core-decorators';
 
 @singleton
 @injectable()
+
 export class Dispatcher {
     private acting: boolean = false;
     private lastState: IAppState;

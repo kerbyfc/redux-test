@@ -2,7 +2,7 @@
  * Local imports
  */
 import {Reducer} from '../core/Reducer';
-import {inject, singleton} from '../core/Injector';
+import {inject, singleton, injectable} from '../core/Injector';
 import {ClientFormReducer} from './forms/ClientForm';
 import {NotificationsReducer} from './NotificationsReducer';
 
@@ -10,6 +10,7 @@ import {NotificationsReducer} from './NotificationsReducer';
  * Root application reducer
  */
 @singleton
+@injectable()
 export class AppReducer extends Reducer<IAppState> {
 
     constructor(
