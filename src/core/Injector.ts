@@ -1,7 +1,6 @@
 /**
  * External imports
  */
-import 'reflect-metadata';
 import * as inversify from 'inversify';
 import * as _ from 'lodash';
 

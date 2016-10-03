@@ -8,6 +8,13 @@ import webpackHotMiddleware = require('webpack-hot-middleware');
 import { browserHistory, match } from 'react-router';
 
 /**
+ * Importing of reflect-metadata should
+ * bee done once, so it can't be placed in
+ * Injector.ts file 
+ */
+import 'reflect-metadata';
+
+/**
  * Local imports
  */
 import '../config/providers';
