@@ -11,6 +11,7 @@
     "react-router": "registry:npm/react-router#2.4.0+20160803174347",
     "react-router-redux": "registry:npm/react-router-redux#4.0.0+20160602212457",
     "sinon": "registry:npm/sinon#1.16.0+20160723033700",
+    "sinon-chai": "registry:npm/sinon-chai#2.8.0+20160310030142",
     "through2": "registry:npm/through2#2.0.0+20160817101636",
     "vinyl": "registry:npm/vinyl#1.2.0+20160817093728"
   },
