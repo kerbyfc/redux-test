@@ -5,8 +5,8 @@
  */
 import 'reflect-metadata';
 
-var chai = require("chai");
-var sinonChai = require("sinon-chai");
+import * as chai from "chai";
+import * as sinonChai from "sinon-chai";
 
 chai.should();
 chai.use(sinonChai);
