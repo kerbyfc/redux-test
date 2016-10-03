@@ -1,4 +1,4 @@
-var webpackConfig = require('./webpack.dev');
+var webpackConfig = require('./webpack.test');
 
 const isDebug = process.env.DEBUG || false;
 const runOnce = process.env.BDD || isDebug ? false : true;
@@ -21,12 +21,14 @@ module.exports = function (config) {
 
         files: [
             './node_modules/es6-shim/es6-shim.js',
+            './src/config/tests.ts',
             './src/**/*.spec.ts'
         ],
 
         exclude: [],
 
         preprocessors: {
+            './src/config/tests.ts': ['webpack'],
             './src/**/*.spec.ts': ['webpack']
         },
 
