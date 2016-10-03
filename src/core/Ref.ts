@@ -7,10 +7,12 @@ import * as _ from 'lodash';
  * Local imports
  */
 import {Dispatcher} from './Dispatcher';
+import {injectable} from './Injector';
 
 /**
  * Reference to state value
  */
+@injectable()
 export class Ref<TType> implements IRef<TType> {
     private static injector: IInjector;
 
@@ -27,6 +29,6 @@ export class Ref<TType> implements IRef<TType> {
     }
 
     get key(): string {
-        return _.last(this.path.split('.'));
+        return _.last<string>(this.path.split('.'));
     }
 }

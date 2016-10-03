@@ -7,6 +7,7 @@ import {Component} from '../core/Component';
 import {DateValidator} from '../validators/DateValidator';
 import {Dispatcher} from '../core/Dispatcher';
 import {EmailValidator} from '../validators/EmailValidator';
+import {FallbackInputValue} from '../actors/inputs/FallbackInputValue';
 import {HideNotificationByTimeout} from '../actors/notifications/HideNotificationByTimeout';
 import {HideNotification} from '../actions/notifications/HideNotification';
 import {Injector} from '../core/Injector';
@@ -16,6 +17,7 @@ import {OnlyRussianCharsValidator} from '../validators/OnlyRussianCharsValidator
 import {PassportValidator} from '../validators/PassportValidator';
 import {PatternValidator} from '../validators/PatternValidator';
 import {Reducer} from '../core/Reducer';
+import {Ref} from '../core/Ref';
 import {SaveClientToServer} from '../actors/clientForm/SaveClient';
 import {SaveClient} from '../actions/clientForm/SaveClient';
 import {ShowClientSaved} from '../actions/clientForm/ShowClientSaved';
@@ -35,6 +37,7 @@ injector.registerProviders([
     DateValidator,
     Dispatcher,
     EmailValidator,
+    FallbackInputValue,
     HideNotification,
     HideNotificationByTimeout,
     Injector,
@@ -44,6 +47,7 @@ injector.registerProviders([
     PassportValidator,
     PatternValidator,
     Reducer,
+    Ref,
     SaveClient,
     SaveClientToServer,
     ShowClientSaved,

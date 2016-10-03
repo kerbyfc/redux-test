@@ -8,7 +8,9 @@ import * as _ from 'lodash';
  */
 import {Actor} from '../../core/Actor';
 import {ChangeInputValue} from '../../actions/input/ChangeInputValue';
+import { injectable } from './../../core/Injector';
 
+@injectable()
 export class FallbackInputValue extends Actor {
 
     public perform(action, state) {
