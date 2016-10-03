@@ -22,7 +22,7 @@ interface IChangeInputValuePayload {
 export class ChangeInputValue extends Action<IChangeInputValuePayload> {
 
     constructor(
-        @inject(FallbackInputValue) fallbackInputValue: IActor,
+        @inject(FallbackInputValue) fallbackInputValue: IActor
     ) {
         super();
 
