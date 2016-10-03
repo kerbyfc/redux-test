@@ -36,6 +36,7 @@
     "karma-webpack": "^1.8.0",
     "mocha": "^3.0.2",
     "react-hot-loader": "^3.0.0-beta.4",
+    "sinon": "^2.0.0-pre.3",
     "ts-node": "^1.3.0",
     "tslint-loader": "^2.1.5",
     "webpack-dev-middleware": "^1.6.1",
