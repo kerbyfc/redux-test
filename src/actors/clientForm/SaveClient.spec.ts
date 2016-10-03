@@ -12,7 +12,7 @@ describe(SaveClientToServer.name, () => {
     it(`should perform new ${ShowClientSaved.name} action`, (next) => {
         const actor: SaveClientToServer = injector.get(SaveClientToServer);
         const dispatcher: IDispatcher = injector.get(Dispatcher);
-        const spy = sinon.spy(dispatcher, 'dispatch');
+        const dispatch = sinon.spy(dispatcher, 'dispatch');
         const state = store.getState();
 
         state.clientForm.loading = true;
@@ -22,7 +22,7 @@ describe(SaveClientToServer.name, () => {
         });
 
         setTimeout(() => {
-            spy.calledWith(sinon.match.instanceOf(ShowClientSaved)).should.be.ok;
+            dispatch.should.have.been.calledWith(sinon.match.instanceOf(ShowClientSaved));
             next();
         }, 1500);
     });

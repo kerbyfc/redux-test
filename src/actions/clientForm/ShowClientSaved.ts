@@ -12,7 +12,7 @@ import {Action} from '../../core/Action';
 export class ShowClientSaved extends Action<any> {
 
     constructor(
-        @inject(NotifyDataIsSaved) notifyDataIsSaved: IActor,
+        @inject(NotifyDataIsSaved) notifyDataIsSaved: IActor
     ) {
         super();
 
