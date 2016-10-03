@@ -14,8 +14,8 @@ export class SaveClientToServer extends Actor {
         super();
     }
 
-    public perform(context) {
-        if (context.state.clientForm.loading) {
+    public perform(action, state) {
+        if (state.current.clientForm.loading) {
             setTimeout(() => {
                 this.showClientSaved.emit(null);
             }, 1000);
