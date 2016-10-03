@@ -23,7 +23,7 @@ describe('NotificationReducer', () => {
 
     let firstNotificationId: string;
 
-    it(`should add notification on ${ShowNotification.type}`, () => {
+    it(`should add notification on ${ShowNotification.name} action`, () => {
         const action: ShowNotification = injector.get(ShowNotification);
         action.emit(addNotificationArgs);
 
@@ -34,7 +34,7 @@ describe('NotificationReducer', () => {
         state.notifications[0].should.contain(addNotificationArgs);
     });
 
-    it(`should remove notification on ${HideNotification.type}`, () => {
+    it(`should remove notification on ${HideNotification.name} action`, () => {
         const action: HideNotification = injector.get(HideNotification);
         action.emit(firstNotificationId);
         store.getState().notifications.length.should.eq(0);
