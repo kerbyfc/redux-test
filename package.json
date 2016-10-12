@@ -4,16 +4,15 @@
   "repository": "https://github.com/kerbyfc/redux-test",
   "main": "index.js",
   "scripts": {
-    "postinstall": "typings install && npm install -g nsrun",
-    "dev": "npm run gulp & npm run watch",
-    "watch": "NODE_ENV=development nodemon scripts/startServer.js",
-    "gulp": "gulp dev",
-    "start": "NODE_ENV=production node scripts/startServer.js",
+    "postinstall": "typings install && npm install -g nsrun && nsrun init:editorconfig",
+    "dev": "npm run dev:watch & npm run dev:server",
+    "dev:server": "NODE_ENV=development nodemon scripts/server.js",
+    "dev:watch": "gulp watch",
+    "start": "NODE_ENV=production node scripts/server.js",
     "build": "NODE_ENV=production webpack --config=webpack.prod.js -p --progress",
     "test": "karma start",
     "test:debug": "DEBUG=true npm test",
     "test:bdd": "BDD=true npm test",
-    "commit": "./scripts/commit.js"
     "init:editorconfig": "ts-node ./scripts/init/editorconfig.ts"
   },
   "author": "kerbyfc@gmail.com",

@@ -201,7 +201,7 @@ gulp.task('watch-state', ['gen-state'], () => {
     gulp.watch(['./src/state.yml'], ['generate-interfaces']);
 });
 
-gulp.task('dev', [
+gulp.task('watch', [
     'watch-state',
     'watch-styles-dts',
     'watch-providers'
