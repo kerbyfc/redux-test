@@ -21,6 +21,7 @@
   "globalDependencies": {
     "classnames": "registry:dt/classnames#0.0.0+20160316155526",
     "core-decorators": "registry:dt/core-decorators#0.10.0+20160316155526",
+    "ejs": "registry:dt/ejs#0.0.0+20161003130526",
     "express": "registry:dt/express#4.0.0+20160708185218",
     "express-serve-static-core": "registry:dt/express-serve-static-core#4.0.0+20160819131900",
     "flat": "registry:dt/flat#0.0.0+20160317120654",
