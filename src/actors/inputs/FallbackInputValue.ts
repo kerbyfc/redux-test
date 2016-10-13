@@ -13,21 +13,21 @@ import { injectable } from './../../core/Injector';
 @injectable()
 export class FallbackInputValue extends Actor {
 
-    public perform(action, state) {
-        if (action instanceof ChangeInputValue) {
-            /**
-             * Get state value by Ref.path
-             */
-            const stateValue = _.get<string>(state.current, action.payload.ref.path);
+	public perform(action, state) {
+		if (action instanceof ChangeInputValue) {
+			/**
+			 * Get state value by Ref.path
+			 */
+			const stateValue = _.get<string>(state.current, action.payload.ref.path);
 
-            /**
-             * Check if stateValue was applyed by reducer
-             * and revert input value if not
-             */
-            if (stateValue !== action.value) {
-                action.input.value = stateValue;
-                action.input.setSelectionRange(action.start, action.end);
-            }
-        }
-    }
+			/**
+			 * Check if stateValue was applyed by reducer
+			 * and revert input value if not
+			 */
+			if (stateValue !== action.value) {
+				action.input.value = stateValue;
+				action.input.setSelectionRange(action.start, action.end);
+			}
+		}
+	}
 }

@@ -8,5 +8,5 @@ import {injectable} from './Injector';
  */
 @injectable()
 export abstract class Actor implements IActor {
-    public abstract perform(action: IAction<any>, state: IActorState);
+	public abstract perform(action: IAction<any>, state: IActorState);
 }

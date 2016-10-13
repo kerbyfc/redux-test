@@ -16,15 +16,15 @@ import {Notifier} from '../Notifier/Notifier';
  */
 export class App extends Component<any, any> {
 
-    public render() {
-        return (
-            <div className={styles.app}>
-                <Header title="Virtu"/>
-                {this.props.children}
-                <Notifier />
-            </div>
-        );
-    }
+	public render() {
+		return (
+			<div className={styles.app}>
+				<Header title="Virtu"/>
+				{this.props.children}
+				<Notifier />
+			</div>
+		);
+	}
 }
 
 export default App;

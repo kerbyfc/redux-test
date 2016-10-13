@@ -5,6 +5,6 @@ import {ClientForm} from '../containers/ClientForm/ClientForm';
 
 export default (
   <Route path="/" component={App} >
-    <IndexRoute component={ClientForm}/>
+	<IndexRoute component={ClientForm}/>
   </Route>
 );

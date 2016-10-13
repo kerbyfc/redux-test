@@ -20,12 +20,12 @@ interface INotificationProps extends React.Attributes, INotification {}
  */
 export function Notification(props: INotificationProps) {
 
-    const modifier: string = props.type === NotificationType.SUCCESS ?
-        styles.success : styles.error;
+	const modifier: string = props.type === NotificationType.SUCCESS ?
+		styles.success : styles.error;
 
-    return (
-        <div className={c(styles.container, modifier)}>
-            {props.text}
-        </div>
-    );
+	return (
+		<div className={c(styles.container, modifier)}>
+			{props.text}
+		</div>
+	);
 }

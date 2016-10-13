@@ -10,7 +10,7 @@ import { browserHistory, match } from 'react-router';
 /**
  * Importing of reflect-metadata should
  * bee done once, so it can't be placed in
- * Injector.ts file 
+ * Injector.ts file
  */
 import 'reflect-metadata';
 
@@ -37,8 +37,8 @@ if (process.env.NODE_ENV === 'development') {
 
   app.use(webpackHotMiddleware(compiler));
   app.use(webpackDevMiddleware(compiler, {
-    noInfo: true,
-    publicPath: config.output.publicPath,
+	noInfo: true,
+	publicPath: config.output.publicPath,
   }));
 }
 
@@ -55,9 +55,9 @@ app.use(express.static('dist', {
  */
 app.use((req, res, next) => {
   match(<any> {
-    history: browserHistory,
-    location: req.url,
-    routes,
+	history: browserHistory,
+	location: req.url,
+	routes,
   }, handleRoute(req, res, next));
 });
 
@@ -66,10 +66,10 @@ app.use((req, res, next) => {
  */
 app.listen(port, (error) => {
   if (error) {
-    console.error(error);
+	console.error(error);
   } else {
-    /* tslint:disable:no-console */
-    console.info(`🌎  Listening on http://localhost:${port}/.`);
-    /* tslint:enable:no-console */
+	/* tslint:disable:no-console */
+	console.info(`🌎  Listening on http://localhost:${port}/.`);
+	/* tslint:enable:no-console */
   }
 });

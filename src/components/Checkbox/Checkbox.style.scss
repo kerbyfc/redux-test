@@ -1,20 +1,20 @@
 .container {
-    composes: container from "../Input/Input.style.scss";
+	composes: container from "../Input/Input.style.scss";
 }
 
 .field {
-    composes: field from "../Input/Input.style.scss";
-    height: 3rem;
-    width: 3rem;
-    -webkit-appearance: initial;
+	composes: field from "../Input/Input.style.scss";
+	height: 3rem;
+	width: 3rem;
+	-webkit-appearance: initial;
 }
 
 .field:checked:before {
-    content: "✓";
-    font-size: 1.9rem;
-    color: #bddb62;
-    top: -0.5rem;
-    left: -0.3rem;
-    position: relative;
-    font-weight: bold;
+	content: "✓";
+	font-size: 1.9rem;
+	color: #bddb62;
+	top: -0.5rem;
+	left: -0.3rem;
+	position: relative;
+	font-weight: bold;
 }

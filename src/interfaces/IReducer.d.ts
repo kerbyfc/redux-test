@@ -1,3 +1,3 @@
 interface IReducer<TState> {
-    release(path: string);
+	release(path: string);
 }

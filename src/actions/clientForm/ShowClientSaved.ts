@@ -11,13 +11,13 @@ import {Action} from '../../core/Action';
 @injectable()
 export class ShowClientSaved extends Action<any> {
 
-    constructor(
-        @inject(NotifyDataIsSaved) notifyDataIsSaved: IActor
-    ) {
-        super();
+	constructor(
+		@inject(NotifyDataIsSaved) notifyDataIsSaved: IActor
+	) {
+		super();
 
-        this.enqueue(
-            notifyDataIsSaved
-        );
-    }
+		this.enqueue(
+			notifyDataIsSaved
+		);
+	}
 }

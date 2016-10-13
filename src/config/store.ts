@@ -20,44 +20,44 @@ const devTools = global['devToolsExtension'] || (() => noop => noop);
 /* tslint:enable:no-string-literal */
 
 function getReducers() {
-    return injector.get(AppReducer).release();
+	return injector.get(AppReducer).release();
 }
 
 export default function configureStore(state: Object = initialState): IStore<IAppState> {
-    const reducers = getReducers();
-    const dispatcher: Dispatcher = injector.get(Dispatcher);
+	const reducers = getReducers();
+	const dispatcher: Dispatcher = injector.get(Dispatcher);
 
-    const middlewares = [
-        routerMiddleware(browserHistory)
-    ];
+	const middlewares = [
+		routerMiddleware(browserHistory)
+	];
 
-    const store = createStore(
-        combineReducers(Object.assign(reducers, {
-            routing: routerReducer
-        })),
-        state,
-        compose(
-            applyMiddleware(...middlewares),
-            devTools()
-        )
-    ) as any;
+	const store = createStore(
+		combineReducers(Object.assign(reducers, {
+			routing: routerReducer
+		})),
+		state,
+		compose(
+			applyMiddleware(...middlewares),
+			devTools()
+		)
+	) as any;
 
-    dispatcher.attachStore(store);
+	dispatcher.attachStore(store);
 
-    /* tslint:disable:no-string-literal */
-    if (process.env.NODE_ENV === 'development' && module['hot']) {
-        module['hot'].accept('./reducers', () => {
-            const AppReducer = require('./../reducers/App').AppReducer;
-            injector.bind(AppReducer);
+	/* tslint:disable:no-string-literal */
+	if (process.env.NODE_ENV === 'development' && module['hot']) {
+		module['hot'].accept('./reducers', () => {
+			const AppReducer = require('./../reducers/App').AppReducer;
+			injector.bind(AppReducer);
 
-            const newReducers = getReducers();
+			const newReducers = getReducers();
 
-            store.replaceReducer(combineReducers(Object.assign(newReducers, {
-                routing: routerReducer
-            })));
-        });
-    }
-    /* tslint:enable:no-string-literal */
+			store.replaceReducer(combineReducers(Object.assign(newReducers, {
+				routing: routerReducer
+			})));
+		});
+	}
+	/* tslint:enable:no-string-literal */
 
-    return store;
+	return store;
 }

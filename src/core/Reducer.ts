@@ -13,82 +13,82 @@ import {injectable} from './Injector';
 import {refs} from '../config/refs';
 
 interface IReduxReducersMapObject {
-    [key: string]: IReduxReducer<any>;
+	[key: string]: IReduxReducer<any>;
 }
 
 @injectable()
 export abstract class Reducer<TState> implements IReducer<TState> {
-    protected path: string = '';
+	protected path: string = '';
 
-    protected get refs() {
-        return _.get(refs, this.path);
-    }
+	protected get refs() {
+		return _.get(refs, this.path);
+	}
 
-    protected get initialState(): TState {
-        return _.cloneDeep<TState>(_.get<TState>(initialState, this.path));
-    }
+	protected get initialState(): TState {
+		return _.cloneDeep<TState>(_.get<TState>(initialState, this.path));
+	}
 
-    public state: TState;
+	public state: TState;
 
-    private concatPath(current: string, next: string) {
-        return current ? current + '.' + next : next;
-    }
+	private concatPath(current: string, next: string) {
+		return current ? current + '.' + next : next;
+	}
 
-    private getReducersToCombine(): IReduxReducersMapObject {
-        return <IReduxReducersMapObject> _.mapValues<IReducer<any>, IReduxReducer<any>>(
-            this.combine(), (reducer: IReducer<any>, key: string) => {
-                return reducer.release(this.concatPath(this.path, key));
-            }
-        );
-    }
+	private getReducersToCombine(): IReduxReducersMapObject {
+		return <IReduxReducersMapObject> _.mapValues<IReducer<any>, IReduxReducer<any>>(
+			this.combine(), (reducer: IReducer<any>, key: string) => {
+				return reducer.release(this.concatPath(this.path, key));
+			}
+		);
+	}
 
-    protected getRelativeRefPath(ref: IRef<any>): string {
-        return ref.path.slice(this.path.length + 1);
-    }
+	protected getRelativeRefPath(ref: IRef<any>): string {
+		return ref.path.slice(this.path.length + 1);
+	}
 
-    protected has(ref: IRef<any>): boolean {
-        return _.has(this.refs, this.getRelativeRefPath(ref));
-    }
+	protected has(ref: IRef<any>): boolean {
+		return _.has(this.refs, this.getRelativeRefPath(ref));
+	}
 
-    /**
-     * TODO: see ClientFormReducer.refs todo
-     */
-    protected combine(): {[name: string]: IReducer<any>} {
-        return null;
-    }
+	/**
+	 * TODO: see ClientFormReducer.refs todo
+	 */
+	protected combine(): {[name: string]: IReducer<any>} {
+		return null;
+	}
 
-    protected abstract reduce(action: IAction<any>);
+	protected abstract reduce(action: IAction<any>);
 
-    public invoke(state: TState, plainObject: IDispatchObject): TState {
-        this.state = _.cloneDeep(state || this.initialState);
-        this.reduce(plainObject.action);
-        return this.state;
-    }
+	public invoke(state: TState, plainObject: IDispatchObject): TState {
+		this.state = _.cloneDeep(state || this.initialState);
+		this.reduce(plainObject.action);
+		return this.state;
+	}
 
-    public release(path: string = this.path): IReduxReducersMapObject | IReduxReducer<TState> {
-        this.path = path;
+	public release(path: string = this.path): IReduxReducersMapObject | IReduxReducer<TState> {
+		this.path = path;
 
-        const children = this.getReducersToCombine();
+		const children = this.getReducersToCombine();
 
-        if (_.isEmpty(children)) {
-            return this.invoke.bind(this);
+		if (_.isEmpty(children)) {
+			return this.invoke.bind(this);
 
-        } else {
+		} else {
 
-            // is root reducer
-            if (this.path === '') {
-                return children;
-            } else {
-                const childReducer = <IReduxReducer<TState>> combineReducers<TState>(children);
+			// is root reducer
+			if (this.path === '') {
+				return children;
+			} else {
+				const childReducer = <IReduxReducer<TState>> combineReducers<TState>(children);
 
-                /**
-                 * Wrap childReducer properties
-                 * TODO: docs & examples
-                 */
-                return (state: TState, plainObject: IDispatchObject): TState => {
-                    return this.invoke(childReducer(state, plainObject), plainObject);
-                };
-            }
-        }
-    }
+				/**
+				 * Wrap childReducer properties
+				 * TODO: docs & examples
+				 */
+				return (state: TState, plainObject: IDispatchObject): TState => {
+					return this.invoke(childReducer(state, plainObject), plainObject);
+				};
+			}
+		}
+	}
 }

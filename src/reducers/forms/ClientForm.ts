@@ -22,122 +22,122 @@ import {override} from 'core-decorators';
 @injectable()
 export class ClientFormReducer extends AbstractForm<IClientFormState> {
 
-    /**
-     * TODO: generate complex interfaces
-     * interface IClientFormReducer extends IReducer<IClientFormState, IClientFormStateRef, IClientFormCombination> {}
-     *
-     * interface IReducer<TState, TStateRefs, TStateCombination> {
-     *   combine(): TStateCombination;
-     *   initialState: TState;
-     *   state: TState;
-     *   refs: TStateRefs;
-     * }
-     *
-     * class ClientFormReducer extends AbstractForm implements IClientFormReducer {}
-     */
-    protected refs: IClientFormStateRef;
+	/**
+	 * TODO: generate complex interfaces
+	 * interface IClientFormReducer extends IReducer<IClientFormState, IClientFormStateRef, IClientFormCombination> {}
+	 *
+	 * interface IReducer<TState, TStateRefs, TStateCombination> {
+	 *   combine(): TStateCombination;
+	 *   initialState: TState;
+	 *   state: TState;
+	 *   refs: TStateRefs;
+	 * }
+	 *
+	 * class ClientFormReducer extends AbstractForm implements IClientFormReducer {}
+	 */
+	protected refs: IClientFormStateRef;
 
-    constructor(
-        @inject(OnlyRussianCharsValidator) private onlyRussianCharsValidator: OnlyRussianCharsValidator,
-        @inject(PassportValidator) private passwordValidator: PassportValidator,
-        @inject(EmailValidator) private emailValidator: EmailValidator,
-        @inject(DateValidator) private dateValidator: DateValidator
-    ) {
-        super();
-    }
+	constructor(
+		@inject(OnlyRussianCharsValidator) private onlyRussianCharsValidator: OnlyRussianCharsValidator,
+		@inject(PassportValidator) private passwordValidator: PassportValidator,
+		@inject(EmailValidator) private emailValidator: EmailValidator,
+		@inject(DateValidator) private dateValidator: DateValidator
+	) {
+		super();
+	}
 
-    private setLoading(isLoading: boolean) {
-        return _.assign<{}, IClientFormState>({}, this.state, {
-            loading: isLoading
-        });
-    }
+	private setLoading(isLoading: boolean) {
+		return _.assign<{}, IClientFormState>({}, this.state, {
+			loading: isLoading
+		});
+	}
 
-    @override
-    protected resolveSelectOptionValue(action: SelectOption) {
-        /**
-         * Reset car model on car brand change
-         */
-        if (action.payload.ref === this.refs.data.car.brand) {
-            this.state.data.car.model = '';
-        }
+	@override
+	protected resolveSelectOptionValue(action: SelectOption) {
+		/**
+		 * Reset car model on car brand change
+		 */
+		if (action.payload.ref === this.refs.data.car.brand) {
+			this.state.data.car.model = '';
+		}
 
-        return action.value;
-    }
+		return action.value;
+	}
 
-    @override
-    protected resolveCheckboxValue(action: ToggleCheckbox) {
-        switch (action.payload.ref) {
-            case this.refs.data.car.exists:
-                /**
-                 * Cleanup car data when car is not exist
-                 */
-                if (action.value === false) {
-                    this.state.data.car = this.initialState.data.car;
-                }
-                break;
-        }
+	@override
+	protected resolveCheckboxValue(action: ToggleCheckbox) {
+		switch (action.payload.ref) {
+			case this.refs.data.car.exists:
+				/**
+				 * Cleanup car data when car is not exist
+				 */
+				if (action.value === false) {
+					this.state.data.car = this.initialState.data.car;
+				}
+				break;
+		}
 
-        return action.value;
-    }
+		return action.value;
+	}
 
-    @override
-    protected resolveInputValue(action: ChangeInputValue) {
-        let valid: boolean = true;
+	@override
+	protected resolveInputValue(action: ChangeInputValue) {
+		let valid: boolean = true;
 
-        switch (action.payload.ref) {
-            /**
-             * Use filtering (return validation result)
-             */
-            case this.refs.data.name:
-            case this.refs.data.surname:
-            case this.refs.data.middlename: {
-                valid = this.onlyRussianCharsValidator.check(action.value, {
-                    minLength: 0,
-                    maxLength: 127
-                });
-                break;
-            }
+		switch (action.payload.ref) {
+			/**
+			 * Use filtering (return validation result)
+			 */
+			case this.refs.data.name:
+			case this.refs.data.surname:
+			case this.refs.data.middlename: {
+				valid = this.onlyRussianCharsValidator.check(action.value, {
+					minLength: 0,
+					maxLength: 127
+				});
+				break;
+			}
 
-            case this.refs.data.passport: {
-                valid = this.passwordValidator.check(action.value, {
-                    length: action.end
-                });
-                break;
-            }
+			case this.refs.data.passport: {
+				valid = this.passwordValidator.check(action.value, {
+					length: action.end
+				});
+				break;
+			}
 
-            case this.refs.data.birthday: {
-                valid = this.dateValidator.check(action.value, {
-                    length: action.end
-                });
-                break;
-            }
+			case this.refs.data.birthday: {
+				valid = this.dateValidator.check(action.value, {
+					length: action.end
+				});
+				break;
+			}
 
-            /**
-             * Update errors
-             */
-            case this.refs.data.email:
-                this.state.errors.email = !action.value || this.emailValidator.check(action.value) ?
-                    '' : 'Неверный формат. Пример: user@domain.zone';
-                break;
-        }
+			/**
+			 * Update errors
+			 */
+			case this.refs.data.email:
+				this.state.errors.email = !action.value || this.emailValidator.check(action.value) ?
+					'' : 'Неверный формат. Пример: user@domain.zone';
+				break;
+		}
 
-        if (valid) {
-            return action.value;
-        }
-    }
+		if (valid) {
+			return action.value;
+		}
+	}
 
-    protected reduce(action) {
-        if (action instanceof SaveClient) {
-            return this.setLoading(true);
-        }
+	protected reduce(action) {
+		if (action instanceof SaveClient) {
+			return this.setLoading(true);
+		}
 
-        if (action instanceof ShowClientSaved) {
-            /**
-             * Reset state
-             */
-            return this.initialState;
-        }
+		if (action instanceof ShowClientSaved) {
+			/**
+			 * Reset state
+			 */
+			return this.initialState;
+		}
 
-        super.reduce(action);
-    }
+		super.reduce(action);
+	}
 }

@@ -16,8 +16,8 @@ import {autobind} from 'core-decorators';
  * Interfaces
  */
 interface IButtonProps extends IComponentProps {
-    text?: string;
-    onClick: (event: SyntheticEvent) => void;
+	text?: string;
+	onClick: (event: SyntheticEvent) => void;
 }
 
 /**
@@ -25,17 +25,17 @@ interface IButtonProps extends IComponentProps {
  */
 export class Button extends Component<IButtonProps, any> {
 
-    @autobind
-    private onClick(event) {
-        event.preventDefault();
-        this.props.onClick(event);
-    };
+	@autobind
+	private onClick(event) {
+		event.preventDefault();
+		this.props.onClick(event);
+	};
 
-    public render() {
-        return (
-            <button className={c(styles.button)} onClick={this.onClick}>
-                {this.props.children || this.props.text}
-            </button>
-        );
-    }
+	public render() {
+		return (
+			<button className={c(styles.button)} onClick={this.onClick}>
+				{this.props.children || this.props.text}
+			</button>
+		);
+	}
 }

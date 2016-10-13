@@ -8,13 +8,13 @@ import {Validator} from '../core/Validator';
  * Interfaces
  */
 export interface ITextLengthValidatorRules {
-    minLength?: number;
-    maxLength?: number;
+	minLength?: number;
+	maxLength?: number;
 }
 
 export interface ITextLengthValidatorResult {
-    minLength: boolean;
-    maxLength: boolean;
+	minLength: boolean;
+	maxLength: boolean;
 }
 
 /**
@@ -23,18 +23,18 @@ export interface ITextLengthValidatorResult {
 @injectable()
 export class TextLengthValidator extends Validator<ITextLengthValidatorRules, ITextLengthValidatorResult> {
 
-    private static validateMinLength(value, min) {
-        return (min || -Infinity) <= value.length;
-    }
+	private static validateMinLength(value, min) {
+		return (min || -Infinity) <= value.length;
+	}
 
-    private static validateMaxLength(value, max) {
-        return value.length <= (max || Infinity);
-    }
+	private static validateMaxLength(value, max) {
+		return value.length <= (max || Infinity);
+	}
 
-    public validate(value: string, rules?: ITextLengthValidatorRules) {
-        return {
-            minLength: TextLengthValidator.validateMinLength(value, rules.minLength),
-            maxLength: TextLengthValidator.validateMaxLength(value, rules.maxLength)
-        };
-    }
+	public validate(value: string, rules?: ITextLengthValidatorRules) {
+		return {
+			minLength: TextLengthValidator.validateMinLength(value, rules.minLength),
+			maxLength: TextLengthValidator.validateMaxLength(value, rules.maxLength)
+		};
+	}
 }

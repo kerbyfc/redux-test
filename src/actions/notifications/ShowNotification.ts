@@ -11,9 +11,9 @@ import {HideNotificationByTimeout} from '../../actors/notifications/HideNotifica
 import {Action} from '../../core/Action';
 
 export interface IShowNotificationPayload {
-    text: string;
-    type: number;
-    delay?: number;
+	text: string;
+	type: number;
+	delay?: number;
 }
 
 /**
@@ -22,35 +22,35 @@ export interface IShowNotificationPayload {
 @injectable()
 export class ShowNotification extends Action<IShowNotificationPayload> {
 
-    private defaultDelay: number = 3000;
+	private defaultDelay: number = 3000;
 
-    /**
-     * Unique identifier
-     */
-    public readonly notificationId: string;
+	/**
+	 * Unique identifier
+	 */
+	public readonly notificationId: string;
 
-    constructor(
-        @inject(HideNotificationByTimeout) hideNotificationByTimeout
-    ) {
-        super();
-        this.notificationId = _.uniqueId('noty');
+	constructor(
+		@inject(HideNotificationByTimeout) hideNotificationByTimeout
+	) {
+		super();
+		this.notificationId = _.uniqueId('noty');
 
-        this.enqueue(
-            hideNotificationByTimeout
-        );
-    }
+		this.enqueue(
+			hideNotificationByTimeout
+		);
+	}
 
-    get delay(): number {
-        return this.payload.delay || this.defaultDelay;
-    }
+	get delay(): number {
+		return this.payload.delay || this.defaultDelay;
+	}
 
-    get notification(): INotification {
-        return {
-            id: this.notificationId,
-            text: this.payload.text,
-            type: this.payload.type,
-            delay: this.delay
-        };
-    }
+	get notification(): INotification {
+		return {
+			id: this.notificationId,
+			text: this.payload.text,
+			type: this.payload.type,
+			delay: this.delay
+		};
+	}
 
 }

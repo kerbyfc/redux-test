@@ -17,15 +17,15 @@ import {injectable} from '../core/Injector';
 @injectable()
 export class NotificationsReducer extends Reducer<INotification[]> {
 
-    public reduce(action) {
-        if (action instanceof ShowNotification) {
-            this.state.push(action.notification);
-        }
+	public reduce(action) {
+		if (action instanceof ShowNotification) {
+			this.state.push(action.notification);
+		}
 
-        if (action instanceof HideNotification) {
-            this.state = _.filter(this.state, (notification: INotification) => {
-                return notification.id !== action.notificationId;
-            });
-        }
-    }
+		if (action instanceof HideNotification) {
+			this.state = _.filter(this.state, (notification: INotification) => {
+				return notification.id !== action.notificationId;
+			});
+		}
+	}
 }

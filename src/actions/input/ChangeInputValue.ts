@@ -9,9 +9,9 @@ import {Action} from '../../core/Action';
  * Interfaces
  */
 interface IChangeInputValuePayload {
-    event: Event;
-    ref: IRef<string>;
-    selection: number[];
+	event: Event;
+	ref: IRef<string>;
+	selection: number[];
 }
 
 /**
@@ -21,29 +21,29 @@ interface IChangeInputValuePayload {
 @injectable()
 export class ChangeInputValue extends Action<IChangeInputValuePayload> {
 
-    constructor(
-        @inject(FallbackInputValue) fallbackInputValue: IActor
-    ) {
-        super();
+	constructor(
+		@inject(FallbackInputValue) fallbackInputValue: IActor
+	) {
+		super();
 
-        this.enqueue(
-            fallbackInputValue
-        );
-    }
+		this.enqueue(
+			fallbackInputValue
+		);
+	}
 
-    get input(): HTMLInputElement {
-        return <HTMLInputElement> this.payload.event.target;
-    }
+	get input(): HTMLInputElement {
+		return <HTMLInputElement> this.payload.event.target;
+	}
 
-    get value(): string {
-        return this.input.value;
-    }
+	get value(): string {
+		return this.input.value;
+	}
 
-    get start(): number {
-        return this.payload.selection[0];
-    }
+	get start(): number {
+		return this.payload.selection[0];
+	}
 
-    get end(): number {
-        return this.payload.selection[1];
-    }
+	get end(): number {
+		return this.payload.selection[1];
+	}
 }

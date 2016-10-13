@@ -9,16 +9,16 @@ import {ShowNotification, IShowNotificationPayload} from '../../actions/notifica
 @injectable()
 export class NotifyDataIsSaved extends Actor {
 
-    constructor(
-        @inject(ShowNotification) private showNotification: IAction<IShowNotificationPayload>
-    ) {
-        super();
-    }
+	constructor(
+		@inject(ShowNotification) private showNotification: IAction<IShowNotificationPayload>
+	) {
+		super();
+	}
 
-    public perform() {
-        this.showNotification.emit({
-            text: 'Данные успешно сохранены',
-            type: NotificationType.SUCCESS
-        });
-    }
+	public perform() {
+		this.showNotification.emit({
+			text: 'Данные успешно сохранены',
+			type: NotificationType.SUCCESS
+		});
+	}
 }

@@ -20,13 +20,13 @@
   composes: panel;
 
   &:hover {
-    background-color: #f5f5f5;
-    color: #000;
+	background-color: #f5f5f5;
+	color: #000;
   }
 
   &:active {
-    background-color: #a50000;
-    color: #fff;
+	background-color: #a50000;
+	color: #fff;
   }
 }
 

@@ -10,7 +10,7 @@ import { syncHistoryWithStore } from 'react-router-redux';
 /**
  * Importing of reflect-metadata should
  * bee done once, so it can't be placed in
- * Injector.ts file 
+ * Injector.ts file
  */
 import 'reflect-metadata';
 
@@ -32,7 +32,7 @@ const history = syncHistoryWithStore(browserHistory, store);
 
 render(
   <Provider store={store}>
-    <Router history={history} routes={routes} />
+	<Router history={history} routes={routes} />
   </Provider>,
   document.getElementById('root')
 );

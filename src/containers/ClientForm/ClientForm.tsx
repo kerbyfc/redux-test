@@ -23,13 +23,13 @@ import {autobind} from 'core-decorators';
  * TODO: fetch it
  */
 const carMarks = [
-    '', 'mazda', 'ford', 'audi'
+	'', 'mazda', 'ford', 'audi'
 ];
 
 const carModels = {
-    mazda: ['', '3', '6', 'mpv'],
-    ford: ['', 'focus', 'mustang', 'mondeo'],
-    audi: ['', 'A3', 'A6', 'A8']
+	mazda: ['', '3', '6', 'mpv'],
+	ford: ['', 'focus', 'mustang', 'mondeo'],
+	audi: ['', 'A3', 'A6', 'A8']
 };
 
 /**
@@ -41,7 +41,7 @@ interface IClientFormProps extends IComponentProps, IClientFormState {}
  * Redux
  */
 function mapStateToProps(state: IAppState): IClientFormState {
-    return state.clientForm;
+	return state.clientForm;
 }
 
 /**
@@ -50,81 +50,81 @@ function mapStateToProps(state: IAppState): IClientFormState {
 @connect(mapStateToProps)
 export class ClientForm extends Component<IClientFormProps, any> {
 
-    @autobind
-    private save() {
-        this.createAction<SaveClient>(SaveClient).emit();
-    }
+	@autobind
+	private save() {
+		this.createAction<SaveClient>(SaveClient).emit();
+	}
 
-    public render() {
-        const refs: IClientFormStateRef = this.$.clientForm;
+	public render() {
+		const refs: IClientFormStateRef = this.$.clientForm;
 
-        return (
-            <Form loading={this.props.loading}>
+		return (
+			<Form loading={this.props.loading}>
 
-                <FormRow title="Фамилия">
-                    <Input key="surname" id="surname" val={this.props.data.surname} $={refs.data.surname} />
-                </FormRow>
+				<FormRow title="Фамилия">
+					<Input key="surname" id="surname" val={this.props.data.surname} $={refs.data.surname} />
+				</FormRow>
 
-                <FormRow title="Имя">
-                    <Input key="name" val={this.props.data.name} $={refs.data.name} />
-                </FormRow>
+				<FormRow title="Имя">
+					<Input key="name" val={this.props.data.name} $={refs.data.name} />
+				</FormRow>
 
-                <FormRow title="Отчество">
-                    <Input key="middlename" val={this.props.data.middlename} $={refs.data.middlename} />
-                </FormRow>
+				<FormRow title="Отчество">
+					<Input key="middlename" val={this.props.data.middlename} $={refs.data.middlename} />
+				</FormRow>
 
-                <FormRow title="День рождения">
-                    <MaskedInput key="birthday" val={this.props.data.birthday} $={refs.data.birthday} mask="." />
-                </FormRow>
+				<FormRow title="День рождения">
+					<MaskedInput key="birthday" val={this.props.data.birthday} $={refs.data.birthday} mask="." />
+				</FormRow>
 
-                <FormRow title="Серия и номер паспорта">
-                    <MaskedInput key="passport"
-                        val={this.props.data.passport}
-                        $={refs.data.passport}
-                        mask=" "
-                    />
-                </FormRow>
+				<FormRow title="Серия и номер паспорта">
+					<MaskedInput key="passport"
+						val={this.props.data.passport}
+						$={refs.data.passport}
+						mask=" "
+					/>
+				</FormRow>
 
-                <FormRow title="Почта">
-                    <Input key="email"
-                        val={this.props.data.email}
-                        $={refs.data.email}
-                        error={this.props.errors.email}
-                    />
-                </FormRow>
+				<FormRow title="Почта">
+					<Input key="email"
+						val={this.props.data.email}
+						$={refs.data.email}
+						error={this.props.errors.email}
+					/>
+				</FormRow>
 
-                <FormRow title="Автомобиль">
-                    <Checkbox key="hascar"
-                        checked={this.props.data.car.exists}
-                        $={refs.data.car.exists}
-                    />
-                </FormRow>
+				<FormRow title="Автомобиль">
+					<Checkbox key="hascar"
+						checked={this.props.data.car.exists}
+						$={refs.data.car.exists}
+					/>
+				</FormRow>
 
-                {this.props.data.car.exists ?
-                    <FormRow title="Марка автомобиля">
-                        <Select key="carMark"
-                            options={carMarks}
-                            value={this.props.data.car.brand}
-                            $={refs.data.car.brand}
-                        />
-                    </FormRow>
-                : ''}
+				{this.props.data.car.exists ?
+					<FormRow title="Марка автомобиля">
+						<Select key="carMark"
+							options={carMarks}
+							value={this.props.data.car.brand}
+							$={refs.data.car.brand}
+						/>
+					</FormRow>
+				: ''}
 
-                {this.props.data.car.exists ?
-                    <FormRow title="Модель автомобиля">
-                        <Select
-                            key="carModel"
-                            options={carModels[this.props.data.car.brand]}
-                            value={this.props.data.car.model}
-                            $={refs.data.car.model}
-                        />
-                    </FormRow>
-                : ''}
+				{this.props.data.car.exists ?
+					<FormRow title="Модель автомобиля">
+						<Select
+							key="carModel"
+							options={carModels[this.props.data.car.brand]}
+							value={this.props.data.car.model}
+							$={refs.data.car.model}
+						/>
+					</FormRow>
+				: ''}
 
-                <Button onClick={this.save}>
-                    Сохранить
-                </Button>
-            </Form>
-        );
-    }
+				<Button onClick={this.save}>
+					Сохранить
+				</Button>
+			</Form>
+		);
+	}
 }

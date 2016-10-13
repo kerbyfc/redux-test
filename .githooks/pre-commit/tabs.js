@@ -2,6 +2,7 @@
 
 var gitStatus = require("git-status");
 var fs = require("fs");
+var rightPad = require('right-pad');
 var leftPad = require('left-pad');
 require('colors');
 
@@ -22,13 +23,13 @@ gitStatus(function (err, data) {
 					var count = 0;
 					fs.readFileSync(file.to).toString().replace(/[^\t\n\r](\t+)/g, function(m, tabs, index, text) {
 						if (!count) {
-							error.push("  at " + file.to);
+							error.push("\n  at " + file.to);
 						}
 						var line = text.slice(0, index).split(/\n/).length;
 						error.push(
-							leftPad(line, 4, ' ') + ": " +
+							"     " + file.to + ":" + rightPad(line.toString(), 4, ' ') + "  " + leftPad(line, 4, ' ') + "|" +
 							showInvisibles(
-								text.slice(text.slice(0, index).lastIndexOf("\n") + 1, index) +
+								text.slice(text.slice(0, index).lastIndexOf("\n"), index + 1) +
 								Array(tabs.length + 1).join("---").red +
 								text.slice(index + tabs.length + 1, index + text.slice(index).indexOf("\n"))
 							)
@@ -40,8 +41,8 @@ gitStatus(function (err, data) {
 		}
 
 		if (error.length) {
-			console.log("Tabs are not allowed for alignment:");
-			console.log(error.join("\n"));
+			console.log("\nTabs are not allowed for alignment:");
+			console.log(error.join("\n") + "\n");
 			process.exit(1);
 		} else {
 			process.exit(0);

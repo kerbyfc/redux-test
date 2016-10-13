@@ -1,8 +1,8 @@
 interface IActorState {
-    current: IAppState;
-    previous: IAppState;
+	current: IAppState;
+	previous: IAppState;
 }
 
 interface IActor {
-    perform(action: IAction<any>, state: IActorState);
+	perform(action: IAction<any>, state: IActorState);
 }

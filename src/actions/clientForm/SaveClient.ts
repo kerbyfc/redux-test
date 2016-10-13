@@ -10,13 +10,13 @@ import {Action} from '../../core/Action';
 @injectable()
 export class SaveClient extends Action<any> {
 
-    constructor(
-        @inject(SaveClientToServer) saveDataToServer: IActor
-    ) {
-        super();
+	constructor(
+		@inject(SaveClientToServer) saveDataToServer: IActor
+	) {
+		super();
 
-        this.enqueue(
-            saveDataToServer
-        );
-    }
+		this.enqueue(
+			saveDataToServer
+		);
+	}
 }

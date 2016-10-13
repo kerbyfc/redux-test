@@ -1,5 +1,5 @@
 .container {
-    height: 4.3rem;
+	height: 4.3rem;
 }
 
 .field {
@@ -11,15 +11,15 @@
 }
 
 .invalid {
-    color: red;
-    .field {
-        border-color: red;
-    }
+	color: red;
+	.field {
+		border-color: red;
+	}
 }
 
 .error {
-    display: inline-block;
-    height: 1rem;
-    line-height: 1rem;
-    padding-left: 0.2rem;
+	display: inline-block;
+	height: 1rem;
+	line-height: 1rem;
+	padding-left: 0.2rem;
 }

@@ -16,33 +16,33 @@ import {Notification} from '../../components/Nodification/Notification';
  * Redux
  */
 function mapStateToProps(state: IAppState) {
-    return {
-        notifications: state.notifications
-    };
+	return {
+		notifications: state.notifications
+	};
 }
 
 /**
  * Interfaces
  */
 interface INotifierProps extends IComponentProps {
-    notifications?: INotification[];
+	notifications?: INotification[];
 }
 
 @connect(mapStateToProps)
 export class Notifier extends Component<INotifierProps, any> {
 
-    public render() {
-        return (
-            <div className={styles.container}>
-                {_.map(this.props.notifications, (notification: INotification) => {
-                    return <Notification
-                        key={notification.id}
-                        type={notification.type}
-                        text={notification.text}
-                        id={notification.id}
-                    />;
-                })}
-            </div>
-        );
-    }
+	public render() {
+		return (
+			<div className={styles.container}>
+				{_.map(this.props.notifications, (notification: INotification) => {
+					return <Notification
+						key={notification.id}
+						type={notification.type}
+						text={notification.text}
+						id={notification.id}
+					/>;
+				})}
+			</div>
+		);
+	}
 }

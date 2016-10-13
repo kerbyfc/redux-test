@@ -14,38 +14,38 @@ import * as styles from './Form.style.scss';
  * Interfaces
  */
 interface IFormProps extends IComponentProps {
-    disabled?: boolean;
-    loading?: boolean;
-    children?: any;
+	disabled?: boolean;
+	loading?: boolean;
+	children?: any;
 }
 
 export function Form(props: IFormProps) {
-    return (
-        <form className={c(styles.form)}>
-            {props.loading ?
+	return (
+		<form className={c(styles.form)}>
+			{props.loading ?
 
-                <ReactCSSTransitionGroup
-                    transitionAppear={true}
-                    transitionAppearTimeout={500}
-                    transitionEnterTimeout={500}
-                    transitionLeaveTimeout={500}
-                    transitionName={{
-                        enter: '', leave: '',
-                        appear: styles.overlayAppear,
-                        appearActive: styles.overlayAppearActive
-                    }}
-                >
+				<ReactCSSTransitionGroup
+					transitionAppear={true}
+					transitionAppearTimeout={500}
+					transitionEnterTimeout={500}
+					transitionLeaveTimeout={500}
+					transitionName={{
+						enter: '', leave: '',
+						appear: styles.overlayAppear,
+						appearActive: styles.overlayAppearActive
+					}}
+				>
 
-                    <div className={c(styles.overlay)}>
-                        <p><span>🕓</span></p>
-                    </div>
+					<div className={c(styles.overlay)}>
+						<p><span>🕓</span></p>
+					</div>
 
-                </ReactCSSTransitionGroup>
-            : ''}
+				</ReactCSSTransitionGroup>
+			: ''}
 
-            <fieldset disabled={props.disabled || props.loading} className={c(styles.fieldset)}>
-                {props.children}
-            </fieldset>
-        </form>
-    );
+			<fieldset disabled={props.disabled || props.loading} className={c(styles.fieldset)}>
+				{props.children}
+			</fieldset>
+		</form>
+	);
 }

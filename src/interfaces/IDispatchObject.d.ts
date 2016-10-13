@@ -1,5 +1,5 @@
 interface IDispatchObject {
-    type: string;
-    action: IAction<any>;
-    payload: any;
+	type: string;
+	action: IAction<any>;
+	payload: any;
 }
