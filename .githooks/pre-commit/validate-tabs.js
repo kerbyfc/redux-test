@@ -4,4 +4,4 @@ require('ts-node/register', {
 	project: '../../'
 });
 
-require('../../scripts/validate/tabs');
+require('../../scripts/validators/tabs');

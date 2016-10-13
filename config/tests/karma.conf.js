@@ -1,4 +1,4 @@
-var webpackConfig = require('./webpack.test');
+var webpackConfig = require('./../webpack/webpack.test.js');
 
 const isDebug = process.env.DEBUG || false;
 const runOnce = process.env.BDD || isDebug ? false : true;
@@ -6,7 +6,7 @@ const runOnce = process.env.BDD || isDebug ? false : true;
 module.exports = function (config) {
 
     const options = {
-        basePath: '',
+        basePath: '../../)),
         autoWatch: true,
         singleRun: runOnce,
         browsers: [isDebug ? 'Chrome' : 'PhantomJS'],
@@ -20,8 +20,8 @@ module.exports = function (config) {
         },
 
         files: [
-            './node_modules/es6-shim/es6-shim.js',
-            './src/config/tests.ts',
+            '../node_modules/es6-shim/es6-shim.js',
+            '../../src/config/tests.ts',
             './src/**/*.spec.ts'
         ],
 

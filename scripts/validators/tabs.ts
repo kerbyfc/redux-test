@@ -6,7 +6,7 @@ import rightPad = require('right-pad');
 import {getLogger} from 'loglevel';
 import {showInvisibles} from '../utils';
 
-const logger: Log = getLogger('validate:tabs');
+const logger: Log = getLogger('validators:tabs');
 
 gitStatus(function (err, data) {
 	if (err) {

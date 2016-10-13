@@ -29,7 +29,7 @@ export interface IResults {
 }
 
 /**
- * Validator that accepts rules to validate different types of text
+ * Validator that accepts rules to validators different types of text
  */
 @injectable()
 export class PatternValidator extends Validator<IPatternValidatorRules, IResults> {

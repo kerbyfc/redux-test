@@ -9,7 +9,7 @@ import * as flat from 'flat';
 import * as glob from 'glob';
 import * as watch from 'gulp-watch';
 
-import {Json2Ts} from './scripts/json2ts';
+import {Json2Ts} from './scripts/generators/json2ts';
 import {NumericDictionary} from 'lodash';
 
 const yaml = require('gulp-yaml');
