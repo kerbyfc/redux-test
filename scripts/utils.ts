@@ -3,45 +3,84 @@ import * as fs from 'fs';
 import * as path from 'path';
 import * as _ from 'lodash';
 import * as yaml from 'js-yaml';
+import * as mkdirp from 'mkdirp';
+import chmod = require('chmod');
 
 interface IFile {
 	path: string;
 	content: string;
 	exists: boolean;
+	basename: string;
+	dir: string;
+	files: string[];
+	filenames: string[];
+	chmod: (mode: number) => IFile;
+	generate: (outFile: IFile, scope?: any) => IFile;
+	relative: (to: IFile) => string;
 }
 
-export function f(filepath: string): IFile {
-	const file: IFile = {
-		path: path.join.apply(null, [__dirname, '..'].concat(filepath.split('/'))),
-		exists: null,
-		content: null
+const ROOT = path.join(__dirname, '..');
+
+class File implements IFile {
+
+	private relpath: string;
+
+	constructor(relpath: string) {
+		this.relpath = path.isAbsolute(relpath) ? relpath.replace(ROOT, '') : relpath;
+	}
+
+	public generate(outFile: IFile, data: any = {}): IFile {
+		mkdirp.sync(outFile.dir);
+		fs.writeFileSync(outFile.path, renderTemplate(this, data));
+		return outFile;
+	}
+
+	public chmod(mode: number): IFile {
+		chmod(this.path, mode);
+		return this;
+	}
+
+	get path(): string {
+		return path.join.apply(path, [ROOT].concat(this.relpath.split('/')));
+	}
+
+	get dir(): string {
+		return path.dirname(this.path);
+	}
+
+	get content(): string {
+		return fs.readFileSync(this.path).toString();
+	}
+
+	get files(): string[] {
+		return this.filenames.map((filename) => {
+			return path.join(this.path, filename);
+		});
+	}
+
+	get filenames(): string[] {
+		return fs.readdirSync(this.path);
+	}
+
+	public relative(to: IFile): string {
+		return path.relative(this.path, to.path);
 	};
 
-	return new Proxy(file, {
-		get(self: IFile, prop: PropertyKey) {
-			switch (prop) {
-				case 'content': {
-					return fs.readFileSync(self.path).toString();
-				}
-				case 'exists': {
-					return fs.existsSync(self.path);
-				}
-				default: {
-					return self[prop];
-				}
-			}
-		}
-	});
+	get basename(): string {
+		return path.basename(this.path, path.extname(this.path));
+	}
+
+	get exists(): boolean {
+		return fs.existsSync(this.path);
+	}
 }
 
-export function renderTemplate(tplFile: IFile, scope: any): string {
-	return ejs.render(tplFile.content, {
-		scope: scope
-	});
+export function f(projectPath: string): IFile {
+	return new File(projectPath);
 }
 
-export function generateFile(tplFile: IFile, scope: any, toFile: IFile): void {
-	fs.writeFileSync(toFile.path, renderTemplate(tplFile, scope));
+export function renderTemplate(tplFile: IFile, data: any): string {
+	return ejs.render(tplFile.content, data);
 }
 
 export function showInvisibles(str: string): string {
