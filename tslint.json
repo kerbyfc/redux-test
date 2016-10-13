@@ -10,6 +10,7 @@
 			"single",
 			"jsx-double"
 		],
+		"no-string-literal": false,
 		"object-literal-sort-keys": false,
 		"switch-default": false,
 		"member-ordering": [
