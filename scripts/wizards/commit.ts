@@ -1,16 +1,16 @@
 import * as _ from 'lodash';
 import * as fs from 'fs';
 import * as path from 'path';
+import * as yaml from 'js-yaml';
 import rightPad = require('right-pad');
 import wrap = require('word-wrap');
 import {Answers, createPromptModule} from 'inquirer';
-import {longest, readYaml, f} from '../utils';
 import {stdin as input, stdout as output} from 'ttys';
+import commitTypes = require('conventional-commit-types');
 
 const MAX_LINE_LENGTH = 100;
 
 const prompt = createPromptModule({input, output});
-const commitTypes = readYaml(f('config/commit-types.yml'));
 
 enum QuestionName {
 	type,
@@ -20,12 +20,16 @@ enum QuestionName {
 	footer
 }
 
+function longest(strings: string[]): number {
+	return _(strings).orderBy((key) => key.length).last().length + 1;
+}
+
 prompt([
 	{
 		message: 'Select the type of change that you\'re committing:',
 		type: 'list',
 		name: QuestionName.type.toString(),
-		choices: getTypeChoises(commitTypes)
+		choices: getTypeChoises(commitTypes.types)
 	},
 	{
 		message: 'Denote the scope of this change (routing, compilation, rendering, etc...):\n',

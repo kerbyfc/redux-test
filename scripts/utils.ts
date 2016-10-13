@@ -1,10 +1,12 @@
 import * as ejs from 'ejs';
 import * as fs from 'fs';
 import * as path from 'path';
-import * as _ from 'lodash';
 import * as yaml from 'js-yaml';
 import * as mkdirp from 'mkdirp';
+import * as ts from 'typescript';
 import chmod = require('chmod');
+import TranspileOptions = ts.TranspileOptions;
+import ScriptTarget = ts.ScriptTarget;
 
 interface IFile {
 	path: string;
@@ -12,8 +14,13 @@ interface IFile {
 	exists: boolean;
 	basename: string;
 	dir: string;
+	ext: string;
+	es5: string;
+	json: any;
 	files: string[];
 	filenames: string[];
+	shebang: () => IFile;
+	write: (content: string, mode?: number) => IFile;
 	chmod: (mode: number) => IFile;
 	generate: (outFile: IFile, scope?: any) => IFile;
 	relative: (to: IFile) => string;
@@ -40,12 +47,41 @@ class File implements IFile {
 		return this;
 	}
 
+	public write(content: string, mode?: number): IFile {
+		mkdirp.sync(this.dir);
+		fs.writeFileSync(this.path, content);
+		if (mode) {
+			return this.chmod(mode);
+		}
+		return this;
+	}
+
+	public shebang(): IFile {
+		this.write('#!/usr/bin/env node\n' + this.content);
+		return this;
+	}
+
 	get path(): string {
 		return path.join.apply(path, [ROOT].concat(this.relpath.split('/')));
 	}
 
 	get dir(): string {
 		return path.dirname(this.path);
+	}
+
+	get json(): any {
+		if (this.ext.match(/ya?ml/)) {
+			return yaml.load(this.content);
+		}
+		return JSON.parse(this.content);
+	}
+
+	get es5(): string {
+		return this.toJs(ScriptTarget.ES5);
+	}
+
+	get ext(): string {
+		return path.extname(this.path);
 	}
 
 	get content(): string {
@@ -73,6 +109,15 @@ class File implements IFile {
 	get exists(): boolean {
 		return fs.existsSync(this.path);
 	}
+
+	protected toJs(target: ScriptTarget = ScriptTarget.ES5): string {
+		if (this.ext.match(/tsx?/)) {
+			const options: TranspileOptions = f('tsconfig.json').json;
+			options.compilerOptions.target = target;
+
+			return ts.transpileModule(this.content, options).outputText;
+		}
+	}
 }
 
 export function f(projectPath: string): IFile {
@@ -83,14 +128,4 @@ export function renderTemplate(tplFile: IFile, data: any): string {
 	return ejs.render(tplFile.content, data);
 }
 
-export function showInvisibles(str: string): string {
-	return str.replace(/\t/g, '---').replace(/\s/g, '⋅');
-}
 
-export function longest(strings: string[]): number {
-	return _(strings).orderBy((key) => key.length).last().length + 1;
-}
-
-export function readYaml<T extends {}>(file: IFile): T {
-	return yaml.safeLoad(file.content);
-}

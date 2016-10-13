@@ -4,7 +4,10 @@ import gitStatus = require('git-status');
 import leftPad = require('left-pad');
 import rightPad = require('right-pad');
 import {getLogger} from 'loglevel';
-import {showInvisibles} from '../utils';
+
+function showInvisibles(str: string): string {
+	return str.replace(/\t/g, '---').replace(/\s/g, '⋅');
+}
 
 const logger: Log = getLogger('validators:tabs');
 
